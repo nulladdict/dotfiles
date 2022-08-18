@@ -1,0 +1,33 @@
+[user]
+    name = nulladdict
+    email = nulladdicted@gmail.com
+    signingkey = B1908F5BE475E93C
+[core]
+    editor = nvim
+    autocrlf = input
+    quotepath = off
+    excludesfile = /Users/nulladdict/.gitignore_global
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+[mergetool]
+    keepbackup = false
+[mergetool "vimdiff"]
+    cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[pull]
+    ff = only
+[push]
+    autoSetupRemote = true
+[commit]
+    gpgsign = true
+[init]
+    defaultBranch = main
+[gui]
+    fontui = -family .AppleSystemUIFont -size 14 -weight normal -slant roman -underline 0 -overstrike 0
+    fontdiff = -family Menlo -size 14 -weight normal -slant roman -underline 0 -overstrike 0
+    tabsize = 4
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
