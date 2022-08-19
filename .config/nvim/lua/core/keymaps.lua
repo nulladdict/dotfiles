@@ -30,5 +30,6 @@ vim.opt.spelllang = 'ru_ru,ru_yo,en_us,en_gb'
 -- Terminal mode
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', opts)
 vim.api.nvim_create_user_command('Tterminal', ' :tabnew <bar> :terminal', { nargs = 0 })
+vim.api.nvim_create_user_command('Sterminal', ' :split <bar> :terminal', { nargs = 0 })
 vim.keymap.set('n', '<leader>t', ':Tterminal<cr>', opts)
 vim.api.nvim_create_autocmd('TermOpen', { pattern = '*', command = 'startinsert' })

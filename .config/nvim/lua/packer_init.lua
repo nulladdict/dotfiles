@@ -6,7 +6,7 @@ return require('packer').startup(function(use)
     use 'ybian/smartim'
     use { 'cocopon/iceberg.vim', as = 'iceberg' }
     use 'nvim-lualine/lualine.nvim'
-    use 'luochen1990/indent-detector.vim'
+    use { 'nmac427/guess-indent.nvim', config = function() require('guess-indent').setup() end }
     use { 'windwp/nvim-autopairs', config = function() require('nvim-autopairs').setup() end }
     use { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end }
     use 'mg979/vim-visual-multi'
@@ -30,5 +30,5 @@ return require('packer').startup(function(use)
 
     use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable('make') == 1 }
-    use { 'kyazdani42/nvim-tree.lua' }
+    use 'kyazdani42/nvim-tree.lua'
 end)
