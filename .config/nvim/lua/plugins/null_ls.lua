@@ -4,9 +4,6 @@ null_ls.setup({
     sources = {
         null_ls.builtins.code_actions.eslint_d,
 
-        null_ls.builtins.completion.spell,
-        null_ls.builtins.completion.vsnip,
-
         null_ls.builtins.diagnostics.eslint_d,
         null_ls.builtins.diagnostics.markdownlint,
         null_ls.builtins.diagnostics.stylelint,

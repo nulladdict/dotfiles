@@ -1,5 +1,8 @@
 local cmp = require('cmp')
 
+-- Set completeopt to have a better completion experience
+vim.o.completeopt = 'menu,menuone,noselect'
+
 cmp.setup {
     snippet = {
         expand = function(args)
@@ -33,10 +36,36 @@ cmp.setup {
             end
         end, { 'i', 's' }),
     },
-    sources = {
+    sources = cmp.config.sources({
         { name = 'nvim_lsp' },
+        { name = 'vsnip' },
+    }, {
+        { name = 'treesitter' }
+    }, {
         { name = 'buffer' },
         { name = 'path' },
-        { name = 'cmdline' },
-    },
+    }),
 }
+
+-- Use different sources for search
+cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+        { name = 'buffer' }
+    }
+})
+cmp.setup.cmdline('?', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+        { name = 'buffer' }
+    }
+})
+
+-- Use cmdline & path source for ':'.
+cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+        { name = 'path' },
+        { name = 'cmdline' }
+    })
+})

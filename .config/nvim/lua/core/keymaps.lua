@@ -11,6 +11,10 @@ vim.opt.mouse = 'a'
 -- Unmap Ex mode
 vim.keymap.set('n', 'Q', '<nop>', opts)
 
+-- Conventional saving
+vim.keymap.set({ 'n', 'v' }, '<C-s>', ':w<cr>', opts)
+vim.keymap.set('i', '<C-s>', '<esc>:w<cr>', opts)
+
 -- Auto indent pasted text
 vim.keymap.set('n', 'p', 'p=`]', opts)
 vim.keymap.set('n', 'P', 'P=`]', opts)
@@ -22,6 +26,9 @@ vim.keymap.set('i', '<C-j>', '<Esc>:m .+1<CR>gi', opts)
 vim.keymap.set('i', '<C-k>', '<Esc>:m .-2<CR>gi', opts)
 vim.keymap.set('v', '<C-j>', ":m '>+1<CR>gv", opts)
 vim.keymap.set('v', '<C-k>', ":m '<-2<CR>gv", opts)
+
+-- Search highlight
+vim.keymap.set({ 'n', 'v' }, '<leader><CR>', ':nohl<cr>', opts)
 
 -- Spell checking
 vim.keymap.set('n', '<leader>ss', ':setlocal spell!<cr>', opts)
