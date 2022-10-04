@@ -14,8 +14,8 @@ local servers = {
     'jsonls',
     'tsserver',
     'sumneko_lua',
-    'marksman',
-    -- 'remark_ls',
+    -- 'marksman',
+    'remark_ls',
     'rust_analyzer',
     'sqlls',
     'svelte',
@@ -63,8 +63,10 @@ local on_attach = function(_, bufnr)
     end, '[W]orkspace [L]ist Folders')
 
     -- Create a command `:Format` local to the LSP buffer
-    vim.api.nvim_buf_create_user_command(bufnr, 'Format', vim.lsp.buf.format or vim.lsp.buf.formatting,
-        { desc = 'Format current buffer with LSP' })
+    for _, fmt_command in ipairs({ 'Format', 'Fmt' }) do
+        vim.api.nvim_buf_create_user_command(bufnr, fmt_command, vim.lsp.buf.format or vim.lsp.buf.formatting,
+            { desc = 'Format current buffer with LSP' })
+    end
 end
 
 for _, lsp in ipairs(servers) do
