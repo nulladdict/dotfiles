@@ -11,6 +11,9 @@ vim.opt.mouse = 'a'
 -- Unmap Ex mode
 vim.keymap.set('n', 'Q', '<nop>', opts)
 
+-- Common misstype
+vim.api.nvim_create_user_command('W', ':w', { nargs = 0 })
+
 -- Conventional saving
 vim.keymap.set({ 'n', 'v' }, '<C-s>', ':w<cr>', opts)
 vim.keymap.set('i', '<C-s>', '<esc>:w<cr>', opts)
