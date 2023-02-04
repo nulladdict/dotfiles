@@ -4,7 +4,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- Enable the following language servers
 local servers = {
     'astro', 'bashls', 'csharp_ls', 'cssls', 'cssmodules_ls', -- 'denols',
-    'dockerls', 'html', 'jsonls', 'tsserver', 'sumneko_lua', -- 'marksman',
+    'dockerls', 'html', 'jsonls', 'tailwindcss', 'tsserver', 'sumneko_lua', -- 'marksman',
     'remark_ls', 'rust_analyzer', 'sqlls', 'svelte', 'taplo', 'volar', 'yamlls'
 }
 
