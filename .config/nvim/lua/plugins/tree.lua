@@ -5,6 +5,7 @@ require('nvim-tree').setup {
     filters = {dotfiles = false},
     git = {ignore = false},
     renderer = {
+        indent_width = 1,
         icons = {
             padding = ' ',
             symlink_arrow = '',
@@ -16,7 +17,10 @@ require('nvim-tree').setup {
             }
         }
     },
-    view = {mappings = {list = {{key = "<2-MiddleMouse>", action = "tabnew"}}}}
+    view = {
+        width = 32,
+        mappings = {list = {{key = "<2-MiddleMouse>", action = "tabnew"}}}
+    }
 }
 
 local function open_nvim_tree(data)
