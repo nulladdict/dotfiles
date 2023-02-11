@@ -41,8 +41,8 @@ vim.api.nvim_create_user_command('Tterminal', ' :tabnew <bar> :terminal',
                                  {nargs = 0})
 vim.api.nvim_create_user_command('Sterminal', ' :split <bar> :terminal',
                                  {nargs = 0})
-vim.api
-    .nvim_create_autocmd('TermOpen', {pattern = '*', command = 'startinsert'})
+vim.api.nvim_create_autocmd('TermOpen', {pattern = '*', command = 'startinsert'})
+vim.api.nvim_create_autocmd('TermOpen', {pattern = '*', command = 'setlocal spell!'})
 
 -- Tab management
 vim.keymap.set('n', '<leader>tt', ':tabnew<cr>', opts)
