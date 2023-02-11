@@ -118,3 +118,10 @@ export GPG_TTY
 [ -f "/Users/nulladdict/.ghcup/env" ] && source "/Users/nulladdict/.ghcup/env" # ghcup-env
 
 export DOTNET_CLI_TELEMETRY_OPTOUT='true'
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# bun completions
+[ -s "/usr/local/Cellar/bun/0.5.6/share/zsh/site-functions/_bun" ] && source "/usr/local/Cellar/bun/0.5.6/share/zsh/site-functions/_bun"
