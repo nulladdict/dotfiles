@@ -19,6 +19,8 @@ vim.keymap.set('i', '<C-s>', '<esc>:w<cr>', opts)
 vim.keymap.set('n', 'p', 'p=`]', opts)
 vim.keymap.set('n', 'P', 'P=`]', opts)
 
+vim.keymap.set({'n', 'v'}, '<leader>y', '"+y', opts)
+
 -- Moving lines around
 vim.keymap.set('n', '<C-j>', ':m .+1<CR>', opts)
 vim.keymap.set('n', '<C-k>', ':m .-2<CR>', opts)
