@@ -54,7 +54,6 @@ return require('packer').startup(function(use)
     }
     use 'hrsh7th/cmp-vsnip'
     use 'hrsh7th/vim-vsnip'
-    use 'ray-x/cmp-treesitter'
 
     use {'nvim-telescope/telescope.nvim', requires = {'nvim-lua/plenary.nvim'}}
     use {
