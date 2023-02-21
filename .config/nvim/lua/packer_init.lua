@@ -66,4 +66,5 @@ return require('packer').startup(function(use)
         config = function() require('neoclip').setup() end
     }
     use 'kyazdani42/nvim-tree.lua'
+    use 'folke/zen-mode.nvim'
 end)
