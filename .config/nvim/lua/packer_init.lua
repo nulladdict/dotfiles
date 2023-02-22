@@ -37,13 +37,13 @@ return require('packer').startup(function(use)
     use 'neovim/nvim-lspconfig'
     use {
         'jose-elias-alvarez/null-ls.nvim',
-        requires = {"nvim-lua/plenary.nvim"}
+        requires = {'nvim-lua/plenary.nvim'}
     }
     use {
-        "folke/trouble.nvim",
-        config = function() require("trouble").setup {icons = false} end
+        'folke/trouble.nvim',
+        config = function() require('trouble').setup {icons = false} end
     }
-    use {'j-hui/fidget.nvim', config = function() require("fidget").setup() end}
+    use {'j-hui/fidget.nvim', config = function() require('fidget').setup() end}
 
     use {
         'hrsh7th/nvim-cmp',

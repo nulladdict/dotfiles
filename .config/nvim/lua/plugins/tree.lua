@@ -1,6 +1,4 @@
 require('nvim-tree').setup {
-    open_on_tab = true,
-    ignore_buf_on_tab_change = {'term'},
     update_focused_file = {enable = true},
     filters = {dotfiles = false},
     git = {ignore = false},
@@ -20,7 +18,8 @@ require('nvim-tree').setup {
     view = {
         width = 32,
         mappings = {list = {{key = "<2-MiddleMouse>", action = "tabnew"}}}
-    }
+    },
+    actions = {open_file = {quit_on_open = true}}
 }
 
 local function open_nvim_tree(data)
