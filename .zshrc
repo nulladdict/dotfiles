@@ -100,13 +100,12 @@ alias gclsh='git clone --depth=1'
 alias gclsp='git clone --depth=1 --filter=blob:none --sparse'
 alias vi='/usr/bin/vim'
 alias vim='nvim'
-alias v='nvim'
 alias envlocal='env $(grep -v "^#" .env.local | xargs)'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 compdef dotfiles='git'
 alias zj='zellij'
-alias t='tmux'
-compdef t='tmux'
+alias tm='tmux'
+compdef tm='tmux'
 
 # FZF settings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
