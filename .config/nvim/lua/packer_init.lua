@@ -4,7 +4,7 @@ return require('packer').startup(function(use)
 
     use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}}
     use 'ybian/smartim'
-    use {'cocopon/iceberg.vim', as = 'iceberg'}
+    use {'rose-pine/neovim', as = 'rose-pine'}
     use 'nvim-lualine/lualine.nvim'
     use {
         'nmac427/guess-indent.nvim',
