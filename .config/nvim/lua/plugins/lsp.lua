@@ -59,8 +59,13 @@ local on_attach = function(_, bufnr)
 end
 
 for _, lsp in ipairs(servers) do
+    local settings = {}
+    if lsp == 'lua_ls' then
+        settings.Lua = {diagnostics = {globals = {'vim'}}}
+    end
     require('lspconfig')[lsp].setup {
         on_attach = on_attach,
-        capabilities = capabilities
+        capabilities = capabilities,
+        settings = settings
     }
 end
