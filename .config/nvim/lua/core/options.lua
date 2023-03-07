@@ -12,7 +12,7 @@ vim.opt.laststatus = 2 -- Always show statusline
 vim.opt.cursorline = true -- Show current line
 vim.opt.splitright = true -- Vertical split to the right
 vim.opt.splitbelow = true -- Horizontal split to the bottom
-vim.opt.scrolloff = 5 -- Always show rows from edge of the screen
+vim.opt.scrolloff = 8 -- Always show rows from edge of the screen
 vim.opt.cmdheight = 1 -- Height of the command bar
 
 -- Sidebar
