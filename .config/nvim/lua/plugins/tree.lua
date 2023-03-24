@@ -34,9 +34,5 @@ end
 
 vim.api.nvim_create_autocmd({"VimEnter"}, {callback = open_nvim_tree})
 
-vim.keymap.set('n', '<leader>bf', require('nvim-tree.api').tree.focus,
-               {desc = '[B]rowse [F]iles'})
 vim.keymap.set('n', '<leader>bb', require('nvim-tree.api').tree.toggle,
                {desc = 'Toggle [B]rowse'})
-vim.keymap.set('n', '<leader>ff', function() vim.cmd [[NvimTreeFindFile]] end,
-               {desc = '[Find] [F]ile'})
