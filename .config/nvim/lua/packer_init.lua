@@ -54,6 +54,37 @@ return require('packer').startup(function(use)
     }
     use 'hrsh7th/cmp-vsnip'
     use 'hrsh7th/vim-vsnip'
+    use {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function()
+            require("copilot").setup({
+                suggestion = {
+                    auto_trigger = true,
+                    debounce = 100,
+                    keymap = {
+                        accept = "<M-j>",
+                        next = "<M-l>",
+                        prev = false,
+                        dismiss = "<M-;>"
+                    }
+                },
+                panel = {keymap = {open = "<C-CR>"}},
+                filetypes = {
+                    ["*"] = function()
+                        if string.match(vim.fs.basename(vim.api
+                                                            .nvim_buf_get_name(0)),
+                                        '^%.env.*') then
+                            -- disable for .env files
+                            return false
+                        end
+                        return true
+                    end
+                }
+            })
+        end
+    }
 
     use {'nvim-telescope/telescope.nvim', requires = {'nvim-lua/plenary.nvim'}}
     use {

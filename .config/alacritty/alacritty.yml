@@ -37,3 +37,8 @@ colors:
     text: "#000000"
     cursor: "#ffffff"
 
+key_bindings:
+  - { key: J, mods: Command, chars: "\x1bj" } # Cmd + j
+  - { key: K, mods: Command, chars: "\x1bk" } # Cmd + k
+  - { key: L, mods: Command, chars: "\x1bl" } # Cmd + l
+  - { key: Semicolon, mods: Command, chars: "\x1b;" } # Cmd + ;
