@@ -44,18 +44,6 @@ local on_attach = function(_, bufnr)
     nmap('<leader>wl', function()
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, '[W]orkspace [L]ist Folders')
-
-    -- Create a command `:Format` local to the LSP buffer
-    for _, fmt_command in ipairs({'Format', 'Fmt'}) do
-        vim.api.nvim_buf_create_user_command(bufnr, fmt_command, function()
-            vim.lsp.buf.format({
-                filter = function(client)
-                    return client.name == 'null-ls'
-                end,
-                bufnr = bufnr
-            })
-        end, {desc = 'Format current buffer with LSP'})
-    end
 end
 
 for _, lsp in ipairs(servers) do
