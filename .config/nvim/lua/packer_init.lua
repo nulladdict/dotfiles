@@ -70,7 +70,7 @@ return require('packer').startup(function(use)
                         dismiss = "<M-;>"
                     }
                 },
-                panel = {keymap = {open = "<C-CR>"}},
+                panel = {keymap = {open = false}},
                 filetypes = {
                     ["*"] = function()
                         if string.match(vim.fs.basename(vim.api
