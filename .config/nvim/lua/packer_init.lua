@@ -18,7 +18,6 @@ return require('packer').startup(function(use)
         'numToStr/Comment.nvim',
         config = function() require('Comment').setup() end
     }
-    use 'mg979/vim-visual-multi'
     use 'justinmk/vim-sneak'
     use {
         'kylechui/nvim-surround',
