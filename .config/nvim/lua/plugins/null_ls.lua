@@ -24,7 +24,7 @@ null_ls.setup({
                 bufnr = bufnr
             })
         end
-        vim.keymap.set({'n', 'v'}, '<C-p>', format,
+        vim.keymap.set({'n', 'v'}, '<leader>f', format,
                        {noremap = true, silent = true})
         for _, fmt_command in ipairs({'Format', 'Fmt'}) do
             vim.api.nvim_buf_create_user_command(bufnr, fmt_command, format, {
