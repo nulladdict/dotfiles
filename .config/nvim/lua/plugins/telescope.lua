@@ -26,3 +26,5 @@ vim.keymap.set('n', '<leader>sg', builtin.live_grep,
                {desc = '[S]earch by [G]rep'})
 vim.keymap.set('n', '<leader>sd', builtin.diagnostics,
                {desc = '[S]earch [D]iagnostics'})
+vim.keymap.set('n', '<leader>st', builtin.git_status,
+               {desc = '[S]earch git s[T]atus'})
