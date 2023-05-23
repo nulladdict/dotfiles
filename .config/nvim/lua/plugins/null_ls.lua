@@ -24,12 +24,17 @@ null_ls.setup({
                 bufnr = bufnr
             })
         end
-        vim.keymap.set({'n', 'v'}, '<leader>f', format,
-                       {noremap = true, silent = true})
         for _, fmt_command in ipairs({'Format', 'Fmt'}) do
             vim.api.nvim_buf_create_user_command(bufnr, fmt_command, format, {
                 desc = 'Format current buffer with LSP'
             })
         end
+        vim.keymap.set({'n', 'v'}, '<leader>f', '<cmd>Fmt<CR>',
+                       {noremap = true, silent = true})
     end
 })
+
+vim.api.nvim_create_user_command('Eslint', '!npx eslint --fix %',
+                                 {bang = true, nargs = 0})
+vim.api.nvim_create_user_command('Stylelint', '!npx stylelint --fix %',
+                                 {bang = true, nargs = 0})
