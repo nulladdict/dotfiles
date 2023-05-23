@@ -19,11 +19,8 @@ return require('packer').startup(function(use)
         config = function() require('Comment').setup() end
     }
     use 'tpope/vim-repeat'
+    use 'tpope/vim-surround'
     use 'justinmk/vim-sneak'
-    use {
-        'kylechui/nvim-surround',
-        config = function() require('nvim-surround').setup() end
-    }
 
     use {
         'nvim-treesitter/nvim-treesitter',
