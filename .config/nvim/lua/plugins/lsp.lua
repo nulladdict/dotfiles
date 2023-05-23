@@ -5,7 +5,8 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local servers = {
     'astro', 'bashls', 'csharp_ls', 'cssls', 'cssmodules_ls', 'dockerls',
     'html', 'jsonls', 'tailwindcss', 'tsserver', 'lua_ls', 'rust_analyzer',
-    'sqlls', 'svelte', 'taplo', 'volar', 'yamlls', 'stylelint_lsp', 'eslint'
+    'sqlls', 'svelte', 'taplo', 'volar', 'yamlls', 'stylelint_lsp', 'eslint',
+    'zls'
 }
 
 -- Ensure the servers above are installed

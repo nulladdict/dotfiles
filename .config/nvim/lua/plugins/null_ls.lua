@@ -12,7 +12,8 @@ null_ls.setup({
         null_ls.builtins.formatting.lua_format,
         null_ls.builtins.formatting.prettierd,
         null_ls.builtins.formatting.sqlformat,
-        null_ls.builtins.formatting.rustfmt
+        null_ls.builtins.formatting.rustfmt,
+        null_ls.builtins.formatting.zigfmt
     },
     on_attach = function(_, bufnr)
         -- Create a command `:Format` local to the LSP buffer
