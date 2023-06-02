@@ -30,6 +30,11 @@ vim.opt.incsearch = true -- Starts searching as soon as typing, without enter ne
 vim.opt.ignorecase = true -- Ignore case letters when search
 vim.opt.smartcase = true -- Ignore lowercase for the whole pattern
 
+-- Folds
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldenable = false
+
 -- Invisible characters
 vim.opt.list = true
 vim.opt.listchars = 'tab:│ ,trail:~,lead:·,multispace:·,nbsp:×'
