@@ -41,7 +41,11 @@ return require('packer').startup(function(use)
         'folke/trouble.nvim',
         config = function() require('trouble').setup {icons = false} end
     }
-    use {'j-hui/fidget.nvim', config = function() require('fidget').setup() end}
+    use {
+        'j-hui/fidget.nvim',
+        tag = 'legacy',
+        config = function() require('fidget').setup() end
+    }
 
     use {
         'hrsh7th/nvim-cmp',
@@ -96,4 +100,8 @@ return require('packer').startup(function(use)
     }
     use 'kyazdani42/nvim-tree.lua'
     use 'folke/zen-mode.nvim'
+    use {
+        'stevearc/dressing.nvim',
+        config = function() require('dressing').setup() end
+    }
 end)
