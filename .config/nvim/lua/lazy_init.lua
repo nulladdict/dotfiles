@@ -1,62 +1,56 @@
-return require('packer').startup(function(use)
-    -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
-
-    use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}}
-    use 'ybian/smartim'
-    use {'rose-pine/neovim', as = 'rose-pine'}
-    use 'nvim-lualine/lualine.nvim'
-    use {
+require('lazy').setup({
+    {'lewis6991/gitsigns.nvim', dependencies = {'nvim-lua/plenary.nvim'}},
+    'ybian/smartim',
+    {'rose-pine/neovim', name = 'rose-pine'},
+    'nvim-lualine/lualine.nvim',
+    {
         'nmac427/guess-indent.nvim',
         config = function() require('guess-indent').setup() end
-    }
-    use {
+    },
+    {
         'windwp/nvim-autopairs',
         config = function() require('nvim-autopairs').setup() end
-    }
-    use {
+    },
+    {
         'numToStr/Comment.nvim',
         config = function() require('Comment').setup() end
-    }
-    use 'tpope/vim-repeat'
-    use 'tpope/vim-surround'
-    use 'justinmk/vim-sneak'
+    },
+    'tpope/vim-repeat',
+    'tpope/vim-surround',
+    'justinmk/vim-sneak',
 
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        run = function()
-            require('nvim-treesitter.install').update({with_sync = true})
-        end
-    }
+    {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
 
-    use 'williamboman/mason.nvim'
-    use 'williamboman/mason-lspconfig.nvim'
-    use 'neovim/nvim-lspconfig'
-    use {
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
+    'neovim/nvim-lspconfig',
+    {
         'jose-elias-alvarez/null-ls.nvim',
-        requires = {'nvim-lua/plenary.nvim'}
-    }
-    use 'MunifTanjim/prettier.nvim'
-    use {
+        dependencies = {'nvim-lua/plenary.nvim'}
+    },
+    'MunifTanjim/prettier.nvim',
+    {
         'folke/trouble.nvim',
         config = function() require('trouble').setup {icons = false} end
-    }
-    use {
+    },
+    {
         'j-hui/fidget.nvim',
         tag = 'legacy',
         config = function() require('fidget').setup() end
-    }
+    },
 
-    use {
+    {
         'hrsh7th/nvim-cmp',
-        requires = {
-            'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path',
+        dependencies = {
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-path',
             'hrsh7th/cmp-cmdline'
         }
-    }
-    use 'hrsh7th/cmp-vsnip'
-    use 'hrsh7th/vim-vsnip'
-    use {
+    },
+    'hrsh7th/cmp-vsnip',
+    'hrsh7th/vim-vsnip',
+    {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
         event = "InsertEnter",
@@ -86,22 +80,39 @@ return require('packer').startup(function(use)
                 }
             })
         end
-    }
+    },
 
-    use {'nvim-telescope/telescope.nvim', requires = {'nvim-lua/plenary.nvim'}}
-    use {
+    {'nvim-telescope/telescope.nvim', dependencies = {'nvim-lua/plenary.nvim'}},
+    {
         'nvim-telescope/telescope-fzf-native.nvim',
-        run = 'make',
+        build = 'make',
         cond = vim.fn.executable('make') == 1
-    }
-    use {
+    },
+    {
         'AckslD/nvim-neoclip.lua',
         config = function() require('neoclip').setup() end
-    }
-    use 'kyazdani42/nvim-tree.lua'
-    use 'folke/zen-mode.nvim'
-    use {
+    },
+    'kyazdani42/nvim-tree.lua',
+    'folke/zen-mode.nvim',
+    {
         'stevearc/dressing.nvim',
         config = function() require('dressing').setup() end
     }
-end)
+}, {
+    ui = {
+        icons = {
+            cmd = "⌘",
+            config = "🛠",
+            event = "📅",
+            ft = "📂",
+            init = "⚙",
+            keys = "🗝",
+            plugin = "🔌",
+            runtime = "💻",
+            source = "📄",
+            start = "🚀",
+            task = "📌",
+            lazy = "💤 "
+        }
+    }
+})

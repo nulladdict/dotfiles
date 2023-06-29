@@ -1,10 +1,5 @@
 local opts = {noremap = true, silent = true}
 
--- Change leader to a space
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-vim.keymap.set({'n', 'v'}, '<space>', '<nop>', opts)
-
 -- Enable full mouse support
 vim.opt.mouse = 'a'
 
