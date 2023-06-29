@@ -118,6 +118,10 @@ export GPG_TTY
 
 export DOTNET_CLI_TELEMETRY_OPTOUT='true'
 
+# zig
+export ZIG_INSTALL="$HOME/.zig"
+export PATH="$ZIG_INSTALL:$PATH"
+
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
