@@ -5,12 +5,10 @@ null_ls.setup({
         null_ls.builtins.code_actions.eslint_d,
 
         null_ls.builtins.diagnostics.eslint_d,
-        -- null_ls.builtins.diagnostics.markdownlint,
         null_ls.builtins.diagnostics.stylelint,
-        null_ls.builtins.diagnostics.tsc,
 
         null_ls.builtins.formatting.lua_format,
-        null_ls.builtins.formatting.prettierd,
+        null_ls.builtins.formatting.prettier,
         null_ls.builtins.formatting.sqlformat,
         null_ls.builtins.formatting.rustfmt,
         null_ls.builtins.formatting.zigfmt
@@ -35,6 +33,8 @@ null_ls.setup({
     end
 })
 
+vim.api.nvim_create_user_command('Prettier', '!npx prettier -w -u %',
+                                 {bang = true, nargs = 0})
 vim.api.nvim_create_user_command('Eslint', '!npx eslint --fix %',
                                  {bang = true, nargs = 0})
 vim.api.nvim_create_user_command('Stylelint', '!npx stylelint --fix %',

@@ -28,7 +28,6 @@ require('lazy').setup({
         'jose-elias-alvarez/null-ls.nvim',
         dependencies = {'nvim-lua/plenary.nvim'}
     },
-    'MunifTanjim/prettier.nvim',
     {
         'folke/trouble.nvim',
         config = function() require('trouble').setup {icons = false} end
