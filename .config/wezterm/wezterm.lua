@@ -2,7 +2,10 @@ local wezterm = require('wezterm')
 local config = wezterm.config_builder()
 
 config.audible_bell = 'Disabled'
+config.term = 'wezterm'
 config.hide_tab_bar_if_only_one_tab = true
+config.native_macos_fullscreen_mode = true
+config.window_decorations = 'RESIZE'
 config.window_padding = {left = 8, right = 8, top = 8, bottom = 8}
 config.initial_cols = 100
 config.initial_rows = 25
@@ -20,7 +23,8 @@ config.keys = {
     {key = 'l', mods = 'CMD', action = wezterm.action.SendString('\x1bl')},
     {key = 'д', mods = 'CMD', action = wezterm.action.SendString('\x1bl')},
     {key = ';', mods = 'CMD', action = wezterm.action.SendString('\x1b;')},
-    {key = 'ж', mods = 'CMD', action = wezterm.action.SendString('\x1b;')}
+    {key = 'ж', mods = 'CMD', action = wezterm.action.SendString('\x1b;')},
+    {key = 'f', mods = 'CMD|CTRL', action = wezterm.action.ToggleFullScreen}
 }
 
 return config
