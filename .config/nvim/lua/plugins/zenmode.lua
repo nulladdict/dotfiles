@@ -1,3 +1,3 @@
-require("zen-mode").setup()
+require('zen-mode').setup()
 
-vim.keymap.set("n", "<leader>zz", function() require("zen-mode").toggle() end)
+vim.keymap.set('n', '<leader>zz', function() require('zen-mode').toggle() end)

@@ -24,6 +24,7 @@ require('lazy').setup({
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'neovim/nvim-lspconfig',
+    'mfussenegger/nvim-lint',
     {
         'jose-elias-alvarez/null-ls.nvim',
         dependencies = {'nvim-lua/plenary.nvim'}
@@ -50,24 +51,24 @@ require('lazy').setup({
     'hrsh7th/cmp-vsnip',
     'hrsh7th/vim-vsnip',
     {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
+        'zbirenbaum/copilot.lua',
+        cmd = 'Copilot',
+        event = 'InsertEnter',
         config = function()
-            require("copilot").setup({
+            require('copilot').setup({
                 suggestion = {
                     auto_trigger = true,
                     debounce = 100,
                     keymap = {
-                        accept = "<M-j>",
-                        next = "<M-l>",
+                        accept = '<M-j>',
+                        next = '<M-l>',
                         prev = false,
-                        dismiss = "<M-;>"
+                        dismiss = '<M-;>'
                     }
                 },
                 panel = {keymap = {open = false}},
                 filetypes = {
-                    ["*"] = function()
+                    ['*'] = function()
                         if string.match(vim.fs.basename(vim.api
                                                             .nvim_buf_get_name(0)),
                                         '^%.env.*') then
@@ -100,18 +101,18 @@ require('lazy').setup({
 }, {
     ui = {
         icons = {
-            cmd = "⌘",
-            config = "🛠",
-            event = "📅",
-            ft = "📂",
-            init = "⚙",
-            keys = "🗝",
-            plugin = "🔌",
-            runtime = "💻",
-            source = "📄",
-            start = "🚀",
-            task = "📌",
-            lazy = "💤 "
+            cmd = '⌘',
+            config = '🛠',
+            event = '📅',
+            ft = '📂',
+            init = '⚙',
+            keys = '🗝',
+            plugin = '🔌',
+            runtime = '💻',
+            source = '📄',
+            start = '🚀',
+            task = '📌',
+            lazy = '💤 '
         }
     }
 })

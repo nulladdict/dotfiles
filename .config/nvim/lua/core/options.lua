@@ -31,8 +31,8 @@ vim.opt.ignorecase = true -- Ignore case letters when search
 vim.opt.smartcase = true -- Ignore lowercase for the whole pattern
 
 -- Folds
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldenable = false
 
 -- Invisible characters

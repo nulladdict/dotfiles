@@ -4,7 +4,7 @@ local cmp = require('cmp')
 vim.o.completeopt = 'menu,menuone,noselect'
 
 cmp.setup {
-    snippet = {expand = function(args) vim.fn["vsnip#anonymous"](args.body) end},
+    snippet = {expand = function(args) vim.fn['vsnip#anonymous'](args.body) end},
     mapping = cmp.mapping.preset.insert {
         ['<C-Space>'] = cmp.mapping(function()
             if cmp.visible() then

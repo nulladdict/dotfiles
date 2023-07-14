@@ -86,11 +86,7 @@ local function on_attach(bufnr)
     vim.keymap.set('n', '<2-LeftMouse>', api.node.open.edit, opts('Open'))
     vim.keymap.set('n', '<2-RightMouse>', api.tree.change_root_to_node,
                    opts('CD'))
-    -- END_DEFAULT_ON_ATTACH
 
-    -- Mappings migrated from view.mappings.list
-    --
-    -- You will need to insert "your code goes here" for any mappings with a custom action_cb
     vim.keymap.set('n', '<2-MiddleMouse>', api.node.open.tab,
                    opts('Open: New Tab'))
 end
@@ -119,7 +115,7 @@ require('nvim-tree').setup {
 
 local function open_nvim_tree(data)
     -- buffer is a [No Name]
-    local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
+    local no_name = data.file == '' and vim.bo[data.buf].buftype == ''
     -- buffer is a directory
     local directory = vim.fn.isdirectory(data.file) == 1
     if not no_name and not directory then return end
@@ -127,7 +123,7 @@ local function open_nvim_tree(data)
     if directory then vim.cmd.cd(data.file) end
 end
 
-vim.api.nvim_create_autocmd({"VimEnter"}, {callback = open_nvim_tree})
+vim.api.nvim_create_autocmd({'VimEnter'}, {callback = open_nvim_tree})
 
 vim.keymap.set('n', '<leader>bb', require('nvim-tree.api').tree.toggle,
                {desc = 'Toggle [B]rowse'})
