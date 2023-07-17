@@ -8,16 +8,14 @@ require('lazy').setup({
         config = function() require('guess-indent').setup() end
     },
     {
-        'windwp/nvim-autopairs',
-        config = function() require('nvim-autopairs').setup() end
+        'echasnovski/mini.pairs',
+        config = function() require('mini.pairs').setup() end
     },
     {
-        'numToStr/Comment.nvim',
-        config = function() require('Comment').setup() end
+        'echasnovski/mini.comment',
+        config = function() require('mini.comment').setup() end
     },
-    'tpope/vim-repeat',
-    'tpope/vim-surround',
-    'justinmk/vim-sneak',
+    {'tpope/vim-surround', dependencies = {'tpope/vim-repeat'}},
 
     {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
 
