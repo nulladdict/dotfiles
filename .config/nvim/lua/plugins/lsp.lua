@@ -62,15 +62,54 @@ local on_attach = function(_, bufnr)
     end, '[W]orkspace [L]ist Folders')
 end
 
+local function fix_all(opts)
+    local util = require('lspconfig.util')
+    opts = opts or {sync = true, bufnr = 0}
+    local bufnr = util.validate_bufnr(opts.bufnr or 0)
+
+    local stylelint_lsp_client = util.get_active_client_by_name(bufnr,
+                                                                'stylelint_lsp')
+    if stylelint_lsp_client == nil then return end
+
+    local request
+    if opts.sync then
+        request = function(buf, method, params)
+            stylelint_lsp_client.request_sync(method, params, nil, buf)
+        end
+    else
+        request = function(buf, method, params)
+            stylelint_lsp_client.request(method, params, nil, buf)
+        end
+    end
+
+    request(bufnr, 'workspace/executeCommand', {
+        command = 'stylelint.applyAutoFixes',
+        arguments = {
+            {
+                uri = vim.uri_from_bufnr(bufnr),
+                version = vim.lsp.util.buf_versions[bufnr]
+            }
+        }
+    })
+end
+
 for _, lsp in ipairs(servers) do
     local settings = {}
     if lsp == 'lua_ls' then
         settings.Lua = {diagnostics = {globals = {'vim'}}}
     end
+    local commands = {}
+    if lsp == 'stylelint_lsp' then
+        commands.StylelintFixAll = {
+            function() fix_all {sync = true, bufnr = 0} end,
+            description = 'Fix all stylelint problems for this buffer'
+        }
+    end
     require('lspconfig')[lsp].setup {
         on_attach = on_attach,
         capabilities = capabilities,
-        settings = settings
+        settings = settings,
+        commands = commands,
     }
 end
 
