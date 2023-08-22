@@ -22,10 +22,9 @@ require('lazy').setup({
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'neovim/nvim-lspconfig',
-    'mfussenegger/nvim-lint',
     {
-        'jose-elias-alvarez/null-ls.nvim',
-        dependencies = {'nvim-lua/plenary.nvim'}
+        'creativenull/efmls-configs-nvim',
+        dependencies = {'neovim/nvim-lspconfig', 'williamboman/mason.nvim'}
     },
     {
         'folke/trouble.nvim',
