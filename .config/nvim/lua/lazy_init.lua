@@ -24,7 +24,7 @@ require('lazy').setup({
     'neovim/nvim-lspconfig',
     {
         'creativenull/efmls-configs-nvim',
-        dependencies = {'neovim/nvim-lspconfig', 'williamboman/mason.nvim'}
+        dependencies = {'neovim/nvim-lspconfig'}
     },
     {
         'folke/trouble.nvim',
@@ -85,12 +85,7 @@ require('lazy').setup({
         build = 'make',
         cond = vim.fn.executable('make') == 1
     },
-    {
-        'AckslD/nvim-neoclip.lua',
-        config = function() require('neoclip').setup() end
-    },
     'kyazdani42/nvim-tree.lua',
-    'folke/zen-mode.nvim',
     {
         'stevearc/dressing.nvim',
         config = function() require('dressing').setup() end
