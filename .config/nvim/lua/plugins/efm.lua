@@ -16,6 +16,8 @@ local languages = {
     sass = {prettier_d},
 
     html = {prettier_d},
+    json = {prettier_d},
+    markdown = {prettier_d},
 
     lua = {lua_format},
 
