@@ -1,23 +1,21 @@
--- local eslint_d = require('efmls-configs.linters.eslint_d')
--- local stylelint = require('efmls-configs.linters.stylelint')
-local prettier_d = require('efmls-configs.formatters.prettier_d')
+local prettier = require('efmls-configs.formatters.prettier')
 local lua_format = require('efmls-configs.formatters.lua_format')
 local rustfmt = require('efmls-configs.formatters.rustfmt')
 
 local languages = {
-    javascript = {prettier_d},
-    javascriptreact = {prettier_d},
-    typescript = {prettier_d},
-    typescriptreact = {prettier_d},
+    javascript = {prettier},
+    javascriptreact = {prettier},
+    typescript = {prettier},
+    typescriptreact = {prettier},
 
-    css = {prettier_d},
-    scss = {prettier_d},
-    less = {prettier_d},
-    sass = {prettier_d},
+    css = {prettier},
+    scss = {prettier},
+    less = {prettier},
+    sass = {prettier},
 
-    html = {prettier_d},
-    json = {prettier_d},
-    markdown = {prettier_d},
+    html = {prettier},
+    json = {prettier},
+    markdown = {prettier},
 
     lua = {lua_format},
 
