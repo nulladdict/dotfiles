@@ -129,6 +129,3 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # bun completions
 [ -s "/usr/local/Cellar/bun/0.5.6/share/zsh/site-functions/_bun" ] && source "/usr/local/Cellar/bun/0.5.6/share/zsh/site-functions/_bun"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
