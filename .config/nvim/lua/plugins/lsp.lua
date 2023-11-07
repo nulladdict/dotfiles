@@ -26,14 +26,14 @@ local servers = {
 
 -- Ensure the servers above are installed
 require('mason').setup()
-require('mason-lspconfig').setup {ensure_installed = servers}
+require('mason-lspconfig').setup { ensure_installed = servers }
 
 -- This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
     local nmap = function(keys, func, desc)
         if desc then desc = 'LSP: ' .. desc end
 
-        vim.keymap.set('n', keys, func, {buffer = bufnr, desc = desc})
+        vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
     end
 
     local telescope = require('telescope.builtin')
@@ -46,7 +46,7 @@ local on_attach = function(_, bufnr)
     nmap('gr', telescope.lsp_references)
     nmap('<leader>ds', telescope.lsp_document_symbols, '[D]ocument [S]ymbols')
     nmap('<leader>ws', telescope.lsp_dynamic_workspace_symbols,
-         '[W]orkspace [S]ymbols')
+        '[W]orkspace [S]ymbols')
 
     nmap('gh', vim.lsp.buf.hover, 'Hover Documentation')
     nmap('gH', vim.lsp.buf.signature_help, 'Signature Documentation')
@@ -54,9 +54,9 @@ local on_attach = function(_, bufnr)
     -- Lesser used LSP functionality
     nmap('<leader>D', telescope.lsp_type_definitions, 'Type [D]efinition')
     nmap('<leader>wa', vim.lsp.buf.add_workspace_folder,
-         '[W]orkspace [A]dd Folder')
+        '[W]orkspace [A]dd Folder')
     nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder,
-         '[W]orkspace [R]emove Folder')
+        '[W]orkspace [R]emove Folder')
     nmap('<leader>wl', function()
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, '[W]orkspace [L]ist Folders')
@@ -64,11 +64,11 @@ end
 
 local function fix_all(opts)
     local util = require('lspconfig.util')
-    opts = opts or {sync = true, bufnr = 0}
+    opts = opts or { sync = true, bufnr = 0 }
     local bufnr = util.validate_bufnr(opts.bufnr or 0)
 
     local stylelint_lsp_client = util.get_active_client_by_name(bufnr,
-                                                                'stylelint_lsp')
+        'stylelint_lsp')
     if stylelint_lsp_client == nil then return end
 
     local request
@@ -96,12 +96,12 @@ end
 for _, lsp in ipairs(servers) do
     local settings = {}
     if lsp == 'lua_ls' then
-        settings.Lua = {diagnostics = {globals = {'vim'}}}
+        settings.Lua = { diagnostics = { globals = { 'vim' } } }
     end
     local commands = {}
     if lsp == 'stylelint_lsp' then
         commands.StylelintFixAll = {
-            function() fix_all {sync = true, bufnr = 0} end,
+            function() fix_all { sync = true, bufnr = 0 } end,
             description = 'Fix all stylelint problems for this buffer'
         }
     end

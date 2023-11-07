@@ -4,7 +4,7 @@ local cmp = require('cmp')
 vim.o.completeopt = 'menu,menuone,noselect'
 
 cmp.setup {
-    snippet = {expand = function(args) vim.fn['vsnip#anonymous'](args.body) end},
+    snippet = { expand = function(args) vim.fn['vsnip#anonymous'](args.body) end },
     mapping = cmp.mapping.preset.insert {
         ['<C-Space>'] = cmp.mapping(function()
             if cmp.visible() then
@@ -23,31 +23,31 @@ cmp.setup {
             else
                 fallback()
             end
-        end, {'i', 's'}),
+        end, { 'i', 's' }),
         ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
             else
                 fallback()
             end
-        end, {'i', 's'})
+        end, { 'i', 's' })
     },
-    sources = cmp.config.sources({{name = 'nvim_lsp'}, {name = 'vsnip'}},
-                                 {{name = 'buffer'}, {name = 'path'}})
+    sources = cmp.config.sources({ { name = 'nvim_lsp' }, { name = 'vsnip' } },
+        { { name = 'buffer' }, { name = 'path' } })
 }
 
 -- Use different sources for search
 cmp.setup.cmdline('/', {
     mapping = cmp.mapping.preset.cmdline(),
-    sources = {{name = 'buffer'}}
+    sources = { { name = 'buffer' } }
 })
 cmp.setup.cmdline('?', {
     mapping = cmp.mapping.preset.cmdline(),
-    sources = {{name = 'buffer'}}
+    sources = { { name = 'buffer' } }
 })
 
 -- Use cmdline & path source for ':'.
 cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({{name = 'path'}, {name = 'cmdline'}})
+    sources = cmp.config.sources({ { name = 'path' }, { name = 'cmdline' } })
 })
