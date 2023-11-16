@@ -93,6 +93,8 @@ local function fix_all(opts)
     })
 end
 
+vim.g.zig_fmt_autosave = false
+
 for _, lsp in ipairs(servers) do
     local settings = {}
     if lsp == 'lua_ls' then
