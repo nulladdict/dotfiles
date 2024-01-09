@@ -21,12 +21,14 @@ local servers = {
     'yamlls',
     'stylelint_lsp',
     'eslint',
-    'zls'
+    'zls',
+    'hls',
 }
 
 -- Ensure the servers above are installed
 require('mason').setup()
 require('mason-lspconfig').setup { ensure_installed = servers }
+require('neodev').setup({})
 
 -- This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
@@ -97,9 +99,6 @@ vim.g.zig_fmt_autosave = false
 
 for _, lsp in ipairs(servers) do
     local settings = {}
-    if lsp == 'lua_ls' then
-        settings.Lua = { diagnostics = { globals = { 'vim' } } }
-    end
     local commands = {}
     if lsp == 'stylelint_lsp' then
         commands.StylelintFixAll = {

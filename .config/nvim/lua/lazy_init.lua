@@ -1,15 +1,11 @@
 require('lazy').setup({
     { 'lewis6991/gitsigns.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
     'ybian/smartim',
-    { 'rose-pine/neovim',        name = 'rose-pine' },
+    { 'rose-pine/neovim',        name = 'rose-pine',                        tag = 'v1.2.2' },
     'nvim-lualine/lualine.nvim',
     {
         'nmac427/guess-indent.nvim',
         config = function() require('guess-indent').setup() end
-    },
-    {
-        'echasnovski/mini.pairs',
-        config = function() require('mini.pairs').setup() end
     },
     {
         'echasnovski/mini.comment',
@@ -22,6 +18,7 @@ require('lazy').setup({
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'neovim/nvim-lspconfig',
+    'folke/neodev.nvim',
     'stevearc/conform.nvim',
     {
         'folke/trouble.nvim',
@@ -29,7 +26,6 @@ require('lazy').setup({
     },
     {
         'j-hui/fidget.nvim',
-        tag = 'legacy',
         config = function() require('fidget').setup() end
     },
 
