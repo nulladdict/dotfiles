@@ -31,16 +31,17 @@ vim.keymap.set('v', '<C-k>', ":m '<-2<CR>gv", opts)
 vim.keymap.set({ 'n', 'v' }, '<leader><CR>', ':nohl<cr>', opts)
 
 -- Spell checking
-vim.keymap.set('n', '<leader>ss', ':setlocal spell!<cr>', opts)
-vim.opt.spell = true
-vim.opt.spelllang = 'ru_ru,ru_yo,en_us,en_gb'
+if not vim.g.vscode then
+    vim.keymap.set('n', '<leader>ss', ':setlocal spell!<cr>', opts)
+    vim.opt.spell = true
+    vim.opt.spelllang = 'ru_ru,ru_yo,en_us,en_gb'
+end
 
 -- Terminal mode
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', opts)
 vim.api
     .nvim_create_autocmd('TermOpen', { pattern = '*', command = 'startinsert' })
-vim.api.nvim_create_autocmd('TermOpen',
-                            { pattern = '*', command = 'setlocal spell!' })
+vim.api.nvim_create_autocmd('TermOpen', { pattern = '*', command = 'setlocal spell!' })
 
 -- Tab management
 vim.keymap.set('n', '<leader>tt', ':tabnew<cr>', opts)

@@ -14,19 +14,25 @@ vim.opt.rtp:prepend(lazypath)
 -- Change leader to a space
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-vim.keymap.set({'n', 'v'}, '<space>', '<nop>', {noremap = true, silent = true})
+vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>', { noremap = true, silent = true })
 
-require('lazy_init')
--- Core settings and functionality
-require('core/colors')
-require('core/keymaps')
-require('core/options')
--- Plugin settings
-require('plugins/cmp')
-require('plugins/conform')
-require('plugins/gitsings')
-require('plugins/lsp')
-require('plugins/lualine')
-require('plugins/oil')
-require('plugins/telescope')
-require('plugins/treesitter')
+if vim.g.vscode then
+    require('vscode_init')
+    require('core/keymaps')
+    require('core/options')
+else
+    require('lazy_init')
+    -- Core settings and functionality
+    require('core/colors')
+    require('core/keymaps')
+    require('core/options')
+    -- Plugin settings
+    require('plugins/cmp')
+    require('plugins/conform')
+    require('plugins/gitsings')
+    require('plugins/lsp')
+    require('plugins/lualine')
+    require('plugins/oil')
+    require('plugins/telescope')
+    require('plugins/treesitter')
+end

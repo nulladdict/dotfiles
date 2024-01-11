@@ -22,11 +22,11 @@ require('lazy').setup({
     'stevearc/conform.nvim',
     {
         'folke/trouble.nvim',
-        config = function() require('trouble').setup { icons = false } end
+        config = function() require('trouble').setup({ icons = false }) end
     },
     {
         'j-hui/fidget.nvim',
-        config = function() require('fidget').setup() end
+        config = function() require('fidget').setup({}) end
     },
 
     {
