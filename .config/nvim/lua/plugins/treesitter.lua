@@ -1,10 +1,18 @@
-require('nvim-treesitter.configs').setup {
-    -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = 'all',
-    -- Install parsers synchronously (only applied to `ensure_installed`)
+require('nvim-treesitter.configs').setup({
+    ensure_installed = { 'astro', 'bash', 'c_sharp', 'comment', 'css', 'dockerfile', 'gitignore', 'html', 'javascript', 'jsdoc', 'json', 'json5', 'lua', 'markdown', 'markdown_inline', 'python', 'rust', 'scss', 'sql', 'svelte', 'toml', 'tsx', 'typescript', 'vim', 'vue', 'yaml', 'zig' },
     sync_install = false,
-    -- Automatically install missing parsers when entering buffer
     auto_install = true,
-    highlight = { enable = true },
-    indent = { enable = true }
-}
+    highlight = {
+        enable = true,
+        disable = function(_, buf)
+            local max_filesize = 500 * 1024 -- 500 KB
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then
+                return true
+            end
+        end,
+        additional_vim_regex_highlighting = false,
+    },
+    indent = { enable = true },
+    incremental_selection = { enable = false }
+})

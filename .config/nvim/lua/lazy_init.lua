@@ -1,7 +1,7 @@
 require('lazy').setup({
     { 'lewis6991/gitsigns.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
     'ybian/smartim',
-    { 'rose-pine/neovim',        name = 'rose-pine',                        tag = 'v1.2.2' },
+    { 'rose-pine/neovim',        name = 'rose-pine', },
     'nvim-lualine/lualine.nvim',
     {
         'nmac427/guess-indent.nvim',
