@@ -1,0 +1,63 @@
+live_config_reload = true
+
+[colors.cursor]
+cursor = "#ffffff"
+text = "#000000"
+
+[colors.primary]
+background = "#000000"
+foreground = "#ffffff"
+
+[font]
+size = 16.0
+
+[font.bold]
+family = "Iosevka Extended"
+style = "Medium"
+
+[font.bold_italic]
+family = "Iosevka Extended"
+style = "Medium Italic"
+
+[font.italic]
+family = "Iosevka Extended"
+style = "Italic"
+
+[font.normal]
+family = "Iosevka Extended"
+style = "Regular"
+
+[[keyboard.bindings]]
+chars = "\u001Bj"
+key = "J"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001Bk"
+key = "K"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001Bl"
+key = "L"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001B;"
+key = "Semicolon"
+mods = "Command"
+
+[shell]
+args = ["-l"]
+program = "/bin/zsh"
+
+[window]
+decorations = "buttonless"
+
+[window.dimensions]
+columns = 100
+lines = 25
+
+[window.padding]
+x = 8
+y = 8
