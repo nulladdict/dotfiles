@@ -12,6 +12,7 @@ config.initial_rows = 25
 config.font_size = 16.0
 config.font = wezterm.font('Iosevka Extended')
 
+config.front_end = "WebGpu"
 config.color_scheme = 'Dark Pastel'
 config.colors = {background = '#000000', foreground = '#ffffff'}
 
