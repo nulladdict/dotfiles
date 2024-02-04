@@ -40,10 +40,6 @@ vim.opt.list = true
 vim.opt.listchars = 'tab:│ ,trail:~,lead:·,multispace:·,nbsp:×'
 vim.opt.backspace = 'indent,eol,start' -- backspace works on every char in insert mode
 
--- Matching parenthesis
-vim.opt.showmatch = true -- Highlight matching parenthesis
-vim.opt.matchtime = 2    -- delay before showing matching parenthesis
-
 -- Backup files
 vim.opt.backup = false
 vim.opt.writebackup = false

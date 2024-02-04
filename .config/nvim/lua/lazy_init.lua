@@ -1,19 +1,31 @@
 require('lazy').setup({
-    { 'lewis6991/gitsigns.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
+    {
+        'lewis6991/gitsigns.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim' }
+    },
     'ybian/smartim',
-    { 'rose-pine/neovim',        name = 'rose-pine', },
+    {
+        'rose-pine/neovim',
+        name = 'rose-pine',
+    },
     'nvim-lualine/lualine.nvim',
     {
         'nmac427/guess-indent.nvim',
-        config = function() require('guess-indent').setup() end
+        opts = {},
     },
     {
-        'echasnovski/mini.comment',
-        config = function() require('mini.comment').setup() end
+        'numToStr/Comment.nvim',
+        opts = {}
     },
-    { 'tpope/vim-surround',              dependencies = { 'tpope/vim-repeat' } },
+    {
+        'tpope/vim-surround',
+        dependencies = { 'tpope/vim-repeat' }
+    },
 
-    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+    {
+        'nvim-treesitter/nvim-treesitter',
+        build = ':TSUpdate'
+    },
 
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
@@ -22,11 +34,11 @@ require('lazy').setup({
     'stevearc/conform.nvim',
     {
         'folke/trouble.nvim',
-        config = function() require('trouble').setup({ icons = false }) end
+        opts = { icons = false }
     },
     {
         'j-hui/fidget.nvim',
-        config = function() require('fidget').setup({}) end
+        opts = {},
     },
 
     {
@@ -72,7 +84,10 @@ require('lazy').setup({
         end
     },
 
-    { 'nvim-telescope/telescope.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
+    {
+        'nvim-telescope/telescope.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim' }
+    },
     {
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
@@ -81,7 +96,7 @@ require('lazy').setup({
     'stevearc/oil.nvim',
     {
         'stevearc/dressing.nvim',
-        config = function() require('dressing').setup() end
+        opts = {},
     }
 }, {
     ui = {
