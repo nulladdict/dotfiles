@@ -5,6 +5,7 @@ vim.o.completeopt = 'menu,menuone,noselect'
 
 cmp.setup {
     snippet = { expand = function(args) vim.fn['vsnip#anonymous'](args.body) end },
+    window = { completion = cmp.config.window.bordered(), },
     mapping = cmp.mapping.preset.insert {
         ['<C-Space>'] = cmp.mapping(function()
             if cmp.visible() then

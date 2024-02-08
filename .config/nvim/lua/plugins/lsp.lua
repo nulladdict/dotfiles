@@ -34,7 +34,6 @@ require('neodev').setup({})
 local on_attach = function(_, bufnr)
     local nmap = function(keys, func, desc)
         if desc then desc = 'LSP: ' .. desc end
-
         vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
     end
 
@@ -47,21 +46,17 @@ local on_attach = function(_, bufnr)
     nmap('gi', telescope.lsp_implementations, '[G]oto [I]mplementation')
     nmap('gr', telescope.lsp_references)
     nmap('<leader>ds', telescope.lsp_document_symbols, '[D]ocument [S]ymbols')
-    nmap('<leader>ws', telescope.lsp_dynamic_workspace_symbols,
-        '[W]orkspace [S]ymbols')
+    nmap('<leader>ws', telescope.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
     nmap('gh', vim.lsp.buf.hover, 'Hover Documentation')
     nmap('gH', vim.lsp.buf.signature_help, 'Signature Documentation')
 
     -- Lesser used LSP functionality
     nmap('<leader>D', telescope.lsp_type_definitions, 'Type [D]efinition')
-    nmap('<leader>wa', vim.lsp.buf.add_workspace_folder,
-        '[W]orkspace [A]dd Folder')
-    nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder,
-        '[W]orkspace [R]emove Folder')
-    nmap('<leader>wl', function()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, '[W]orkspace [L]ist Folders')
+    nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+    nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+    nmap('<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+        '[W]orkspace [L]ist Folders')
 end
 
 local function fix_all(opts)
@@ -69,8 +64,7 @@ local function fix_all(opts)
     opts = opts or { sync = true, bufnr = 0 }
     local bufnr = util.validate_bufnr(opts.bufnr or 0)
 
-    local stylelint_lsp_client = util.get_active_client_by_name(bufnr,
-        'stylelint_lsp')
+    local stylelint_lsp_client = util.get_active_client_by_name(bufnr, 'stylelint_lsp')
     if stylelint_lsp_client == nil then return end
 
     local request
@@ -119,3 +113,12 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+
+-- Rounded borders for previews
+local util_preview = vim.lsp.util.open_floating_preview
+---@diagnostic disable-next-line: duplicate-set-field
+vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
+    opts = opts or {}
+    opts.border = opts.border or 'rounded'
+    return util_preview(contents, syntax, opts, ...)
+end
