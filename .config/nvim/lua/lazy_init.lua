@@ -100,6 +100,7 @@ require('lazy').setup({
     }
 }, {
     ui = {
+        border = 'rounded',
         icons = {
             cmd = '⌘',
             config = '🛠',

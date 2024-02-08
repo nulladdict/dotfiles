@@ -26,8 +26,8 @@ local servers = {
 }
 
 -- Ensure the servers above are installed
-require('mason').setup()
-require('mason-lspconfig').setup { ensure_installed = servers }
+require('mason').setup({ ui = { border = 'rounded' } })
+require('mason-lspconfig').setup({ ensure_installed = servers })
 require('neodev').setup({})
 
 -- This function gets run when an LSP connects to a particular buffer.
