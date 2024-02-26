@@ -130,6 +130,7 @@ export FZF_DEFAULT_COMMAND='rg --files'
 GPG_TTY=$(tty)
 export GPG_TTY
 
+# dotnet
 export DOTNET_CLI_TELEMETRY_OPTOUT='true'
 
 # zig
