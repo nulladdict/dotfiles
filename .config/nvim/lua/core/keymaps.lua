@@ -34,7 +34,8 @@ vim.keymap.set({ 'n', 'v' }, '<leader><CR>', ':nohl<cr>', opts)
 if not vim.g.vscode then
     vim.keymap.set('n', '<leader>ss', ':setlocal spell!<cr>', opts)
     vim.opt.spell = true
-    vim.opt.spelllang = 'ru_ru,ru_yo,en_us,en_gb'
+    vim.opt.spelllang = 'ru_yo,en_us,en_gb'
+    vim.opt.spelloptions = 'camel'
 end
 
 -- Terminal mode
