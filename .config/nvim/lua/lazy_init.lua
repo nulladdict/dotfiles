@@ -71,9 +71,7 @@ require('lazy').setup({
                 panel = { keymap = { open = false } },
                 filetypes = {
                     ['*'] = function()
-                        if string.match(vim.fs.basename(vim.api
-                                    .nvim_buf_get_name(0)),
-                                '^%.env.*') then
+                        if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), '^%.env.*') then
                             -- disable for .env files
                             return false
                         end
@@ -86,12 +84,14 @@ require('lazy').setup({
 
     {
         'nvim-telescope/telescope.nvim',
-        dependencies = { 'nvim-lua/plenary.nvim' }
-    },
-    {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-        cond = vim.fn.executable('make') == 1
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            {
+                'nvim-telescope/telescope-fzf-native.nvim',
+                build = 'make',
+                cond = vim.fn.executable('make') == 1
+            }
+        }
     },
     'stevearc/oil.nvim',
     {

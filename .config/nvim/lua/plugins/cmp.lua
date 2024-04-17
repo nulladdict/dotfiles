@@ -33,8 +33,10 @@ cmp.setup {
             end
         end, { 'i', 's' })
     },
-    sources = cmp.config.sources({ { name = 'nvim_lsp' }, { name = 'vsnip' } },
-        { { name = 'buffer' }, { name = 'path' } })
+    sources = cmp.config.sources(
+        { { name = 'nvim_lsp' }, { name = 'vsnip' } },
+        { { name = 'buffer' }, { name = 'path' } }
+    )
 }
 
 -- Use different sources for search
