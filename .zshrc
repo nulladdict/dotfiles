@@ -132,6 +132,7 @@ export GPG_TTY
 
 # dotnet
 export DOTNET_CLI_TELEMETRY_OPTOUT='true'
+export PATH="$PATH:/Users/nulladdict/.dotnet/tools"
 
 # zig
 export ZIG_INSTALL="$HOME/.zig"
