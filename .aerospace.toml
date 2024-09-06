@@ -48,7 +48,7 @@ alt-shift-6 = 'move-node-to-workspace 6'
 alt-tab = 'workspace --wrap-around next'
 alt-shift-tab = 'workspace-back-and-forth'
 
-alt-q = 'enable off'
+# alt-q = 'enable off'
 alt-w = 'mode join'
 alt-e = 'layout tiles horizontal vertical'
 alt-r = 'mode resize'
@@ -61,7 +61,7 @@ h = 'resize width -50'
 j = 'resize height +50'
 k = 'resize height -50'
 l = 'resize width +50'
-0 = ['flatten-workspace-tree', 'mode main']
+0 = ['balance-sizes', 'mode main']
 
 [mode.join.binding]
 esc = 'mode main'
@@ -69,6 +69,7 @@ h = ['join-with left', 'mode main']
 j = ['join-with down', 'mode main']
 k = ['join-with up', 'mode main']
 l = ['join-with right', 'mode main']
+0 = ['flatten-workspace-tree', 'mode main']
 
 [[on-window-detected]]
 if.app-id = 'company.thebrowser.Browser'
