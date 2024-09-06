@@ -11,7 +11,8 @@ local servers = {
     'html',
     'jsonls',
     'tailwindcss',
-    'tsserver',
+    -- 'tsserver',
+    'vtsls',
     'lua_ls',
     'rust_analyzer',
     'sqlls',
@@ -28,13 +29,12 @@ local servers = {
 -- Ensure the servers above are installed
 require('mason').setup({ ui = { border = 'rounded' } })
 require('mason-lspconfig').setup({ ensure_installed = servers })
-require('neodev').setup({})
 
 -- This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
     local nmap = function(keys, func, desc)
         if desc then desc = 'LSP: ' .. desc end
-        vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+        vim.keymap.set({ 'n', 'v' }, keys, func, { buffer = bufnr, desc = desc })
     end
 
     local telescope = require('telescope.builtin')
@@ -44,22 +44,15 @@ local on_attach = function(_, bufnr)
 
     nmap('gd', telescope.lsp_definitions, '[G]oto [D]efinition')
     nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+    nmap('gy', telescope.lsp_type_definitions, 'Type [D]efinition')
     nmap('gi', telescope.lsp_implementations, '[G]oto [I]mplementation')
     nmap('gr', telescope.lsp_references)
-    nmap('<leader>ds', telescope.lsp_document_symbols, '[D]ocument [S]ymbols')
-    nmap('<leader>ws', telescope.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
     nmap('gh', vim.lsp.buf.hover, 'Hover Documentation')
     nmap('gH', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-    nmap('<leader>D', telescope.lsp_type_definitions, 'Type [D]efinition')
-    nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-    nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-    nmap('<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
-        '[W]orkspace [L]ist Folders')
 end
 
-local function fix_all(opts)
+local function stylelint_fix_all(opts)
     local util = require('lspconfig.util')
     opts = opts or { sync = true, bufnr = 0 }
     local bufnr = util.validate_bufnr(opts.bufnr or 0)
@@ -91,21 +84,29 @@ end
 
 vim.g.zig_fmt_autosave = false
 
+require('lspconfig.configs').vtsls = require('vtsls').lspconfig
+
 for _, lsp in ipairs(servers) do
     local settings = {}
     local commands = {}
     if lsp == 'stylelint_lsp' then
         commands.StylelintFixAll = {
-            function() fix_all { sync = true, bufnr = 0 } end,
+            function() stylelint_fix_all({ sync = true, bufnr = 0 }) end,
             description = 'Fix all stylelint problems for this buffer'
         }
     end
-    require('lspconfig')[lsp].setup {
+    if lsp == 'vtsls' then
+        settings = {
+            vtsls = { autoUseWorkspaceTsdk = true },
+            typescript = { tsserver = { maxTsServerMemory = 8092 } }
+        }
+    end
+    require('lspconfig')[lsp].setup({
         on_attach = on_attach,
         capabilities = capabilities,
         settings = settings,
         commands = commands
-    }
+    })
 end
 
 -- Diagnostic keymaps

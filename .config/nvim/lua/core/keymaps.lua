@@ -14,8 +14,8 @@ vim.keymap.set({ 'n', 'v' }, '<C-s>', ':w<cr>', opts)
 vim.keymap.set('i', '<C-s>', '<esc>:w<cr>', opts)
 
 -- Auto indent pasted text
-vim.keymap.set('n', 'p', 'p=`]', opts)
-vim.keymap.set('n', 'P', 'P=`]', opts)
+-- vim.keymap.set('n', 'p', 'p=`]', opts)
+-- vim.keymap.set('n', 'P', 'P=`]', opts)
 
 vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', opts)
 
@@ -40,8 +40,7 @@ end
 
 -- Terminal mode
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', opts)
-vim.api
-    .nvim_create_autocmd('TermOpen', { pattern = '*', command = 'startinsert' })
+vim.api.nvim_create_autocmd('TermOpen', { pattern = '*', command = 'startinsert' })
 vim.api.nvim_create_autocmd('TermOpen', { pattern = '*', command = 'setlocal spell!' })
 
 -- Tab management

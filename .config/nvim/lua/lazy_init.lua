@@ -14,10 +14,6 @@ require('lazy').setup({
         opts = {},
     },
     {
-        'numToStr/Comment.nvim',
-        opts = {}
-    },
-    {
         'tpope/vim-surround',
         dependencies = { 'tpope/vim-repeat' }
     },
@@ -30,7 +26,11 @@ require('lazy').setup({
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'neovim/nvim-lspconfig',
-    'folke/neodev.nvim',
+    'yioneko/nvim-vtsls',
+    {
+        'folke/lazydev.nvim',
+        opts = {}
+    },
     'stevearc/conform.nvim',
     {
         'folke/trouble.nvim',
@@ -53,33 +53,46 @@ require('lazy').setup({
     'hrsh7th/cmp-vsnip',
     'hrsh7th/vim-vsnip',
     {
-        'zbirenbaum/copilot.lua',
-        cmd = 'Copilot',
-        event = 'InsertEnter',
+        'github/copilot.vim',
+        -- enabled = false,
+        event = 'VeryLazy',
         config = function()
-            require('copilot').setup({
-                suggestion = {
-                    auto_trigger = true,
-                    debounce = 100,
-                    keymap = {
-                        accept = '<M-j>',
-                        next = '<M-l>',
-                        prev = false,
-                        dismiss = '<M-;>'
-                    }
-                },
-                panel = { keymap = { open = false } },
-                filetypes = {
-                    ['*'] = function()
-                        if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), '^%.env.*') then
-                            -- disable for .env files
-                            return false
-                        end
-                        return true
-                    end
-                }
+            vim.g.copilot_no_mappings = true
+            vim.keymap.set('i', '<M-j>', 'copilot#Accept("")', { expr = true, replace_keycodes = false })
+            vim.keymap.set('i', '<M-k>', 'copilot#AcceptWord("")', { expr = true, replace_keycodes = false })
+            vim.keymap.set('i', '<M-l>', 'copilot#Next()', { expr = true, replace_keycodes = false })
+            vim.keymap.set('i', '<M-;>', 'copilot#Dismiss()', { expr = true, replace_keycodes = false })
+            vim.api.nvim_create_autocmd('BufEnter', {
+                pattern = { '*.env', '*.env.*' },
+                callback = function() vim.b.copilot_enabled = false end
             })
+            vim.g.copilot_workspace_folders = { vim.fn.getcwd() }
         end
+    },
+    {
+        'huggingface/llm.nvim',
+        enabled = false,
+        opts = {
+            backend = 'openai',
+            url = 'http://code-llama-70b.kontur.host',
+            fim = {
+                enabled = true,
+                prefix = "<PRE> ",
+                middle = " <MID>",
+                suffix = " <SUF>",
+            },
+            model = 'CodeLlama-70B-Instruct-GPTQ',
+            context_window = 4096,
+            tokenizer = { repository = 'TheBloke/CodeLlama-70B-Instruct-GPTQ' },
+            accept_keymap = '<M-j>',
+            dismiss_keymap = '<M-;>',
+            enable_suggestions_on_startup = true,
+            enable_suggestions_on_files = { '*.ts', '*.tsx', '*.lua' },
+            lsp = {
+                bin_path = vim.api.nvim_call_function('stdpath', { 'data' }) .. '/mason/bin/llm-ls',
+                cmd_env = { LLM_LOG_LEVEL = 'DEBUG' },
+            },
+        }
     },
 
     {

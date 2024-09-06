@@ -1,6 +1,24 @@
 local telescope = require('telescope')
 
-telescope.setup { defaults = { mappings = { i = { ['<C-u>'] = false, ['<C-d>'] = false } } } }
+telescope.setup({
+    defaults = {
+        mappings = {
+            i = {
+                ['<C-u>'] = false,
+                ['<C-d>'] = false
+            }
+        },
+    },
+    pickers = {
+        find_files = { hidden = true },
+        grep_string = {
+            additional_args = { "--hidden" }
+        },
+        live_grep = {
+            additional_args = { "--hidden" }
+        },
+    },
+})
 
 -- Enable telescope fzf native, if installed
 pcall(telescope.load_extension, 'fzf')
