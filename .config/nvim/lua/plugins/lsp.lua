@@ -3,32 +3,44 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Enable the following language servers
 local servers = {
-    'astro',
-    'bashls',
-    'cssls',
-    'cssmodules_ls',
-    'dockerls',
-    'html',
-    'jsonls',
-    'tailwindcss',
-    -- 'tsserver',
-    'vtsls',
-    'lua_ls',
-    'rust_analyzer',
-    'sqlls',
-    'svelte',
-    'taplo',
-    'volar',
-    'yamlls',
-    'stylelint_lsp',
-    'eslint',
-    'zls',
-    'hls',
+    astro = {},
+    bashls = {},
+    cssls = {},
+    cssmodules_ls = {},
+    dockerls = {},
+    html = {},
+    jsonls = {},
+    tailwindcss = {},
+    vtsls = {
+        settings = {
+            vtsls = { autoUseWorkspaceTsdk = true },
+            typescript = { tsserver = { maxTsServerMemory = 8092 } }
+        }
+    },
+    lua_ls = {},
+    rust_analyzer = {},
+    sqlls = {},
+    svelte = {},
+    taplo = {},
+    volar = {},
+    yamlls = {},
+    stylelint_lsp = {
+        commands = {
+            StylelintFixAll = {
+                function() stylelint_fix_all({ sync = true, bufnr = 0 }) end,
+                description = 'Fix all stylelint problems for this buffer'
+            }
+        }
+    },
+    eslint = {},
+    biome = {},
+    zls = {},
+    hls = {},
 }
 
 -- Ensure the servers above are installed
 require('mason').setup({ ui = { border = 'rounded' } })
-require('mason-lspconfig').setup({ ensure_installed = servers })
+require('mason-lspconfig').setup({ ensure_installed = vim.tbl_keys(servers) })
 
 -- This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
@@ -52,7 +64,7 @@ local on_attach = function(_, bufnr)
     nmap('gH', vim.lsp.buf.signature_help, 'Signature Documentation')
 end
 
-local function stylelint_fix_all(opts)
+function stylelint_fix_all(opts)
     local util = require('lspconfig.util')
     opts = opts or { sync = true, bufnr = 0 }
     local bufnr = util.validate_bufnr(opts.bufnr or 0)
@@ -86,27 +98,11 @@ vim.g.zig_fmt_autosave = false
 
 require('lspconfig.configs').vtsls = require('vtsls').lspconfig
 
-for _, lsp in ipairs(servers) do
-    local settings = {}
-    local commands = {}
-    if lsp == 'stylelint_lsp' then
-        commands.StylelintFixAll = {
-            function() stylelint_fix_all({ sync = true, bufnr = 0 }) end,
-            description = 'Fix all stylelint problems for this buffer'
-        }
-    end
-    if lsp == 'vtsls' then
-        settings = {
-            vtsls = { autoUseWorkspaceTsdk = true },
-            typescript = { tsserver = { maxTsServerMemory = 8092 } }
-        }
-    end
-    require('lspconfig')[lsp].setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
-        settings = settings,
-        commands = commands
-    })
+for server_name in pairs(servers) do
+    local server = servers[server_name] or {}
+    server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+    server.on_attach = on_attach
+    require('lspconfig')[server_name].setup(server)
 end
 
 -- Diagnostic keymaps

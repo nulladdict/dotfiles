@@ -7,17 +7,14 @@ vim.opt.mouse = 'a'
 vim.keymap.set('n', 'Q', '<nop>', opts)
 
 -- Unmap man entry
-vim.keymap.set('n', 'K', '<nop>', opts)
+vim.keymap.set({ 'n', 'v' }, 'K', '<nop>', opts)
 
 -- Conventional saving
 vim.keymap.set({ 'n', 'v' }, '<C-s>', ':w<cr>', opts)
 vim.keymap.set('i', '<C-s>', '<esc>:w<cr>', opts)
 
--- Auto indent pasted text
--- vim.keymap.set('n', 'p', 'p=`]', opts)
--- vim.keymap.set('n', 'P', 'P=`]', opts)
-
 vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', opts)
+vim.keymap.set({ 'n', 'v' }, '<leader>p', '"+p', opts)
 
 -- Moving lines around
 vim.keymap.set('n', '<C-j>', ':m .+1<CR>', opts)
