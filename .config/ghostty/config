@@ -4,6 +4,7 @@ font-size = 16
 theme = rose-pine
 background = 000000
 foreground = ffffff
+cursor-color = ffffff
 selection-invert-fg-bg = true
 
 macos-titlebar-style = hidden
