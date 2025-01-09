@@ -119,8 +119,6 @@ alias vim='nvim'
 alias envlocal='env $(grep -v "^#" .env.local | xargs)'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 compdef dotfiles='git'
-alias tm='tmux'
-compdef tm='tmux'
 
 # FZF settings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
