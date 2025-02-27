@@ -10,11 +10,11 @@ key-mapping.preset = 'qwerty'
 
 [gaps]
 inner.horizontal = 4
-inner.vertical =   4
-outer.left =       2
-outer.bottom =     2
-outer.top =        2
-outer.right =      2
+inner.vertical = 4
+outer.left = 2
+outer.bottom = 2
+outer.top = 2
+outer.right = 2
 
 [mode.main.binding]
 cmd-h = []
@@ -81,10 +81,6 @@ if.app-id = 'com.brave.Browser'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
-if.app-id = 'com.github.wez.wezterm'
-run = 'move-node-to-workspace 2'
-
-[[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
 run = 'move-node-to-workspace 2'
 
@@ -99,4 +95,3 @@ run = 'move-node-to-workspace 4'
 [[on-window-detected]]
 if.app-id = 'ru.keepcoder.Telegram'
 run = 'move-node-to-workspace 5'
-
