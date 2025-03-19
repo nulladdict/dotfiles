@@ -120,6 +120,8 @@ alias envlocal='env $(grep -v "^#" .env.local | xargs)'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 compdef dotfiles='git'
 
+alias tm='tmux attach || tmux new-session'
+
 # FZF settings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='rg --files'
