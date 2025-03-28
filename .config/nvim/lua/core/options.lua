@@ -14,6 +14,7 @@ vim.opt.splitright = true    -- Vertical split to the right
 vim.opt.splitbelow = true    -- Horizontal split to the bottom
 vim.opt.scrolloff = 8        -- Always show rows from edge of the screen
 vim.opt.cmdheight = 1        -- Height of the command bar
+vim.opt.winborder = 'rounded'
 
 -- Sidebar
 vim.opt.number = true      -- Show line number
@@ -30,11 +31,6 @@ vim.opt.incsearch = true  -- Starts searching as soon as typing, without enter n
 vim.opt.ignorecase = true -- Ignore case letters when search
 vim.opt.smartcase = true  -- Ignore lowercase for the whole pattern
 
--- Folds
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldenable = false
-
 -- Invisible characters
 vim.opt.list = true
 vim.opt.listchars = 'tab:│ ,trail:~,lead:·,multispace:·,nbsp:×'
@@ -44,15 +40,3 @@ vim.opt.backspace = 'indent,eol,start' -- backspace works on every char in inser
 vim.opt.backup = false
 vim.opt.writebackup = false
 vim.opt.undofile = true
-
--- Mapping waiting time
-vim.opt.timeout = false
-vim.opt.ttimeout = true
-vim.opt.ttimeoutlen = 250
-
--- Perfomance
-vim.opt.hidden = true    -- Enable background buffers
-vim.opt.history = 200    -- Remember lines in history
-vim.opt.lazyredraw = true
-vim.opt.synmaxcol = 250  -- Max column for syntax highlight
-vim.opt.updatetime = 250 -- ms to wait for trigger an event

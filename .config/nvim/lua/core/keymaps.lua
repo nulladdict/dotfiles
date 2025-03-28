@@ -10,8 +10,8 @@ vim.keymap.set('n', 'Q', '<nop>', opts)
 vim.keymap.set({ 'n', 'v' }, 'K', '<nop>', opts)
 
 -- Conventional saving
-vim.keymap.set({ 'n', 'v' }, '<C-s>', ':w<cr>', opts)
-vim.keymap.set('i', '<C-s>', '<esc>:w<cr>', opts)
+vim.keymap.set({ 'n', 'v' }, '<D-s>', ':w<cr>', opts)
+vim.keymap.set('i', '<D-s>', '<esc>:w<cr>', opts)
 
 vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', opts)
 vim.keymap.set({ 'n', 'v' }, '<leader>p', '"+p', opts)
@@ -29,7 +29,6 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<cr>')
 
 -- Spell checking
 if not vim.g.vscode then
-    -- vim.keymap.set('n', '<leader>ss', ':setlocal spell!<cr>', opts)
     vim.opt.spell = true
     vim.opt.spelllang = 'ru_yo,en_us,en_gb'
     vim.opt.spelloptions = 'camel'
@@ -39,11 +38,6 @@ end
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', opts)
 vim.api.nvim_create_autocmd('TermOpen', { pattern = '*', command = 'startinsert' })
 vim.api.nvim_create_autocmd('TermOpen', { pattern = '*', command = 'setlocal spell!' })
-
--- Tab management
-vim.keymap.set('n', '<leader>tt', ':tabnew<cr>', opts)
-vim.keymap.set('n', '<leader>te', ':tabedit %<cr>', opts)
-vim.keymap.set('n', '<leader>tw', ':tabclose<cr>', opts)
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight when yanking (copying) text',

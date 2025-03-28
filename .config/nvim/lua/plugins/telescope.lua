@@ -38,5 +38,16 @@ vim.keymap.set('n', '<leader>st', builtin.git_status, { desc = '[S]earch git s[T
 vim.keymap.set('n', '<leader>sh', builtin.oldfiles, { desc = '[S]earch recent [H]istory' })
 vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
 
-vim.keymap.set('n', '[q', ':cprevious<CR>', { desc = 'Go to previous quickfix item', silent = true })
-vim.keymap.set('n', ']q', ':cnext<CR>', { desc = 'Go to next quickfix item', silent = true })
+-- https://github.com/nvim-telescope/telescope.nvim/issues/3436
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'TelescopeFindPre',
+    callback = function()
+        vim.opt_local.winborder = 'none'
+        vim.api.nvim_create_autocmd('WinLeave', {
+            once = true,
+            callback = function()
+                vim.opt_local.winborder = 'rounded'
+            end,
+        })
+    end,
+})
