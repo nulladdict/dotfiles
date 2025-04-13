@@ -27,7 +27,6 @@ else
     require('core/keymaps')
     require('core/options')
     -- Plugin settings
-    -- require('plugins/cmp')
     require('plugins/conform')
     require('plugins/gitsings')
     require('plugins/lsp')

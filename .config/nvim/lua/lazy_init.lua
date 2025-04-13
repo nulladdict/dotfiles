@@ -35,13 +35,7 @@ require('lazy').setup({
     },
 
     'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
     'neovim/nvim-lspconfig',
-    'yioneko/nvim-vtsls',
-    {
-        'folke/lazydev.nvim',
-        opts = {}
-    },
     'stevearc/conform.nvim',
     {
         'folke/trouble.nvim',
@@ -65,6 +59,7 @@ require('lazy').setup({
                 completion = {
                     documentation = { auto_show = true },
                     accept = { auto_brackets = { enabled = false } },
+                    menu = { max_height = 16 },
                 },
                 sources = { default = { 'lsp', 'snippets', 'path', 'buffer' } },
             })
@@ -94,7 +89,7 @@ require('lazy').setup({
     },
     {
         'supermaven-inc/supermaven-nvim',
-        enabled = true,
+        -- enabled = false,
         config = function()
             require('supermaven-nvim').setup({
                 keymaps = {

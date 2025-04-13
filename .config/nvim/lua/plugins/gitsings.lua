@@ -15,7 +15,7 @@ require('gitsigns').setup({
             else
                 gitsigns.nav_hunk('next', { target = 'all' })
             end
-        end, { buffer = bufnr, expr = true })
+        end, { buffer = bufnr })
 
         vim.keymap.set('n', '[c', function()
             if vim.wo.diff then
@@ -23,6 +23,6 @@ require('gitsigns').setup({
             else
                 gitsigns.nav_hunk('prev', { target = 'all' })
             end
-        end, { buffer = bufnr, expr = true })
+        end, { buffer = bufnr })
     end
 })
