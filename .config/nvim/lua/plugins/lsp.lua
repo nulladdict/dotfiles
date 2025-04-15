@@ -78,16 +78,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.keymap.set({ 'n', 'v' }, keys, func, { buffer = event.buf, desc = desc })
         end
 
-        local telescope = require('telescope.builtin')
+        local snacks = require('snacks')
 
         nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
         nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-        nmap('gd', telescope.lsp_definitions, '[G]oto [D]efinition')
-        nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-        nmap('gy', telescope.lsp_type_definitions, 'Type [D]efinition')
-        nmap('gi', telescope.lsp_implementations, '[G]oto [I]mplementation')
-        nmap('gr', telescope.lsp_references)
+        nmap('gd', snacks.picker.lsp_definitions, '[G]oto [D]efinition')
+        nmap('gD', snacks.picker.lsp_declarations, '[G]oto [D]eclaration')
+        nmap('gy', snacks.picker.lsp_type_definitions, 'Type [D]efinition')
+        nmap('gi', snacks.picker.lsp_implementations, '[G]oto [I]mplementation')
+        nmap('gr', snacks.picker.lsp_references, '[G]oto [R]eferences')
 
         nmap('gh', vim.lsp.buf.hover, 'Hover Documentation')
         nmap('gH', vim.lsp.buf.signature_help, 'Signature Documentation')

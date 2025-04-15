@@ -6,12 +6,15 @@ require('lazy').setup({
 })
 
 local nmap = function(keys, action)
-    local func = function()
-        vscode.with_insert(function()
+    vim.keymap.set({ 'n', 'v' }, keys, function()
+        if vim.fn.mode() == 'n' then
             vscode.action(action)
-        end)
-    end
-    vim.keymap.set({ 'n', 'v' }, keys, func)
+        else
+            vscode.with_insert(function()
+                vscode.action(action)
+            end)
+        end
+    end)
 end
 
 nmap('==', 'editor.action.format')
@@ -24,7 +27,6 @@ nmap('gD', 'editor.action.revealDeclaration')
 nmap('gy', 'editor.action.goToTypeDefinition')
 nmap('gi', 'editor.action.goToImplementation')
 nmap('gr', 'editor.action.goToReferences')
--- editor.action.referenceSearch.trigger
 
 nmap('gh', 'editor.action.showHover')
 

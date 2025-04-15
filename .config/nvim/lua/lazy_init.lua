@@ -68,9 +68,9 @@ require('lazy').setup({
 
     {
         'github/copilot.vim',
-        enabled = false,
         config = function()
-            vim.g.copilot_no_mappings = true
+            vim.g.copilot_settings = { selectedCompletionModel = 'gpt-4o-copilot' }
+
             local function set_all(keymaps, rhs)
                 for _, lhs in ipairs(keymaps) do
                     vim.keymap.set('i', lhs, rhs, { expr = true, replace_keycodes = false })
@@ -87,45 +87,30 @@ require('lazy').setup({
             vim.g.copilot_workspace_folders = { vim.fn.getcwd() }
         end
     },
-    {
-        'supermaven-inc/supermaven-nvim',
-        -- enabled = false,
-        config = function()
-            require('supermaven-nvim').setup({
-                keymaps = {
-                    accept_suggestion = '<Tab>',
-                    accept_word = '<D-k>',
-                },
-                condition = function()
-                    local expaded = vim.fn.expand('%:t')
-                    return string.match(expaded, '.env') or string.match(expaded, '.env.local')
-                end,
-            })
-            vim.keymap.set(
-                'i',
-                '<D-j>',
-                function() require('supermaven-nvim.completion_preview').on_accept_suggestion() end,
-                { noremap = true, silent = true }
-            )
-        end,
-    },
 
-    {
-        'nvim-telescope/telescope.nvim',
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            {
-                'nvim-telescope/telescope-fzf-native.nvim',
-                build = 'make',
-                cond = vim.fn.executable('make') == 1
-            }
-        }
-    },
     'stevearc/oil.nvim',
     {
-        'stevearc/dressing.nvim',
-        opts = {},
-    }
+        'folke/snacks.nvim',
+        opts = {
+            styles = {
+                input = {
+                    relative = 'cursor',
+                }
+            },
+            input = {},
+            picker = {
+                ui_select = true,
+            }
+        },
+        keys = {
+            { '<leader><space>', function() Snacks.picker.smart() end,                  desc = 'Smart Find Files' },
+            { '<leader>sf',      function() Snacks.picker.files({ hidden = true }) end, desc = 'Find Files' },
+            { '<leader>sg',      function() Snacks.picker.grep({ hidden = true }) end,  desc = 'Grep' },
+            { '<leader>sh',      function() Snacks.picker.recent() end,                 desc = 'Recent' },
+            { '<leader>sr',      function() Snacks.picker.resume() end,                 desc = 'Resume' },
+            { '<leader>st',      function() Snacks.picker.git_status() end,             desc = 'Git Status' },
+        },
+    },
 }, {
     ui = {
         border = 'rounded',
