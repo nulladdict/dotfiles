@@ -10,7 +10,7 @@ vim.keymap.set('n', 'Q', '<nop>', opts)
 vim.keymap.set({ 'n', 'v' }, 'K', '<nop>', opts)
 
 -- Conventional saving
-vim.keymap.set({ 'n', 'v' }, '<D-s>', ':w<cr>', opts)
+vim.keymap.set('n', '<D-s>', ':w<cr>', opts)
 vim.keymap.set('i', '<D-s>', '<esc>:w<cr>', opts)
 
 vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', opts)

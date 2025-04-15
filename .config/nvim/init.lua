@@ -1,13 +1,16 @@
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        'git',
-        'clone',
-        '--filter=blob:none',
-        'https://github.com/folke/lazy.nvim.git',
-        '--branch=stable', -- latest stable release
-        lazypath
-    })
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+    local out = vim.fn.system({ 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath })
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
+            { out,                            'WarningMsg' },
+            { '\nPress any key to exit...' },
+        }, true, {})
+        vim.fn.getchar()
+        os.exit(1)
+    end
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -16,21 +19,43 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>', { noremap = true, silent = true })
 
+require('core/keymaps')
+require('core/options')
+
 if vim.g.vscode then
-    require('vscode_init')
-    require('core/keymaps')
-    require('core/options')
+    local vscode = require('vscode-neovim')
+    vim.notify = vscode.notify
+
+    require('lazy').setup({
+        spec = { 'ybian/smartim' }
+    })
+
+    local vscode_map = function(keys, action)
+        vim.keymap.set('n', keys, function() vscode.action(action) end)
+    end
+
+    vscode_map('==', 'editor.action.format')
+
+    vscode_map('<leader>rn', 'editor.action.rename')
+    vscode_map('<leader>ca', 'editor.action.quickFix')
+
+    vscode_map('gd', 'editor.action.revealDefinition')
+    vscode_map('gD', 'editor.action.revealDeclaration')
+    vscode_map('gy', 'editor.action.goToTypeDefinition')
+    vscode_map('gi', 'editor.action.goToImplementation')
+    vscode_map('gr', 'editor.action.goToReferences')
+
+    vscode_map('gh', 'editor.action.showHover')
+
+    vscode_map('<leader>sf', 'workbench.action.quickOpen')
+    vscode_map('<leader>sg', 'workbench.action.findInFiles')
 else
-    require('lazy_init')
-    -- Core settings and functionality
-    require('core/colors')
-    require('core/keymaps')
-    require('core/options')
-    -- Plugin settings
-    require('plugins/conform')
-    require('plugins/gitsings')
-    require('plugins/lsp')
-    require('plugins/lualine')
-    require('plugins/oil')
-    require('plugins/treesitter')
+    require('lazy').setup({
+        spec = {
+            { import = 'plugins' },
+        },
+        ui = {
+            border = 'rounded',
+        }
+    })
 end
