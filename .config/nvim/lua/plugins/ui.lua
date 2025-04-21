@@ -104,10 +104,10 @@ return {
             })
 
             vim.api.nvim_create_autocmd({ 'VimEnter' }, {
-                pattern = 'oil:///*',
+                pattern = '*',
                 callback = function()
                     if vim.bo.filetype == 'oil' then
-                        vim.cmd.lcd(require('oil').get_current_dir())
+                        vim.cmd.cd(require('oil').get_current_dir())
                     end
                 end
             })
