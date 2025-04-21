@@ -16,8 +16,15 @@ return {
     {
         'neovim/nvim-lspconfig',
         dependencies = {
-            { 'williamboman/mason.nvim', opts = {} },
-            { 'j-hui/fidget.nvim',       opts = {} },
+            {
+                'williamboman/mason.nvim',
+                opts = {
+                    ui = {
+                        border = "rounded",
+                    },
+                },
+            },
+            { 'j-hui/fidget.nvim', opts = {} },
         },
         config = function()
             vim.lsp.config('lua_ls', {
@@ -81,8 +88,11 @@ return {
             -- Keymaps
             vim.api.nvim_create_autocmd('LspAttach', {
                 callback = function(event)
-                    local snacks = require('snacks')
+                    if vim.bo[event.buf].filetype == 'copilot-chat' then
+                        return
+                    end
 
+                    local snacks = require('snacks')
                     local lsp_map = function(keys, action, desc)
                         vim.keymap.set('n', keys, action, { buffer = event.buf, desc = desc })
                     end

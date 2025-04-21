@@ -26,6 +26,7 @@ return {
         config = function()
             vim.g.copilot_settings = { selectedCompletionModel = 'gpt-4o-copilot' }
             vim.g.copilot_workspace_folders = { vim.fn.getcwd() }
+            vim.g.copilot_filetypes = { ['copilot-chat'] = false }
 
             vim.keymap.set('i', '<D-j>', 'copilot#Accept("")', { expr = true, replace_keycodes = false })
             vim.keymap.set('i', '<D-о>', 'copilot#Accept("")', { expr = true, replace_keycodes = false })
@@ -37,4 +38,45 @@ return {
         end
     },
 
+    {
+        'CopilotC-Nvim/CopilotChat.nvim',
+        dependencies = {
+            { 'nvim-lua/plenary.nvim' },
+            {
+                'MeanderingProgrammer/render-markdown.nvim',
+                opts = {
+                    file_types = { 'copilot-chat' },
+                },
+                ft = { 'copilot-chat' },
+            },
+        },
+        build = 'make tiktoken',
+        opts = {
+            model = 'claude-3.7-sonnet',
+            agent = 'copilot',
+            providers = {
+                github_models = {
+                    disabled = true,
+                },
+            },
+            window = {
+                layout = 'vertical',
+                width = 0.4,
+            }
+        },
+        config = function(_, opts)
+            local chat = require('CopilotChat')
+            chat.setup(opts)
+            local select = require('CopilotChat.select')
+
+            vim.keymap.set('n', '<D-k>', function() chat.open() end)
+            vim.keymap.set('v', '<D-i>', function()
+                vim.ui.input({ prompt = 'Ask Copilot' }, function(input)
+                    if input ~= '' then
+                        chat.ask(input, { selection = select.visual })
+                    end
+                end)
+            end)
+        end
+    },
 }
