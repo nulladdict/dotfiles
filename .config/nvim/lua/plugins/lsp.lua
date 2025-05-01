@@ -20,7 +20,7 @@ return {
                 'williamboman/mason.nvim',
                 opts = {
                     ui = {
-                        border = "rounded",
+                        border = 'rounded',
                     },
                 },
             },
@@ -69,7 +69,7 @@ return {
                 'cssls',
                 'cssmodules_ls',
                 'dockerls',
-                'eslint',
+                -- 'eslint',
                 'gopls',
                 'html',
                 'jsonls',

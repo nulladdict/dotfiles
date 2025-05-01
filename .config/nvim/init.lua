@@ -56,6 +56,7 @@ else
         },
         ui = {
             border = 'rounded',
-        }
+        },
+        install = { colorscheme = { 'rose-pine' } },
     })
 end

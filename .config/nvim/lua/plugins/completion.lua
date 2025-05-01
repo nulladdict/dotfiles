@@ -42,13 +42,6 @@ return {
         'CopilotC-Nvim/CopilotChat.nvim',
         dependencies = {
             { 'nvim-lua/plenary.nvim' },
-            {
-                'MeanderingProgrammer/render-markdown.nvim',
-                opts = {
-                    file_types = { 'copilot-chat' },
-                },
-                ft = { 'copilot-chat' },
-            },
         },
         build = 'make tiktoken',
         opts = {
@@ -77,6 +70,13 @@ return {
                     end
                 end)
             end)
+
+            vim.api.nvim_create_autocmd('BufEnter', {
+                pattern = 'copilot-*',
+                callback = function()
+                    vim.opt_local.conceallevel = 0
+                end
+            })
         end
     },
 }
