@@ -123,7 +123,10 @@ compdef dotfiles='git'
 alias tm='tmux attach || tmux new-session'
 
 # FZF settings
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ -n "${commands[fzf-share]}" ]; then
+  source "$(fzf-share)/key-bindings.zsh"
+  source "$(fzf-share)/completion.zsh"
+fi
 export FZF_DEFAULT_COMMAND='rg --files'
 
 # GPG agent settings
@@ -147,3 +150,4 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # haskell
 [ -f "/Users/nulladdict/.ghcup/env" ] && source "/Users/nulladdict/.ghcup/env" # ghcup-env
+
