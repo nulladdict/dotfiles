@@ -6,6 +6,7 @@ enable-normalization-opposite-orientation-for-nested-containers = true
 default-root-container-layout = 'tiles'
 default-root-container-orientation = 'auto'
 
+automatically-unhide-macos-hidden-apps = false
 key-mapping.preset = 'qwerty'
 
 [gaps]
@@ -17,8 +18,6 @@ outer.top = 2
 outer.right = 2
 
 [mode.main.binding]
-cmd-h = []
-
 alt-h = 'focus left'
 alt-j = 'focus down'
 alt-k = 'focus up'
@@ -51,11 +50,21 @@ alt-shift-7 = ['move-node-to-workspace 7', 'workspace 7']
 alt-shift-8 = ['move-node-to-workspace 8', 'workspace 8']
 alt-shift-9 = ['move-node-to-workspace 9', 'workspace 9']
 
-alt-tab = 'workspace --wrap-around next'
-alt-shift-tab = 'workspace-back-and-forth'
-
 alt-f = 'fullscreen'
-alt-shift-f = 'layout floating tiling'
+alt-w = 'mode window'
+
+[mode.window.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']
+f = ['layout floating tiling', 'mode main']
+t = ['layout horizontal vertical', 'mode main']
+backspace = ['close-all-windows-but-current', 'mode main']
+
+h = ['join-with left', 'mode main']
+j = ['join-with down', 'mode main']
+k = ['join-with up', 'mode main']
+l = ['join-with right', 'mode main']
+
 
 [[on-window-detected]]
 if.app-id = 'com.brave.Browser'
@@ -63,6 +72,14 @@ run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'dev.zed.Zed'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.VSCode'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
