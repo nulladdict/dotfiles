@@ -1,5 +1,6 @@
-font-family = Iosevka Extended
+font-family = Iosevka Term
 font-size = 16
+font-feature = -calt, -liga, -dlig
 
 theme = rose-pine
 background = 000000
