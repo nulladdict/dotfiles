@@ -7,81 +7,99 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs }:
-  let
-    configuration = { pkgs, ... }: {
-      # Using Determinate Nix
-      nix.enable = false;
+  outputs =
+    inputs@{
+      self,
+      nix-darwin,
+      nixpkgs,
+    }:
+    let
+      configuration =
+        { pkgs, ... }:
+        {
+          # Using Determinate Nix
+          nix.enable = false;
 
-      nixpkgs.config.allowUnfree = true;
+          nixpkgs.config.allowUnfree = true;
 
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
-      environment.systemPackages = with pkgs; [
-        git
-        git-lfs
-        lazygit
-        gh
+          # List packages installed in system profile. To search by name, run:
+          # $ nix-env -qaP | grep wget
+          environment.systemPackages = with pkgs; [
+            nixfmt-rfc-style
 
-        neovim
-        vscode
+            git
+            git-lfs
+            lazygit
+            gh
 
-        fzf
-        ripgrep
-        fd
-        jq
-        tmux
-        curl
-        htop
+            neovim
+            vscode
 
-        nodejs_latest
-        yarn
-      ];
+            fzf
+            ripgrep
+            fd
+            jq
+            tmux
+            curl
+            htop
 
-      homebrew = {
-        enable = true;
-        taps = [
-          "daipeihust/tap"
-          "nikitabobko/tap"
-        ];
-        brews = [
-          "im-select"
-        ];
-        casks = [
-          "brave-browser"
-          "betterdisplay"
-          "aerospace"
-          "ghostty"
-          "telegram"
-          "mattermost"
-          "figma"
-        ];
-        onActivation.cleanup = "zap";
-        onActivation.autoUpdate = true;
-        onActivation.upgrade = true;
+            nodejs_latest
+            yarn
+          ];
+
+          homebrew = {
+            enable = true;
+            taps = [
+              "daipeihust/tap"
+              "nikitabobko/tap"
+            ];
+            brews = [
+              "im-select"
+            ];
+            casks = [
+              "brave-browser"
+              "betterdisplay"
+              "aerospace"
+              "ghostty"
+              "telegram"
+              "mattermost"
+              "figma"
+            ];
+            onActivation.cleanup = "zap";
+            onActivation.autoUpdate = true;
+            onActivation.upgrade = true;
+          };
+
+          # Necessary for using flakes on this system.
+          nix.settings.experimental-features = "nix-command flakes";
+
+          # Set Git commit hash for darwin-version.
+          system.configurationRevision = self.rev or self.dirtyRev or null;
+
+          # Used for backwards compatibility, please read the changelog before changing.
+          # $ darwin-rebuild changelog
+          system.stateVersion = 6;
+
+          system.primaryUser = "nulladdict";
+          system.defaults = {
+            dock.autohide = true;
+            dock.show-recents = false;
+            dock.persistent-apps = [
+              "/Applications/Brave Browser.app"
+              "/System/Applications/Mail.app"
+              "/Applications/Telegram.app"
+            ];
+          };
+
+          # The platform the configuration will be used on.
+          nixpkgs.hostPlatform = "aarch64-darwin";
+        };
+    in
+    {
+      # Build darwin flake using:
+      # $ darwin-rebuild build --flake .#mini
+      darwinConfigurations."mini" = nix-darwin.lib.darwinSystem {
+        modules = [ configuration ];
       };
-
-      # Necessary for using flakes on this system.
-      nix.settings.experimental-features = "nix-command flakes";
-
-      # Set Git commit hash for darwin-version.
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-
-      # Used for backwards compatibility, please read the changelog before changing.
-      # $ darwin-rebuild changelog
-      system.stateVersion = 6;
-
-      system.primaryUser = "nulladdict";
-
-      # The platform the configuration will be used on.
-      nixpkgs.hostPlatform = "aarch64-darwin";
     };
-  in
-  {
-    # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#mini
-    darwinConfigurations."mini" = nix-darwin.lib.darwinSystem {
-      modules = [ configuration ];
-    };
-  };
 }
