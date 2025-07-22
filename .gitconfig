@@ -1,12 +1,16 @@
 [user]
     name = nulladdict
     email = nulladdicted@gmail.com
-    signingkey = B1908F5BE475E93C
+    signingkey = ~/.ssh/nulladdicted.pub
 [core]
     editor = nvim
     autocrlf = input
     quotepath = off
-    excludesfile = /Users/nulladdict/.gitignore_global
+    excludesfile = ~/.gitignore_global
+[gpg]
+    format = ssh
+[gpg "ssh"]
+    allowedSignersFile = ~/.ssh/allowed_signers
 [merge]
     tool = nvimdiff
     conflictstyle = diff3
