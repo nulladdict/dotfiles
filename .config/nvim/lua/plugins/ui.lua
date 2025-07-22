@@ -8,7 +8,7 @@ return {
             require('rose-pine').setup({
                 styles = { italic = false, transparency = true },
                 before_highlight = function(group, highlight)
-                    local no_bg = { 'MatchParen', "@comment.todo", "@comment.hint", "@comment.info", "@comment.note" }
+                    local no_bg = { 'MatchParen', '@comment.todo', '@comment.hint', '@comment.info', '@comment.note' }
                     if vim.tbl_contains(no_bg, group) then
                         highlight.bg = nil
                         highlight.blend = nil
@@ -18,7 +18,7 @@ return {
             vim.api.nvim_create_autocmd('ColorScheme', { pattern = '*', command = 'hi! link Sneak Search' })
             vim.opt.background = 'dark'
             vim.cmd('colorscheme rose-pine')
-        end
+        end,
     },
 
     {
@@ -28,14 +28,14 @@ return {
                 icons_enabled = false,
                 theme = 'rose-pine',
                 component_separators = '|',
-                section_separators = ''
+                section_separators = '',
             },
             sections = {
                 lualine_c = {
-                    { 'filename', path = 1 }
-                }
-            }
-        }
+                    { 'filename', path = 1 },
+                },
+            },
+        },
     },
 
     {
@@ -47,7 +47,7 @@ return {
                 change = { text = '~' },
                 delete = { text = '_' },
                 topdelete = { text = '‾' },
-                changedelete = { text = '~' }
+                changedelete = { text = '~' },
             },
             on_attach = function(bufnr)
                 local gitsigns = require('gitsigns')
@@ -67,8 +67,8 @@ return {
                         gitsigns.nav_hunk('prev', { target = 'all' })
                     end
                 end, { buffer = bufnr })
-            end
-        }
+            end,
+        },
     },
 
     {
@@ -94,13 +94,15 @@ return {
                     ['gs'] = 'actions.change_sort',
                     ['gx'] = 'actions.open_external',
                     ['g.'] = 'actions.toggle_hidden',
-                    ['g\\'] = 'actions.toggle_trash'
+                    ['g\\'] = 'actions.toggle_trash',
                 },
                 use_default_keymaps = false,
                 view_options = {
                     show_hidden = true,
-                    is_always_hidden = function(name) return name == '.DS_Store' end
-                }
+                    is_always_hidden = function(name)
+                        return name == '.DS_Store'
+                    end,
+                },
             })
 
             vim.api.nvim_create_autocmd({ 'VimEnter' }, {
@@ -109,7 +111,7 @@ return {
                     if vim.bo.filetype == 'oil' then
                         vim.cmd.cd(require('oil').get_current_dir())
                     end
-                end
+                end,
             })
 
             vim.keymap.set('n', '<leader>bb', function()
@@ -120,7 +122,7 @@ return {
                     oil.open()
                 end
             end, { desc = 'Toggle [B]rowse' })
-        end
+        end,
     },
 
     {
@@ -131,20 +133,62 @@ return {
             styles = {
                 input = {
                     relative = 'cursor',
-                }
+                },
             },
             input = {},
             picker = { ui_select = true },
             notifier = {},
         },
         keys = {
-            { '<leader><space>', function() require('snacks').picker.smart() end,                  desc = 'Smart Find Files' },
-            { '<leader>sf',      function() require('snacks').picker.files({ hidden = true }) end, desc = 'Find Files' },
-            { '<leader>sg',      function() require('snacks').picker.grep({ hidden = true }) end,  desc = 'Grep' },
-            { '<leader>sh',      function() require('snacks').picker.recent() end,                 desc = 'Recent' },
-            { '<leader>sr',      function() require('snacks').picker.resume() end,                 desc = 'Resume' },
-            { '<leader>st',      function() require('snacks').picker.git_status() end,             desc = 'Git Status' },
-            { '<leader>sn',      function() require('snacks').picker.notifications() end,          desc = 'Notification History' },
+            {
+                '<leader><space>',
+                function()
+                    require('snacks').picker.smart()
+                end,
+                desc = 'Smart Find Files',
+            },
+            {
+                '<leader>sf',
+                function()
+                    require('snacks').picker.files({ hidden = true })
+                end,
+                desc = 'Find Files',
+            },
+            {
+                '<leader>sg',
+                function()
+                    require('snacks').picker.grep({ hidden = true })
+                end,
+                desc = 'Grep',
+            },
+            {
+                '<leader>sh',
+                function()
+                    require('snacks').picker.recent()
+                end,
+                desc = 'Recent',
+            },
+            {
+                '<leader>sr',
+                function()
+                    require('snacks').picker.resume()
+                end,
+                desc = 'Resume',
+            },
+            {
+                '<leader>st',
+                function()
+                    require('snacks').picker.git_status()
+                end,
+                desc = 'Git Status',
+            },
+            {
+                '<leader>sn',
+                function()
+                    require('snacks').picker.notifications()
+                end,
+                desc = 'Notification History',
+            },
         },
-    }
+    },
 }

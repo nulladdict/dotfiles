@@ -33,9 +33,11 @@ return {
 
             vim.api.nvim_create_autocmd('BufEnter', {
                 pattern = { '*.env', '*.env.*' },
-                callback = function() vim.b.copilot_enabled = false end
+                callback = function()
+                    vim.b.copilot_enabled = false
+                end,
             })
-        end
+        end,
     },
 
     {
@@ -55,7 +57,7 @@ return {
             window = {
                 layout = 'vertical',
                 width = 0.4,
-            }
+            },
         },
         config = function(_, opts)
             local chat = require('CopilotChat')
@@ -72,11 +74,11 @@ return {
                     if input ~= '' then
                         chat.ask(input, {
                             context = 'buffer',
-                            selection = select.visual
+                            selection = select.visual,
                         })
                     end
                 end)
             end)
-        end
+        end,
     },
 }

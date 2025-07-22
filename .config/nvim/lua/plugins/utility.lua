@@ -8,7 +8,7 @@ return {
 
     {
         'tpope/vim-surround',
-        dependencies = { 'tpope/vim-repeat' }
+        dependencies = { 'tpope/vim-repeat' },
     },
 
     {
@@ -16,6 +16,6 @@ return {
         config = function()
             vim.g.undotree_SetFocusWhenToggle = 1
             vim.g.undotree_SplitWidth = 40
-        end
-    }
+        end,
+    },
 }

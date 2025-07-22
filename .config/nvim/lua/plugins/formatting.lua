@@ -21,7 +21,6 @@ return {
                     lua = { 'stylua' },
                     rust = { 'rustfmt' },
                     zig = { 'zigfmt' },
-                    haskell = { 'fourmolu' },
                     yaml = { 'prettier' },
                     sql = { 'sql_formatter' },
                     go = { 'gofmt' },
@@ -46,6 +45,6 @@ return {
             vim.api.nvim_create_user_command('Stylelint', function()
                 conform.format({ async = true, formatters = { 'stylelint' } })
             end, { nargs = 0 })
-        end
-    }
+        end,
+    },
 }

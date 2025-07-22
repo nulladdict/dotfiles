@@ -16,14 +16,14 @@ return {
                     additional_vim_regex_highlighting = false,
                 },
                 indent = { enable = true },
-                incremental_selection = { enable = false }
+                incremental_selection = { enable = false },
             })
-        end
+        end,
     },
 
     {
         'windwp/nvim-ts-autotag',
-        opts = {}
+        opts = {},
     },
 
     {
@@ -31,6 +31,6 @@ return {
         opts = {
             n_lines = 500,
             silent = true,
-        }
+        },
     },
 }

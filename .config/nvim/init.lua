@@ -5,7 +5,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     if vim.v.shell_error ~= 0 then
         vim.api.nvim_echo({
             { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
-            { out,                            'WarningMsg' },
+            { out, 'WarningMsg' },
             { '\nPress any key to exit...' },
         }, true, {})
         vim.fn.getchar()
@@ -34,13 +34,15 @@ if vim.g.vscode then
                 opts = {
                     n_lines = 500,
                     silent = true,
-                }
+                },
             },
-        }
+        },
     })
 
     local vscode_map = function(keys, action)
-        vim.keymap.set('n', keys, function() vscode.action(action) end)
+        vim.keymap.set('n', keys, function()
+            vscode.action(action)
+        end)
     end
 
     vscode_map('==', 'editor.action.format')
