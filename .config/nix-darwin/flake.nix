@@ -86,6 +86,7 @@
             dock.show-recents = false;
             dock.persistent-apps = [
               "/Applications/Brave Browser.app"
+              "/Applications/Ghostty.app"
               "/System/Applications/Mail.app"
               "/Applications/Telegram.app"
             ];
