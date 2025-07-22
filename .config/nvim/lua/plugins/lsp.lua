@@ -49,6 +49,7 @@ return {
 
                         'stylua',
                         'sql-formatter',
+                        -- 'nixfmt', managed by nix
                     },
                 },
             },

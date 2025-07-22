@@ -24,6 +24,7 @@ return {
                     yaml = { 'prettier' },
                     sql = { 'sql_formatter' },
                     go = { 'gofmt' },
+                    nix = { 'nixfmt' },
                 },
             })
 
