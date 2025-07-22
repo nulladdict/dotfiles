@@ -3,12 +3,14 @@
 -- "gra" is mapped in Normal and Visual mode to vim.lsp.buf.code_action()
 -- "grr" is mapped in Normal mode to vim.lsp.buf.references()
 -- "gri" is mapped in Normal mode to vim.lsp.buf.implementation()
+-- "grt" is mapped in Normal mode to vim.lsp.buf.type_definition()
 -- "gO" is mapped in Normal mode to vim.lsp.buf.document_symbol()
 -- CTRL-S is mapped in Insert mode to vim.lsp.buf.signature_help()
 vim.keymap.del('n', 'grn')
 vim.keymap.del({ 'n', 'v' }, 'gra')
 vim.keymap.del('n', 'grr')
 vim.keymap.del('n', 'gri')
+vim.keymap.del('n', 'grt')
 vim.keymap.del('n', 'gO')
 vim.keymap.del('i', '<C-S>')
 
@@ -17,7 +19,7 @@ return {
         'neovim/nvim-lspconfig',
         dependencies = {
             {
-                'williamboman/mason.nvim',
+                'mason-org/mason.nvim',
                 opts = {
                     ui = {
                         border = 'rounded',

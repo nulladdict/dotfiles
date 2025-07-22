@@ -27,7 +27,16 @@ if vim.g.vscode then
     vim.notify = vscode.notify
 
     require('lazy').setup({
-        spec = { 'ybian/smartim' }
+        spec = {
+            'ybian/smartim',
+            {
+                'echasnovski/mini.ai',
+                opts = {
+                    n_lines = 500,
+                    silent = true,
+                }
+            },
+        }
     })
 
     local vscode_map = function(keys, action)
@@ -49,6 +58,9 @@ if vim.g.vscode then
 
     vscode_map('<leader>sf', 'workbench.action.quickOpen')
     vscode_map('<leader>sg', 'workbench.action.findInFiles')
+
+    vscode_map(']d', 'editor.action.marker.next')
+    vscode_map('[d', 'editor.action.marker.prev')
 else
     require('lazy').setup({
         spec = {

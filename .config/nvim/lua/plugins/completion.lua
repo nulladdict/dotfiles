@@ -45,7 +45,7 @@ return {
         },
         build = 'make tiktoken',
         opts = {
-            model = 'claude-3.7-sonnet',
+            model = 'claude-sonnet-4',
             agent = 'copilot',
             providers = {
                 github_models = {
@@ -62,21 +62,21 @@ return {
             chat.setup(opts)
             local select = require('CopilotChat.select')
 
-            vim.keymap.set('n', '<D-k>', function() chat.open() end)
+            vim.keymap.set('n', '<D-k>', function()
+                chat.open({
+                    context = 'buffers',
+                })
+            end)
             vim.keymap.set('v', '<D-i>', function()
                 vim.ui.input({ prompt = 'Ask Copilot' }, function(input)
                     if input ~= '' then
-                        chat.ask(input, { selection = select.visual })
+                        chat.ask(input, {
+                            context = 'buffer',
+                            selection = select.visual
+                        })
                     end
                 end)
             end)
-
-            vim.api.nvim_create_autocmd('BufEnter', {
-                pattern = 'copilot-*',
-                callback = function()
-                    vim.opt_local.conceallevel = 0
-                end
-            })
         end
     },
 }

@@ -25,7 +25,7 @@ return {
                     yaml = { 'prettier' },
                     sql = { 'sql_formatter' },
                     go = { 'gofmt' },
-                }
+                },
             })
 
             vim.keymap.set({ 'n', 'v' }, '==', function()
