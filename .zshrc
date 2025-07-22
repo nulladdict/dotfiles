@@ -145,9 +145,3 @@ export PATH="$ZIG_INSTALL:$PATH"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# bun completions
-[ -s "/usr/local/Cellar/bun/0.5.6/share/zsh/site-functions/_bun" ] && source "/usr/local/Cellar/bun/0.5.6/share/zsh/site-functions/_bun"
-
-# haskell
-[ -f "/Users/nulladdict/.ghcup/env" ] && source "/Users/nulladdict/.ghcup/env" # ghcup-env
-
