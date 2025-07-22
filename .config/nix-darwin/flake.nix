@@ -56,6 +56,9 @@
           "mattermost"
           "figma"
         ];
+        onActivation.cleanup = "zap";
+        onActivation.autoUpdate = true;
+        onActivation.upgrade = true;
       };
 
       # Necessary for using flakes on this system.
