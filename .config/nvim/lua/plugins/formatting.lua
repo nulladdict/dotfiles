@@ -19,11 +19,8 @@ return {
                     markdown = { 'prettier' },
                     astro = { 'prettier' },
                     lua = { 'stylua' },
-                    rust = { 'rustfmt' },
-                    zig = { 'zigfmt' },
                     yaml = { 'prettier' },
                     sql = { 'sql_formatter' },
-                    go = { 'gofmt' },
                     nix = { 'nixfmt' },
                 },
             })

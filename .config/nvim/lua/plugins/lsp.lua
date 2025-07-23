@@ -6,13 +6,13 @@
 -- "grt" is mapped in Normal mode to vim.lsp.buf.type_definition()
 -- "gO" is mapped in Normal mode to vim.lsp.buf.document_symbol()
 -- CTRL-S is mapped in Insert mode to vim.lsp.buf.signature_help()
-vim.keymap.del('n', 'grn')
-vim.keymap.del({ 'n', 'v' }, 'gra')
-vim.keymap.del('n', 'grr')
-vim.keymap.del('n', 'gri')
-vim.keymap.del('n', 'grt')
-vim.keymap.del('n', 'gO')
-vim.keymap.del('i', '<C-S>')
+pcall(vim.keymap.del, 'n', 'grn')
+pcall(vim.keymap.del, { 'n', 'v' }, 'gra')
+pcall(vim.keymap.del, 'n', 'grr')
+pcall(vim.keymap.del, 'n', 'gri')
+pcall(vim.keymap.del, 'n', 'grt')
+pcall(vim.keymap.del, 'n', 'gO')
+pcall(vim.keymap.del, 'i', '<C-S>')
 
 return {
     {
@@ -48,6 +48,7 @@ return {
 
                         'stylua',
                         'sql-formatter',
+                        'prettier',
                         -- 'nixfmt', managed by nix
                     },
                 },

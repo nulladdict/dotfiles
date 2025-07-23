@@ -65,12 +65,17 @@ if vim.g.vscode then
     vscode_map('[d', 'editor.action.marker.prev')
 else
     require('lazy').setup({
+        rocks = {
+            enabled = false,
+        },
         spec = {
             { import = 'plugins' },
         },
         ui = {
             border = 'rounded',
         },
-        install = { colorscheme = { 'rose-pine' } },
+        install = {
+            colorscheme = { 'rose-pine' },
+        },
     })
 end
