@@ -90,6 +90,7 @@
               "/System/Applications/Mail.app"
               "/Applications/Telegram.app"
             ];
+            loginwindow.GuestEnabled = false;
           };
 
           # The platform the configuration will be used on.
