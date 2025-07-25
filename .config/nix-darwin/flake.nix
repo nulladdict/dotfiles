@@ -41,10 +41,11 @@
             jq
             tmux
             curl
+            wget
             htop
 
             nodejs_latest
-            yarn
+            (yarn.override { withNode = false; })
           ];
 
           homebrew = {
