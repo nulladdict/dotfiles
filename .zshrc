@@ -129,19 +129,3 @@ if [ -n "${commands[fzf-share]}" ]; then
 fi
 export FZF_DEFAULT_COMMAND='rg --files'
 
-# GPG agent settings
-GPG_TTY=$(tty)
-export GPG_TTY
-
-# dotnet
-export DOTNET_CLI_TELEMETRY_OPTOUT='true'
-export PATH="$PATH:/Users/nulladdict/.dotnet/tools"
-
-# zig
-export ZIG_INSTALL="$HOME/.zig"
-export PATH="$ZIG_INSTALL:$PATH"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
