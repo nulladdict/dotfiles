@@ -24,7 +24,6 @@ return {
     {
         'github/copilot.vim',
         config = function()
-            vim.g.copilot_settings = { selectedCompletionModel = 'gpt-4o-copilot' }
             vim.g.copilot_workspace_folders = { vim.fn.getcwd() }
             vim.g.copilot_filetypes = { ['copilot-chat'] = false }
 
@@ -47,7 +46,7 @@ return {
         },
         build = 'make tiktoken',
         opts = {
-            model = 'claude-sonnet-4',
+            model = 'gpt-5-mini',
             agent = 'copilot',
             providers = {
                 github_models = {

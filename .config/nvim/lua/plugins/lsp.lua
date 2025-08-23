@@ -100,7 +100,7 @@ return {
                 'cssls',
                 'cssmodules_ls',
                 'dockerls',
-                -- 'eslint',
+                'eslint',
                 'html',
                 'jsonls',
                 'lua_ls',
