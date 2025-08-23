@@ -43,6 +43,9 @@
             curl
             wget
             htop
+            ffmpeg
+
+            vault
 
             nodejs_latest
             (yarn.override { withNode = false; })
@@ -92,6 +95,7 @@
               "/Applications/Telegram.app"
             ];
             loginwindow.GuestEnabled = false;
+            NSGlobalDomain.ApplePressAndHoldEnabled = false;
           };
 
           # The platform the configuration will be used on.
