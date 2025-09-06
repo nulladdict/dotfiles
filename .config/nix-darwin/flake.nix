@@ -56,6 +56,7 @@
             taps = [
               "daipeihust/tap"
               "nikitabobko/tap"
+              "iina/homebrew-mpv-iina"
             ];
             brews = [
               "im-select"
@@ -68,6 +69,10 @@
               "telegram"
               "mattermost"
               "figma"
+              "transmission"
+              "iina"
+              "lm-studio"
+              "zed"
             ];
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
