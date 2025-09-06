@@ -47,15 +47,12 @@ if vim.g.vscode then
 
     vscode_map('==', 'editor.action.format')
 
-    vscode_map('<leader>rn', 'editor.action.rename')
-    vscode_map('<leader>ca', 'editor.action.quickFix')
-
+    vscode_map('grn', 'editor.action.rename')
+    vscode_map('gra', 'editor.action.quickFix')
+    vscode_map('grr', 'editor.action.goToReferences')
+    vscode_map('gri', 'editor.action.goToImplementation')
+    vscode_map('grt', 'editor.action.goToTypeDefinition')
     vscode_map('gd', 'editor.action.revealDefinition')
-    vscode_map('gD', 'editor.action.revealDeclaration')
-    vscode_map('gy', 'editor.action.goToTypeDefinition')
-    vscode_map('gi', 'editor.action.goToImplementation')
-    vscode_map('gr', 'editor.action.goToReferences')
-
     vscode_map('gh', 'editor.action.showHover')
 
     vscode_map('<leader>sf', 'workbench.action.quickOpen')

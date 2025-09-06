@@ -10,13 +10,18 @@ return {
         },
         config = function()
             require('blink.cmp').setup({
-                keymap = { preset = 'enter' },
+                keymap = {
+                    preset = 'enter',
+                    ['<tab>'] = false,
+                },
                 completion = {
                     documentation = { auto_show = true },
                     accept = { auto_brackets = { enabled = false } },
                     menu = { max_height = 16 },
                 },
-                sources = { default = { 'lsp', 'snippets', 'path', 'buffer' } },
+                sources = {
+                    default = { 'lsp', 'snippets', 'path', 'buffer' },
+                },
             })
         end,
     },
@@ -40,44 +45,50 @@ return {
     },
 
     {
-        'CopilotC-Nvim/CopilotChat.nvim',
-        dependencies = {
-            { 'nvim-lua/plenary.nvim' },
-        },
-        build = 'make tiktoken',
+        'olimorris/codecompanion.nvim',
         opts = {
-            model = 'gpt-5-mini',
-            agent = 'copilot',
-            providers = {
-                github_models = {
-                    disabled = true,
+            extensions = {
+                mcphub = {
+                    callback = 'mcphub.extensions.codecompanion',
+                    opts = {
+                        make_vars = true,
+                        make_slash_commands = true,
+                        show_result_in_chat = true,
+                    },
                 },
             },
-            window = {
-                layout = 'vertical',
-                width = 0.4,
+            strategies = {
+                chat = {
+                    name = 'copilot',
+                    model = 'gpt-5-mini',
+                },
+                inline = {
+                    name = 'copilot',
+                    model = 'gpt-5-mini',
+                },
             },
         },
         config = function(_, opts)
-            local chat = require('CopilotChat')
-            chat.setup(opts)
-            local select = require('CopilotChat.select')
-
-            vim.keymap.set('n', '<D-k>', function()
-                chat.open({
-                    context = 'buffers',
-                })
-            end)
-            vim.keymap.set('v', '<D-i>', function()
-                vim.ui.input({ prompt = 'Ask Copilot' }, function(input)
-                    if input ~= '' then
-                        chat.ask(input, {
-                            context = 'buffer',
-                            selection = select.visual,
-                        })
-                    end
-                end)
-            end)
+            require('codecompanion').setup(opts)
+            vim.keymap.set('n', '<D-k>', '<cmd>CodeCompanionChat Toggle<cr>', { noremap = true, silent = true })
+            vim.keymap.set('v', '<D-i>', '<cmd>CodeCompanion<cr>', { noremap = true, silent = true })
+            vim.keymap.set('v', 'ga', '<cmd>CodeCompanionChat Add<cr>', { noremap = true, silent = true })
+            vim.cmd([[cab cc CodeCompanion]])
         end,
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'nvim-treesitter/nvim-treesitter',
+            'ravitemer/mcphub.nvim',
+            {
+                'echasnovski/mini.diff',
+                config = function()
+                    local diff = require('mini.diff')
+                    diff.setup({
+                        -- Disabled by default
+                        source = diff.gen_source.none(),
+                    })
+                end,
+            },
+        },
     },
 }

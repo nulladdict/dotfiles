@@ -1,19 +1,3 @@
--- https://neovim.io/doc/user/lsp.html#lsp-defaults
--- "grn" is mapped in Normal mode to vim.lsp.buf.rename()
--- "gra" is mapped in Normal and Visual mode to vim.lsp.buf.code_action()
--- "grr" is mapped in Normal mode to vim.lsp.buf.references()
--- "gri" is mapped in Normal mode to vim.lsp.buf.implementation()
--- "grt" is mapped in Normal mode to vim.lsp.buf.type_definition()
--- "gO" is mapped in Normal mode to vim.lsp.buf.document_symbol()
--- CTRL-S is mapped in Insert mode to vim.lsp.buf.signature_help()
-pcall(vim.keymap.del, 'n', 'grn')
-pcall(vim.keymap.del, { 'n', 'v' }, 'gra')
-pcall(vim.keymap.del, 'n', 'grr')
-pcall(vim.keymap.del, 'n', 'gri')
-pcall(vim.keymap.del, 'n', 'grt')
-pcall(vim.keymap.del, 'n', 'gO')
-pcall(vim.keymap.del, 'i', '<C-S>')
-
 return {
     {
         'neovim/nvim-lspconfig',
@@ -123,17 +107,13 @@ return {
                         vim.keymap.set('n', keys, action, { buffer = event.buf, desc = desc })
                     end
 
-                    lsp_map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-                    lsp_map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
+                    -- https://neovim.io/doc/user/lsp.html#lsp-defaults
+                    lsp_map('grr', snacks.picker.lsp_references, '[G]oto [R]eferences')
+                    lsp_map('gri', snacks.picker.lsp_implementations, '[G]oto [I]mplementation')
+                    lsp_map('grt', snacks.picker.lsp_type_definitions, 'Type [D]efinition')
                     lsp_map('gd', snacks.picker.lsp_definitions, '[G]oto [D]efinition')
-                    lsp_map('gD', snacks.picker.lsp_declarations, '[G]oto [D]eclaration')
-                    lsp_map('gy', snacks.picker.lsp_type_definitions, 'Type [D]efinition')
-                    lsp_map('gi', snacks.picker.lsp_implementations, '[G]oto [I]mplementation')
-                    lsp_map('gr', snacks.picker.lsp_references, '[G]oto [R]eferences')
-
-                    lsp_map('gh', vim.lsp.buf.hover, 'Hover Documentation')
-                    lsp_map('gH', vim.lsp.buf.signature_help, 'Signature Documentation')
+                    lsp_map('gO', snacks.picker.lsp_symbols, '[G]oto [O]bjects')
+                    lsp_map('gh', vim.lsp.buf.hover, '[H]over Documentation')
                 end,
             })
 
