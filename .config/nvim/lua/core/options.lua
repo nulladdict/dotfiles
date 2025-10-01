@@ -6,6 +6,7 @@ vim.opt.tabstop = 4
 
 -- UI
 vim.opt.encoding = 'utf-8' -- Set default encoding
+vim.opt.ff = 'unix'
 vim.opt.ffs = 'unix,dos,mac' -- Use Unix as the standard file type
 vim.opt.linebreak = true -- Wrap on word boundary
 vim.opt.laststatus = 2 -- Always show statusline

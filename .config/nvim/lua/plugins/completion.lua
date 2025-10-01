@@ -30,10 +30,30 @@ return {
         'github/copilot.vim',
         config = function()
             vim.g.copilot_workspace_folders = { vim.fn.getcwd() }
-            vim.g.copilot_filetypes = { ['copilot-chat'] = false }
+            vim.g.copilot_no_tab_map = true
 
-            vim.keymap.set('i', '<D-j>', 'copilot#Accept("")', { expr = true, replace_keycodes = false })
-            vim.keymap.set('i', '<D-о>', 'copilot#Accept("")', { expr = true, replace_keycodes = false })
+            local function appy_suggestion(fallback)
+                return function()
+                    if require('sidekick').nes_jump_or_apply() then
+                        return
+                    end
+                    local suggestion = vim.fn['copilot#GetDisplayedSuggestion']()
+                    if suggestion.text ~= nil and suggestion.text ~= '' then
+                        return vim.fn['copilot#Accept'](fallback)
+                    end
+                    return fallback
+                end
+            end
+            local function clear_suggestion()
+                vim.fn['copilot#Dismiss']()
+                require('sidekick.nes').clear()
+            end
+
+            for key, fallback in pairs({ ['<tab>'] = '\t', ['<D-j>'] = '', ['<D-о>'] = '' }) do
+                vim.keymap.set({ 'i', 'n' }, key, appy_suggestion(fallback), { expr = true, replace_keycodes = false })
+            end
+            vim.keymap.set({ 'i', 'n' }, '<D-l>', clear_suggestion, { silent = true })
+            vim.keymap.set({ 'i', 'n' }, '<D-д>', clear_suggestion, { silent = true })
 
             vim.api.nvim_create_autocmd('BufEnter', {
                 pattern = { '*.env', '*.env.*' },
@@ -45,49 +65,30 @@ return {
     },
 
     {
-        'olimorris/codecompanion.nvim',
+        'folke/sidekick.nvim',
         opts = {
-            extensions = {
-                mcphub = {
-                    callback = 'mcphub.extensions.codecompanion',
-                    opts = {
-                        make_vars = true,
-                        make_slash_commands = true,
-                        show_result_in_chat = true,
-                    },
-                },
-            },
-            strategies = {
-                chat = {
-                    name = 'copilot',
-                    model = 'gpt-5-mini',
-                },
-                inline = {
-                    name = 'copilot',
-                    model = 'gpt-5-mini',
-                },
+            -- Never clear suggestions automatically
+            clear = {
+                events = {},
+                esc = false,
             },
         },
-        config = function(_, opts)
-            require('codecompanion').setup(opts)
-            vim.keymap.set('n', '<D-k>', '<cmd>CodeCompanionChat Toggle<cr>', { noremap = true, silent = true })
-            vim.keymap.set('v', '<D-i>', '<cmd>CodeCompanion<cr>', { noremap = true, silent = true })
-            vim.keymap.set('v', 'ga', '<cmd>CodeCompanionChat Add<cr>', { noremap = true, silent = true })
-            vim.cmd([[cab cc CodeCompanion]])
-        end,
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            'nvim-treesitter/nvim-treesitter',
-            'ravitemer/mcphub.nvim',
+        keys = {
             {
-                'echasnovski/mini.diff',
-                config = function()
-                    local diff = require('mini.diff')
-                    diff.setup({
-                        -- Disabled by default
-                        source = diff.gen_source.none(),
-                    })
+                '<C-.>',
+                function()
+                    require('sidekick.cli').focus()
                 end,
+                mode = { 'n', 'x', 'i', 't' },
+                desc = 'Sidekick Switch Focus',
+            },
+            {
+                '<leader>aa',
+                function()
+                    require('sidekick.cli').toggle({ name = 'opencode', focus = true })
+                end,
+                desc = 'Sidekick Toggle CLI',
+                mode = { 'n', 'v' },
             },
         },
     },

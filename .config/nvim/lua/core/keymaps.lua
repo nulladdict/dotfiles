@@ -46,3 +46,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
         vim.hl.on_yank()
     end,
 })
+
+vim.api.nvim_create_autocmd('FileType', {
+    desc = 'Force unix file format for git commit messages',
+    pattern = 'gitcommit',
+    callback = function()
+        vim.schedule(function()
+            vim.bo.fileformat = 'unix'
+        end)
+    end,
+})

@@ -34,6 +34,7 @@ return {
                         'sql-formatter',
                         'prettier',
                         -- 'nixfmt', managed by nix
+                        'taplo',
                     },
                 },
             },

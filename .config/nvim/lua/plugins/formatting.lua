@@ -22,6 +22,7 @@ return {
                     yaml = { 'prettier' },
                     sql = { 'sql_formatter' },
                     nix = { 'nixfmt' },
+                    toml = { 'taplo' },
                 },
             })
 
