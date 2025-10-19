@@ -5,6 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
   outputs =
@@ -12,6 +13,7 @@
       self,
       nix-darwin,
       nixpkgs,
+      neovim-nightly-overlay,
     }:
     let
       configuration =
@@ -32,7 +34,8 @@
             lazygit
             gh
 
-            neovim
+            # neovim
+            neovim-nightly-overlay.packages.${pkgs.system}.default
             vscode
 
             fzf
