@@ -129,11 +129,12 @@ if [ -n "${commands[fzf-share]}" ]; then
 fi
 export FZF_DEFAULT_COMMAND='rg --files'
 
+# npm-global
+export PATH="$HOME/.npm-global/bin:$PATH"
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/nulladdict/.lmstudio/bin"
 # End of LM Studio CLI section
-
 
 # opencode
 export PATH=/Users/nulladdict/.opencode/bin:$PATH
