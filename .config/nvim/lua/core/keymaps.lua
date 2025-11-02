@@ -13,6 +13,7 @@ vim.keymap.set({ 'n', 'v' }, 'K', '<nop>', opts)
 vim.keymap.set('n', '<D-s>', ':w<cr>', opts)
 vim.keymap.set('i', '<D-s>', '<esc>:w<cr>', opts)
 
+-- System clipboard
 vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', opts)
 vim.keymap.set({ 'n', 'v' }, '<leader>p', '"+p', opts)
 
@@ -54,5 +55,21 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.schedule(function()
             vim.bo.fileformat = 'unix'
         end)
+    end,
+})
+
+vim.keymap.set('n', '<leader>bb', function()
+    if vim.bo.filetype == 'netrw' then
+        vim.cmd('b#')
+    else
+        vim.cmd('Explore')
+    end
+end)
+vim.api.nvim_create_autocmd('VimEnter', {
+    callback = function()
+        local path = vim.fn.expand('%:p')
+        if vim.fn.isdirectory(path) == 1 then
+            vim.cmd.cd(path)
+        end
     end,
 })
