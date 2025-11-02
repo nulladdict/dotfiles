@@ -2,12 +2,6 @@ return {
     {
         'saghen/blink.cmp',
         version = '1.*',
-        dependencies = {
-            {
-                'L3MON4D3/LuaSnip',
-                build = 'make install_jsregexp',
-            },
-        },
         config = function()
             require('blink.cmp').setup({
                 keymap = {
@@ -81,14 +75,6 @@ return {
                 end,
                 mode = { 'n', 'x', 'i', 't' },
                 desc = 'Sidekick Switch Focus',
-            },
-            {
-                '<leader>aa',
-                function()
-                    require('sidekick.cli').toggle({ name = 'opencode', focus = true })
-                end,
-                desc = 'Sidekick Toggle CLI',
-                mode = { 'n', 'v' },
             },
         },
     },

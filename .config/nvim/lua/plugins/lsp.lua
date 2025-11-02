@@ -4,11 +4,7 @@ return {
         dependencies = {
             {
                 'mason-org/mason.nvim',
-                opts = {
-                    ui = {
-                        border = 'rounded',
-                    },
-                },
+                opts = {},
             },
             {
                 'WhoIsSethDaniel/mason-tool-installer.nvim',
