@@ -35,7 +35,7 @@
             gh
 
             # neovim
-            neovim-nightly-overlay.packages.${pkgs.system}.default
+            neovim-nightly-overlay.packages.${stdenv.hostPlatform.system}.default
             vscode
 
             fzf
