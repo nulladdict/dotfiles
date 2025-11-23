@@ -25,6 +25,7 @@ require('core/options')
 if vim.g.vscode then
     local vscode = require('vscode-neovim')
     vim.notify = vscode.notify
+    vim.o.cmdheight = 1000
 
     require('lazy').setup({
         spec = {
