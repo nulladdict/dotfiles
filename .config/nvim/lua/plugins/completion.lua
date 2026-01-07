@@ -25,6 +25,7 @@ return {
         config = function()
             vim.g.copilot_workspace_folders = { vim.fn.getcwd() }
             vim.g.copilot_no_tab_map = true
+            vim.g.copilot_version = 'latest'
 
             local function appy_suggestion(fallback)
                 return function()
