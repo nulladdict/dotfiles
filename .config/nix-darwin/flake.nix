@@ -50,8 +50,12 @@
 
             vault
 
-            nodejs_latest
+            nodejs_24
             (yarn.override { withNode = false; })
+
+            dotnet-sdk_8
+
+            go
           ];
 
           homebrew = {
