@@ -1,10 +1,30 @@
 return {
     {
+        'folke/lazydev.nvim',
+        ft = 'lua',
+        opts = {
+            library = {
+                -- See the configuration section for more details
+                -- Load luvit types when the `vim.uv` word is found
+                { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+            },
+        },
+    },
+    {
+        'seblyng/roslyn.nvim',
+        opts = { filewatching = 'roslyn' },
+    },
+    {
         'neovim/nvim-lspconfig',
         dependencies = {
             {
                 'mason-org/mason.nvim',
-                opts = {},
+                opts = {
+                    registries = {
+                        'github:mason-org/mason-registry',
+                        'github:Crashdummyy/mason-registry',
+                    },
+                },
             },
             {
                 'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -21,17 +41,16 @@ return {
                         'html-lsp',
                         'json-lsp',
                         'lua-language-server',
+                        'oxlint',
+                        'prettier',
+                        'sql-formatter',
                         'sqlls',
                         'stylelint-lsp',
+                        'stylua',
                         'tailwindcss-language-server',
+                        'taplo',
                         'vtsls',
                         'yaml-language-server',
-
-                        'stylua',
-                        'sql-formatter',
-                        'prettier',
-                        -- 'nixfmt', managed by nix
-                        'taplo',
                     },
                 },
             },
@@ -69,6 +88,7 @@ return {
             })
 
             vim.lsp.config('vtsls', {
+                root_markers = { '.git' },
                 settings = {
                     vtsls = { autoUseWorkspaceTsdk = true },
                     typescript = { tsserver = { maxTsServerMemory = 8092 } },
@@ -79,6 +99,7 @@ return {
                 'astro',
                 'bashls',
                 'biome',
+                'css_variables',
                 'cssls',
                 'cssmodules_ls',
                 'dockerls',
@@ -87,6 +108,7 @@ return {
                 'html',
                 'jsonls',
                 'lua_ls',
+                'oxlint',
                 'sqlls',
                 'stylelint_lsp',
                 'tailwindcss',

@@ -1,4 +1,5 @@
 return {
+    { 'nulladdict/blink-cmp-scss-vars' },
     {
         'saghen/blink.cmp',
         version = '1.*',
@@ -14,7 +15,33 @@ return {
                     menu = { max_height = 16 },
                 },
                 sources = {
-                    default = { 'lsp', 'snippets', 'path', 'buffer' },
+                    default = {
+                        'lazydev',
+                        'lsp',
+                        'snippets',
+                        'path',
+                        'buffer',
+                        'scss-vars',
+                    },
+                    providers = {
+                        lazydev = {
+                            name = 'LazyDev',
+                            module = 'lazydev.integrations.blink',
+                            score_offset = 100,
+                        },
+                        ['scss-vars'] = {
+                            name = 'scss-vars',
+                            module = 'scss-vars',
+                            opts = {
+                                include = {
+                                    'node_modules/@skbkontur/colors/colors.scss',
+                                    'packages/compass/src/styles/colors.scss',
+                                    'packages/compass/src/styles/common.scss',
+                                    'packages/compass/src/styles/mixins.scss',
+                                },
+                            },
+                        },
+                    },
                 },
             })
         end,
