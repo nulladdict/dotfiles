@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
@@ -11,11 +12,16 @@
   outputs =
     inputs@{
       self,
-      nix-darwin,
       nixpkgs,
+      nixpkgs-stable,
+      nix-darwin,
       neovim-nightly-overlay,
     }:
     let
+      pkgs-stable = import nixpkgs-stable {
+        system = "aarch64-darwin";
+      };
+
       configuration =
         { pkgs, ... }:
         {
@@ -27,16 +33,16 @@
           # List packages installed in system profile. To search by name, run:
           # $ nix-env -qaP | grep wget
           environment.systemPackages = with pkgs; [
-            nixfmt-rfc-style
+            nixfmt
 
             git
             git-lfs
             lazygit
             gh
 
-            # neovim
             neovim-nightly-overlay.packages.${stdenv.hostPlatform.system}.default
             vscode
+            zed-editor
 
             fzf
             ripgrep
@@ -53,7 +59,13 @@
             nodejs_24
             (yarn.override { withNode = false; })
 
-            dotnet-sdk_8
+            (
+              with pkgs-stable.dotnetCorePackages;
+              combinePackages [
+                sdk_10_0
+                sdk_8_0
+              ]
+            )
 
             go
           ];
@@ -79,7 +91,6 @@
               "transmission"
               "iina"
               "lm-studio"
-              "zed"
             ];
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
@@ -108,6 +119,7 @@
             ];
             loginwindow.GuestEnabled = false;
             NSGlobalDomain.ApplePressAndHoldEnabled = false;
+            finder.FXPreferredViewStyle = "Nlsv";
           };
 
           # The platform the configuration will be used on.
