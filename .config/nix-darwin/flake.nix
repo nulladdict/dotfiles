@@ -42,7 +42,6 @@
 
             neovim-nightly-overlay.packages.${stdenv.hostPlatform.system}.default
             vscode
-            zed-editor
 
             fzf
             ripgrep
@@ -91,11 +90,16 @@
               "transmission"
               "iina"
               "lm-studio"
+              "opencode-desktop"
             ];
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
             onActivation.upgrade = true;
           };
+
+          fonts.packages = with pkgs; [
+            iosevka-bin
+          ];
 
           # Necessary for using flakes on this system.
           nix.settings.experimental-features = "nix-command flakes";
