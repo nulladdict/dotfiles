@@ -112,6 +112,19 @@
           system.stateVersion = 6;
 
           system.primaryUser = "nulladdict";
+
+          # Use apple watch for sudo
+          security.pam.services.sudo_local.watchIdAuth = true;
+
+          # Raise maxfiles limit
+          launchd.daemons.maxfiles = {
+            command = "/bin/launchctl limit maxfiles 65536 65536";
+            serviceConfig = {
+              Label = "limit.maxfiles";
+              RunAtLoad = true;
+            };
+          };
+
           system.defaults = {
             dock.autohide = true;
             dock.show-recents = false;
