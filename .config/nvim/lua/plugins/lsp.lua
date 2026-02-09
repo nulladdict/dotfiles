@@ -49,6 +49,7 @@ return {
                         'stylua',
                         'tailwindcss-language-server',
                         'taplo',
+                        'tsgo',
                         'vtsls',
                         'yaml-language-server',
                     },
@@ -112,7 +113,8 @@ return {
                 'sqlls',
                 'stylelint_lsp',
                 'tailwindcss',
-                'vtsls',
+                'tsgo',
+                -- 'vtsls',
                 'yamlls',
             })
 
