@@ -41,6 +41,7 @@ return {
                         'html-lsp',
                         'json-lsp',
                         'lua-language-server',
+                        'oxfmt',
                         'oxlint',
                         'prettier',
                         'sql-formatter',
@@ -113,8 +114,8 @@ return {
                 'sqlls',
                 'stylelint_lsp',
                 'tailwindcss',
-                'tsgo',
-                -- 'vtsls',
+                -- 'tsgo',
+                'vtsls',
                 'yamlls',
             })
 
