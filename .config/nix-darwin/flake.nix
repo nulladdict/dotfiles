@@ -45,9 +45,10 @@
 
             fzf
             ripgrep
+            ast-grep
             fd
             jq
-            tmux
+            zellij
             curl
             wget
             htop

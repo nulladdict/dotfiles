@@ -120,7 +120,11 @@ alias envlocal='env $(grep -v "^#" .env.local | xargs)'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 compdef dotfiles='git'
 
-alias tm='tmux attach || tmux new-session'
+alias zj='zellij'
+compdef zj='zellij'
+zjj() {
+  zellij attach --create "${PWD:t}"
+}
 
 # FZF settings
 if [ -n "${commands[fzf-share]}" ]; then
