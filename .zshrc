@@ -143,6 +143,8 @@ export PATH="$PATH:/Users/nulladdict/.lmstudio/bin"
 # opencode
 export PATH=/Users/nulladdict/.opencode/bin:$PATH
 export OPENCODE_EXPERIMENTAL_MARKDOWN=true
+alias oc='opencode'
+compdef oc='opencode'
 
 # amp
 export PATH=/Users/nulladdict/.amp/bin:$PATH
