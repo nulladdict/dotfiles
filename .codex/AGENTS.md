@@ -1,0 +1,1 @@
+/Users/nulladdict/.config/opencode/AGENTS.md
