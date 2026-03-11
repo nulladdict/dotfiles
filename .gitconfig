@@ -7,13 +7,14 @@
     autocrlf = input
     quotepath = off
     excludesfile = ~/.gitignore_global
+    pager = delta
 [gpg]
     format = ssh
 [gpg "ssh"]
     allowedSignersFile = ~/.ssh/allowed_signers
 [merge]
     tool = nvimdiff
-    conflictstyle = diff3
+    conflictstyle = zdiff3
 [mergetool]
     keepbackup = false
 [rerere]
@@ -26,6 +27,8 @@
     gpgsign = true
 [init]
     defaultBranch = main
+[interactive]
+    diffFilter = delta --color-only
 [gui]
     fontui = -family .AppleSystemUIFont -size 14 -weight normal -slant roman -underline 0 -overstrike 0
     fontdiff = -family Menlo -size 14 -weight normal -slant roman -underline 0 -overstrike 0
@@ -35,3 +38,10 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+[delta]
+    navigate = true
+    syntax-theme = ansi
+    line-numbers = true
+    file-decoration-style = none
+    hunk-header-style = raw
+    hunk-header-decoration-style = none

@@ -148,3 +148,6 @@ compdef oc='opencode'
 
 # amp
 export PATH=/Users/nulladdict/.amp/bin:$PATH
+
+# lazygit
+export XDG_CONFIG_HOME="$HOME/.config"

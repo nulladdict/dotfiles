@@ -2,7 +2,7 @@
   description = "nix-darwin system flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/b271d4716bdda4b2af77c2c1ea57b3fc40ef44c5";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
@@ -33,6 +33,7 @@
             git-lfs
             lazygit
             gh
+            delta
 
             neovim-nightly-overlay.packages.${stdenv.hostPlatform.system}.default
             vscode
