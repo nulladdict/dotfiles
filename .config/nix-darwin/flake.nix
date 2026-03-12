@@ -2,7 +2,7 @@
   description = "nix-darwin system flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/b271d4716bdda4b2af77c2c1ea57b3fc40ef44c5";
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
@@ -36,7 +36,6 @@
             delta
 
             neovim-nightly-overlay.packages.${stdenv.hostPlatform.system}.default
-            vscode
 
             fzf
             ripgrep
@@ -57,6 +56,16 @@
             go
           ];
 
+          npmGlobal = {
+            enable = true;
+            nodejs = pkgs.nodejs_24;
+            packages = [
+              "@github/copilot"
+              "@openai/codex"
+              "agent-browser"
+            ];
+          };
+
           homebrew = {
             enable = true;
             taps = [
@@ -74,11 +83,12 @@
               "ghostty"
               "telegram"
               "mattermost"
+              "zoom"
               "figma"
               "transmission"
               "iina"
-              "lm-studio"
               "opencode-desktop"
+              "visual-studio-code"
             ];
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
@@ -135,7 +145,10 @@
       # Build darwin flake using:
       # $ darwin-rebuild build --flake .#mini
       darwinConfigurations."mini" = nix-darwin.lib.darwinSystem {
-        modules = [ configuration ];
+        modules = [
+          configuration
+          ./modules/npm-global.nix
+        ];
       };
     };
 }
