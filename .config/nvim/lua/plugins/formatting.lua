@@ -22,6 +22,7 @@ return {
                     yaml = { 'oxfmt' },
                     sql = { 'sql_formatter' },
                     nix = { 'nixfmt' },
+                    python = { 'ruff_format' },
                     toml = { 'taplo' },
                     go = { 'gofmt' },
                 },

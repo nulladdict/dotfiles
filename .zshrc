@@ -151,3 +151,6 @@ export PATH=/Users/nulladdict/.amp/bin:$PATH
 
 # lazygit
 export XDG_CONFIG_HOME="$HOME/.config"
+
+# uv
+export PATH="/Users/nulladdict/.local/bin:$PATH"

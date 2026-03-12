@@ -32,6 +32,7 @@ return {
                     ensure_installed = {
                         'astro-language-server',
                         'bash-language-server',
+                        'basedpyright',
                         'biome',
                         'css-lsp',
                         'cssmodules-language-server',
@@ -43,6 +44,7 @@ return {
                         'lua-language-server',
                         'oxfmt',
                         'oxlint',
+                        'ruff',
                         'prettier',
                         'sql-formatter',
                         'sqlls',
@@ -99,6 +101,7 @@ return {
 
             vim.lsp.enable({
                 'astro',
+                'basedpyright',
                 'bashls',
                 'biome',
                 'css_variables',

@@ -54,6 +54,8 @@
             (yarn.override { withNode = false; })
 
             go
+
+            uv
           ];
 
           npmGlobal = {
