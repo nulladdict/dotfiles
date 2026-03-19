@@ -35,6 +35,7 @@
             gh
             delta
 
+            kitty
             neovim-nightly-overlay.packages.${stdenv.hostPlatform.system}.default
 
             fzf
@@ -82,7 +83,6 @@
               "brave-browser"
               "betterdisplay"
               "aerospace"
-              "ghostty"
               "telegram"
               "mattermost"
               "zoom"
@@ -99,6 +99,7 @@
 
           fonts.packages = with pkgs; [
             iosevka-bin
+            nerd-fonts.symbols-only
           ];
 
           # Necessary for using flakes on this system.
@@ -130,7 +131,7 @@
             dock.show-recents = false;
             dock.persistent-apps = [
               "/Applications/Brave Browser.app"
-              "/Applications/Ghostty.app"
+              "/Applications/Nix Apps/kitty.app"
               "/System/Applications/Mail.app"
               "/Applications/Telegram.app"
             ];
