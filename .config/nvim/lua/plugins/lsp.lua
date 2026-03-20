@@ -114,6 +114,7 @@ return {
                 'jsonls',
                 'lua_ls',
                 'oxlint',
+                'ruff',
                 'sqlls',
                 'stylelint_lsp',
                 'tailwindcss',
