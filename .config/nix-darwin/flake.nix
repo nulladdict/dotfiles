@@ -65,7 +65,6 @@
             packages = [
               "@github/copilot"
               "@openai/codex"
-              "agent-browser"
             ];
           };
 

@@ -1,16 +1,6 @@
 {
   "version": 3,
   "skills": {
-    "agent-browser": {
-      "source": "vercel-labs/agent-browser",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/vercel-labs/agent-browser.git",
-      "skillPath": "skills/agent-browser/SKILL.md",
-      "skillFolderHash": "ef3abe1fe6f259718037dc6131d332c7571292c3",
-      "pluginName": "agent-browser",
-      "installedAt": "2026-03-10T08:44:58.237Z",
-      "updatedAt": "2026-03-10T08:44:58.237Z"
-    },
     "ast-grep": {
       "source": "ast-grep/agent-skill",
       "sourceType": "github",
