@@ -63,8 +63,9 @@
             enable = true;
             nodejs = pkgs.nodejs_24;
             packages = [
-              "@github/copilot"
+              "opencode-ai"
               "@openai/codex"
+              "@github/copilot"
             ];
           };
 
