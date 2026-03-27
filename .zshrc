@@ -114,7 +114,7 @@ alias gloma='git pull origin $(git_main_branch) --rebase --autostash'
 alias glom='git pull origin $(git_main_branch) --rebase'
 alias gclsh='git clone --depth=1'
 alias gclsp='git clone --depth=1 --filter=blob:none --sparse'
-alias vi='/usr/bin/vim'
+alias vi='nvim'
 alias vim='nvim'
 alias envlocal='env $(grep -v "^#" .env.local | xargs)'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -143,9 +143,6 @@ export PATH="$PATH:/Users/nulladdict/.lmstudio/bin"
 # opencode
 alias oc='opencode'
 compdef oc='opencode'
-
-# amp
-export PATH=/Users/nulladdict/.amp/bin:$PATH
 
 # lazygit
 export XDG_CONFIG_HOME="$HOME/.config"
