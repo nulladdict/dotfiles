@@ -5,7 +5,7 @@
     "chrome-devtools": {
       "enabled": false,
       "type": "local",
-      "command": ["npx", "-y", "chrome-devtools-mcp@latest", "--autoConnect", "--channel=beta"]
+      "command": ["npx", "-y", "chrome-devtools-mcp@latest", "--autoConnect"]
     },
     "context7": {
       "enabled": false,
