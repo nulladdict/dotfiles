@@ -6,6 +6,7 @@
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    neovim-nightly-overlay.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -23,6 +24,26 @@
           nix.enable = false;
 
           nixpkgs.config.allowUnfree = true;
+
+          nixpkgs.overlays = [
+            (final: prev: {
+              tree-sitter = prev.tree-sitter.overrideAttrs (old: rec {
+                version = "0.26.7";
+                src = prev.fetchFromGitHub {
+                  owner = "tree-sitter";
+                  repo = "tree-sitter";
+                  rev = "v${version}";
+                  hash = "sha256-O3c2djKhM+vIYunthDApi9sw/gFH/FBME1uR4N+9MFM=";
+                  fetchSubmodules = true;
+                };
+                patches = [ ];
+                cargoDeps = prev.rustPlatform.fetchCargoVendor {
+                  inherit src;
+                  hash = "sha256-zh6KsnZ7s6VXGCggoYbLGeGnEZ7g7anjkz8C5/L4yXQ=";
+                };
+              });
+            })
+          ];
 
           # List packages installed in system profile. To search by name, run:
           # $ nix-env -qaP | grep wget
@@ -57,6 +78,8 @@
             go
 
             uv
+
+            tree-sitter
           ];
 
           npmGlobal = {
@@ -65,7 +88,7 @@
             packages = [
               "opencode-ai"
               "@openai/codex"
-              "@github/copilot"
+              "@sourcegraph/amp"
             ];
           };
 
