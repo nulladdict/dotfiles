@@ -5,8 +5,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/master";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    neovim-nightly-overlay.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -14,7 +12,6 @@
       self,
       nixpkgs,
       nix-darwin,
-      neovim-nightly-overlay,
     }:
     let
       configuration =
@@ -57,7 +54,7 @@
             delta
 
             kitty
-            neovim-nightly-overlay.packages.${stdenv.hostPlatform.system}.default
+            neovim
 
             fzf
             ripgrep
