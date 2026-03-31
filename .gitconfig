@@ -45,3 +45,5 @@
     file-decoration-style = none
     hunk-header-style = raw
     hunk-header-decoration-style = none
+[alias]
+    prune-branches = !git branch -vv | rg '\\[origin/.*: gone\\]' | rg -v '^\\*' | cut -c 3- | awk '{print $1}' | xargs -r git branch -D
