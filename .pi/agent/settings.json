@@ -3,8 +3,14 @@
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.4",
   "defaultThinkingLevel": "high",
+  "transport": "websocket",
   "theme": "rose-pine",
   "npmCommand": ["npm", "--prefix", "~/.npm-global"],
-  "packages": ["npm:@plannotator/pi-extension", "npm:pi-mcp-adapter", "npm:pi-subagents"]
+  "packages": [
+    "npm:@plannotator/pi-extension",
+    "npm:pi-mcp-adapter",
+    "npm:pi-subagents",
+    "npm:pi-web-access"
+  ]
 }
 
