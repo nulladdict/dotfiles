@@ -1,0 +1,9 @@
+{
+  "lastChangelogVersion": "0.64.0",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.4",
+  "defaultThinkingLevel": "high",
+  "npmCommand": ["npm", "--prefix", "~/.npm-global"],
+  "packages": ["npm:@plannotator/pi-extension"]
+}
+

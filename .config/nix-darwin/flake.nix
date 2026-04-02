@@ -86,6 +86,7 @@
               "opencode-ai"
               "@openai/codex"
               "@sourcegraph/amp"
+              "@mariozechner/pi-coding-agent"
             ];
           };
 
