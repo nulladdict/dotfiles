@@ -5,6 +5,6 @@
   "defaultThinkingLevel": "high",
   "theme": "rose-pine",
   "npmCommand": ["npm", "--prefix", "~/.npm-global"],
-  "packages": ["npm:@plannotator/pi-extension"]
+  "packages": ["npm:@plannotator/pi-extension", "npm:pi-mcp-adapter", "npm:pi-subagents"]
 }
 
