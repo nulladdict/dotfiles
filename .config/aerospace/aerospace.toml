@@ -50,12 +50,12 @@ alt-shift-7 = ['move-node-to-workspace 7', 'workspace 7']
 alt-shift-8 = ['move-node-to-workspace 8', 'workspace 8']
 alt-shift-9 = ['move-node-to-workspace 9', 'workspace 9']
 
-alt-f = 'fullscreen'
 alt-w = 'mode window'
 
 [mode.window.binding]
 esc = ['reload-config', 'mode main']
 r = ['flatten-workspace-tree', 'mode main']
+s = ['fullscreen', 'mode main']
 f = ['layout floating tiling', 'mode main']
 t = ['layout horizontal vertical', 'mode main']
 backspace = ['close-all-windows-but-current', 'mode main']
@@ -71,7 +71,7 @@ if.app-id = 'com.brave.Browser'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
-if.app-id = 'net.kovidgoyal.kitty'
+if.app-id = 'com.mitchellh.ghostty'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]

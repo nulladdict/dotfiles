@@ -54,6 +54,7 @@
             delta
 
             kitty
+            ghostty-bin
             neovim
 
             fzf
@@ -152,7 +153,7 @@
             dock.show-recents = false;
             dock.persistent-apps = [
               "/Applications/Brave Browser.app"
-              "/Applications/Nix Apps/kitty.app"
+              "/Applications/Nix Apps/Ghostty.app"
               "/System/Applications/Mail.app"
               "/Applications/Telegram.app"
             ];
