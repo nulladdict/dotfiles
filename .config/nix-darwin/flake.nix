@@ -62,7 +62,6 @@
             ast-grep
             fd
             jq
-            zellij
             curl
             wget
             htop
