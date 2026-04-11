@@ -1,13 +1,15 @@
 start-at-login = true
 
 enable-normalization-flatten-containers = true
-enable-normalization-opposite-orientation-for-nested-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = false
 
 default-root-container-layout = 'tiles'
-default-root-container-orientation = 'auto'
+default-root-container-orientation = 'horizontal'
 
-automatically-unhide-macos-hidden-apps = false
+automatically-unhide-macos-hidden-apps = true
 key-mapping.preset = 'qwerty'
+
+accordion-padding = 0
 
 [gaps]
 inner.horizontal = 4
@@ -17,11 +19,10 @@ outer.bottom = 2
 outer.top = 2
 outer.right = 2
 
+
 [mode.main.binding]
-alt-h = 'focus left'
-alt-j = 'focus down'
-alt-k = 'focus up'
-alt-l = 'focus right'
+alt-j = 'focus dfs-next --boundaries-action wrap-around-the-workspace'
+alt-k = 'focus dfs-prev --boundaries-action wrap-around-the-workspace'
 
 alt-shift-h = 'move left'
 alt-shift-j = 'move down'
@@ -50,21 +51,9 @@ alt-shift-7 = ['move-node-to-workspace 7', 'workspace 7']
 alt-shift-8 = ['move-node-to-workspace 8', 'workspace 8']
 alt-shift-9 = ['move-node-to-workspace 9', 'workspace 9']
 
-alt-w = 'mode window'
-
-[mode.window.binding]
-esc = ['reload-config', 'mode main']
-r = ['flatten-workspace-tree', 'mode main']
-s = ['fullscreen', 'mode main']
-f = ['layout floating tiling', 'mode main']
-t = ['layout horizontal vertical', 'mode main']
-backspace = ['close-all-windows-but-current', 'mode main']
-
-h = ['join-with left', 'mode main']
-j = ['join-with down', 'mode main']
-k = ['join-with up', 'mode main']
-l = ['join-with right', 'mode main']
-
+alt-f = 'fullscreen'
+alt-w = 'exec-and-forget ~/.config/aerospace/scripts/bsp-workspace.sh'
+alt-a = ['flatten-workspace-tree', 'layout h_accordion h_tiles', 'mode main']
 
 [[on-window-detected]]
 if.app-id = 'com.brave.Browser'
@@ -72,7 +61,7 @@ run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
-run = 'move-node-to-workspace 2'
+run = ['move-node-to-workspace 2', 'layout h_accordion']
 
 [[on-window-detected]]
 if.app-id = 'dev.zed.Zed'
