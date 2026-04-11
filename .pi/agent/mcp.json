@@ -6,6 +6,11 @@
     },
     "context7": {
       "url": "https://mcp.context7.com/mcp"
+    },
+    "exa": {
+      "url": "https://mcp.exa.ai/mcp",
+      "lifecycle": "eager",
+      "directTools": true
     }
   }
 }
