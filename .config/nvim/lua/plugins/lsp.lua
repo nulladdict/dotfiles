@@ -48,7 +48,7 @@ return {
                         'prettier',
                         'sql-formatter',
                         'sqlls',
-                        'stylelint-lsp',
+                        'stylelint-language-server',
                         'stylua',
                         'tailwindcss-language-server',
                         'taplo',
@@ -96,6 +96,14 @@ return {
                 settings = {
                     vtsls = { autoUseWorkspaceTsdk = true },
                     typescript = { tsserver = { maxTsServerMemory = 8092 } },
+                },
+            })
+
+            vim.lsp.config('stylelint_lsp', {
+                settings = {
+                    stylelint = {
+                        validate = { 'css', 'scss', 'less', 'postcss' },
+                    },
                 },
             })
 
