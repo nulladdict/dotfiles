@@ -110,7 +110,6 @@
               "figma"
               "transmission"
               "iina"
-              "opencode-desktop"
               "visual-studio-code"
             ];
             onActivation.cleanup = "zap";
