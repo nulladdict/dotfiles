@@ -117,8 +117,9 @@ alias gclsp='git clone --depth=1 --filter=blob:none --sparse'
 alias vi='nvim'
 alias vim='nvim'
 alias envlocal='env $(grep -v "^#" .env.local | xargs)'
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-compdef dotfiles='git'
+alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+compdef dot='git'
+alias dotl='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 # FZF settings
 if [ -n "${commands[fzf-share]}" ]; then
@@ -143,3 +144,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 
 # uv
 export PATH="/Users/nulladdict/.local/bin:$PATH"
+
+# dotnet
+export PATH="$PATH:/Users/nulladdict/.dotnet/tools"
