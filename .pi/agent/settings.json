@@ -5,13 +5,7 @@
   "defaultThinkingLevel": "high",
   "transport": "websocket",
   "theme": "rose-pine",
-  "npmCommand": [
-    "npm",
-    "--prefix",
-    "~/.npm-global"
-  ],
-  "packages": [
-    "npm:@plannotator/pi-extension",
-    "npm:pi-mcp-adapter"
-  ]
+  "npmCommand": ["npm", "--prefix", "~/.npm-global"],
+  "packages": ["npm:@plannotator/pi-extension", "npm:pi-mcp-adapter"]
 }
+

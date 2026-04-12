@@ -139,6 +139,7 @@ export default function question(pi: ExtensionAPI) {
 
           if (matchesKey(data, Key.enter)) {
             const selected = allOptions[optionIndex];
+            if (!selected) return;
             if (selected.isOther) {
               editMode = true;
               refresh();
@@ -163,8 +164,7 @@ export default function question(pi: ExtensionAPI) {
           add(theme.fg("text", ` ${params.question}`));
           lines.push("");
 
-          for (let i = 0; i < allOptions.length; i++) {
-            const opt = allOptions[i];
+          for (const [i, opt] of allOptions.entries()) {
             const selected = i === optionIndex;
             const isOther = opt.isOther === true;
             const prefix = selected ? theme.fg("accent", "> ") : "  ";
