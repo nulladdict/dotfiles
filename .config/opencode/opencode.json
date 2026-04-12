@@ -7,10 +7,10 @@
       "type": "local",
       "command": ["npx", "-y", "chrome-devtools-mcp@latest", "--autoConnect"]
     },
-    "context7": {
+    "exa": {
       "enabled": false,
       "type": "remote",
-      "url": "https://mcp.context7.com/mcp"
+      "url": "https://mcp.exa.ai/mcp"
     }
   },
   "autoupdate": true
