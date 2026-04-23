@@ -22,26 +22,6 @@
 
           nixpkgs.config.allowUnfree = true;
 
-          nixpkgs.overlays = [
-            (final: prev: {
-              tree-sitter = prev.tree-sitter.overrideAttrs (old: rec {
-                version = "0.26.7";
-                src = prev.fetchFromGitHub {
-                  owner = "tree-sitter";
-                  repo = "tree-sitter";
-                  rev = "v${version}";
-                  hash = "sha256-O3c2djKhM+vIYunthDApi9sw/gFH/FBME1uR4N+9MFM=";
-                  fetchSubmodules = true;
-                };
-                patches = [ ];
-                cargoDeps = prev.rustPlatform.fetchCargoVendor {
-                  inherit src;
-                  hash = "sha256-zh6KsnZ7s6VXGCggoYbLGeGnEZ7g7anjkz8C5/L4yXQ=";
-                };
-              });
-            })
-          ];
-
           # List packages installed in system profile. To search by name, run:
           # $ nix-env -qaP | grep wget
           environment.systemPackages = with pkgs; [
@@ -53,8 +33,8 @@
             gh
             delta
 
-            kitty
             ghostty-bin
+            tree-sitter
             neovim
 
             fzf
@@ -66,7 +46,6 @@
             wget
             htop
             ffmpeg
-
             vault
 
             nodejs_24
@@ -75,8 +54,6 @@
             go
 
             uv
-
-            tree-sitter
           ];
 
           npmGlobal = {
@@ -111,6 +88,7 @@
               "transmission"
               "iina"
               "visual-studio-code"
+              "kitlangton-hex"
             ];
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
@@ -150,7 +128,7 @@
             dock.autohide = true;
             dock.show-recents = false;
             dock.persistent-apps = [
-              "/Applications/Brave Browser.app"
+              "/Applications/Brave Origin Nightly.app/"
               "/Applications/Nix Apps/Ghostty.app"
               "/System/Applications/Mail.app"
               "/Applications/Telegram.app"
