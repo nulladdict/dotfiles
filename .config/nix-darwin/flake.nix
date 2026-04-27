@@ -73,12 +73,14 @@
               "daipeihust/tap"
               "nikitabobko/tap"
               "iina/homebrew-mpv-iina"
+              "nulladdict/tap"
             ];
             brews = [
               "im-select"
             ];
             casks = [
-              "brave-browser"
+              # "brave-browser"
+              "brave-origin@nightly"
               "betterdisplay"
               "aerospace"
               "telegram"
@@ -128,7 +130,7 @@
             dock.autohide = true;
             dock.show-recents = false;
             dock.persistent-apps = [
-              "/Applications/Brave Origin Nightly.app/"
+              "/Applications/Brave Origin Nightly.app"
               "/Applications/Nix Apps/Ghostty.app"
               "/System/Applications/Mail.app"
               "/Applications/Telegram.app"
