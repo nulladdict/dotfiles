@@ -138,6 +138,8 @@ export PATH="$PATH:/Users/nulladdict/.lmstudio/bin"
 # opencode
 alias oc='opencode'
 compdef oc='opencode'
+export OPENCODE_DISABLE_PRUNE='true'
+export OPENCODE_EXPERIMENTAL_MARKDOWN='true'
 
 # lazygit
 export XDG_CONFIG_HOME="$HOME/.config"
