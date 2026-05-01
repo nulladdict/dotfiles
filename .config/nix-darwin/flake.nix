@@ -16,9 +16,6 @@
     let
       configuration =
         { pkgs, ... }:
-        let
-          plannotator = pkgs.callPackage ./packages/plannotator.nix { };
-        in
         {
           # Using Determinate Nix
           nix.enable = false;
@@ -35,7 +32,6 @@
             lazygit
             gh
             delta
-            plannotator
 
             ghostty-bin
             tree-sitter
@@ -81,6 +77,7 @@
             ];
             brews = [
               "im-select"
+              "plannotator"
             ];
             casks = [
               # "brave-browser"
