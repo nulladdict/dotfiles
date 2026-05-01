@@ -1,9 +1,9 @@
 {
-  "lastChangelogVersion": "0.70.6",
+  "lastChangelogVersion": "0.71.1",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "medium",
-  "transport": "websocket",
+  "transport": "websocket-cached",
   "theme": "rose-pine",
   "npmCommand": ["npm", "--prefix", "~/.npm-global"],
   "packages": ["npm:@plannotator/pi-extension", "npm:pi-mcp-adapter"],
