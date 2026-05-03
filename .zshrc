@@ -131,18 +131,11 @@ export FZF_DEFAULT_COMMAND='rg --files'
 # npm-global
 export PATH="$HOME/.npm-global/bin:$PATH"
 
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/nulladdict/.lmstudio/bin"
-# End of LM Studio CLI section
-
 # opencode
 alias oc='opencode'
 compdef oc='opencode'
 export OPENCODE_DISABLE_PRUNE='true'
 export OPENCODE_EXPERIMENTAL_MARKDOWN='true'
-
-# lazygit
-export XDG_CONFIG_HOME="$HOME/.config"
 
 # uv
 export PATH="/Users/nulladdict/.local/bin:$PATH"

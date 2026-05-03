@@ -31,7 +31,6 @@
             git-lfs
             lazygit
             gh
-            delta
 
             ghostty-bin
             tree-sitter

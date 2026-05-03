@@ -82,7 +82,12 @@ return {
                 },
             },
             input = {},
-            picker = { ui_select = true },
+            picker = {
+                ui_select = true,
+                previewers = {
+                    diff = { style = 'syntax' },
+                },
+            },
             notifier = {},
         },
         keys = {
