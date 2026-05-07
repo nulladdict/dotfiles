@@ -1,4 +1,4 @@
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 const GUIDELINE = "- Use bash for file operations like ls, rg, find";
 const INSERT = "- Prefer modern shell tools: use rg instead of grep and fd instead of find";

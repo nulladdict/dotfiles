@@ -61,8 +61,7 @@
             packages = [
               "opencode-ai"
               "@openai/codex"
-              "@sourcegraph/amp"
-              "@mariozechner/pi-coding-agent"
+              "@earendil-works/pi-coding-agent"
             ];
           };
 
