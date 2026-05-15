@@ -6,5 +6,5 @@ require('keymaps')
 require('options')
 
 if vim.g.vscode then
-    require('vscode')
+    require('vs_code')
 end

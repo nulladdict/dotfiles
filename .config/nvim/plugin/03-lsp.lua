@@ -145,7 +145,15 @@ do
     })
 
     -- Diagnostic
-    vim.diagnostic.config({ virtual_text = true })
+    vim.diagnostic.config({
+        virtual_text = true,
+        severity_sort = true,
+        jump = {
+            on_jump = function(_, bufnr)
+                vim.diagnostic.open_float({ bufnr = bufnr, scope = 'cursor', focus = false })
+            end,
+        },
+    })
     vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
     vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 end

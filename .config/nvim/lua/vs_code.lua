@@ -17,7 +17,7 @@ local vscode_map = function(keys, action)
     end)
 end
 
-vscode_map('==', 'editor.action.format')
+vscode_map('==', 'editor.action.formatDocument')
 
 vscode_map('grn', 'editor.action.rename')
 vscode_map('gra', 'editor.action.quickFix')
