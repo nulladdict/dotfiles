@@ -72,10 +72,12 @@
               "nikitabobko/tap"
               "iina/homebrew-mpv-iina"
               "nulladdict/tap"
+              "modem-dev/tap"
             ];
             brews = [
               "im-select"
               "plannotator"
+              "hunk"
             ];
             casks = [
               # "brave-browser"

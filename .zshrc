@@ -142,3 +142,6 @@ export PATH="/Users/nulladdict/.local/bin:$PATH"
 
 # dotnet
 export PATH="$PATH:/Users/nulladdict/.dotnet/tools"
+
+# lazygit
+export XDG_CONFIG_HOME="$HOME/.config"
