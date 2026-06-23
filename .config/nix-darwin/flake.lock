@@ -1,5 +1,24 @@
 {
   "nodes": {
+    "herdr": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1781540022,
+        "narHash": "sha256-DjCSwhRMBRE9lSvjpX6m8IpoEgUbOP1jcmeXMlQlSQY=",
+        "owner": "ogulcancelik",
+        "repo": "herdr",
+        "rev": "0bf9bb58eb9c9495f660aed1bd9336121b953fdc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ogulcancelik",
+        "ref": "v0.7.0",
+        "repo": "herdr",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -7,11 +26,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779036909,
-        "narHash": "sha256-zXcwYQGCT6pzinK+1dBB2ekTVtfxGZAapb3Evdcu4fY=",
+        "lastModified": 1781761792,
+        "narHash": "sha256-rCPytmKNjctLloB6UgK5CRrHSwV4b0ygxtJLPPp8R14=",
         "owner": "nix-darwin",
         "repo": "nix-darwin",
-        "rev": "56c666e108467d87d13508936aade6d567f2a501",
+        "rev": "a1fa429e945becaf60468600daf649be4ba0350c",
         "type": "github"
       },
       "original": {
@@ -23,11 +42,27 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1780150753,
-        "narHash": "sha256-ybTmYeHI9v26gACAL4yY83tmI639BYOpuzUhAwOql48=",
+        "lastModified": 1779357205,
+        "narHash": "sha256-cCO8aTqss5x9Ky8GWkpY0Hy5fyTZEbtifSUV8QjSzic=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0578ce5efe2122710777fd8bc27c51bdfa03eb3f",
+        "rev": "f83fc3c307e74bc5fd5adb7eb6b8b13ffd2a36e1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1782066021,
+        "narHash": "sha256-f4UmmRbYlfCDHHUfvfxhcrV5MAp17qZPEkjyoWd6zmo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "6e7f01b46bc2d02e4293f113384e830bafe244ac",
         "type": "github"
       },
       "original": {
@@ -39,8 +74,9 @@
     },
     "root": {
       "inputs": {
+        "herdr": "herdr",
         "nix-darwin": "nix-darwin",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       }
     }
   },

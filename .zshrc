@@ -120,6 +120,7 @@ alias envlocal='env $(grep -v "^#" .env.local | xargs)'
 alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 compdef dot='git'
 alias dotl='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+alias h='herdr'
 
 # FZF settings
 if [ -n "${commands[fzf-share]}" ]; then

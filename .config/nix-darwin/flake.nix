@@ -5,6 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/master";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    herdr.url = "github:ogulcancelik/herdr/v0.7.0";
   };
 
   outputs =
@@ -12,6 +13,7 @@
       self,
       nixpkgs,
       nix-darwin,
+      herdr,
     }:
     let
       configuration =
@@ -53,6 +55,8 @@
             go
 
             uv
+
+            herdr.packages.${pkgs.stdenv.hostPlatform.system}.default
           ];
 
           npmGlobal = {
@@ -68,19 +72,28 @@
           homebrew = {
             enable = true;
             taps = [
-              "daipeihust/tap"
-              "nikitabobko/tap"
-              "iina/homebrew-mpv-iina"
-              "nulladdict/tap"
-              "modem-dev/tap"
+              {
+                name = "daipeihust/tap";
+                trusted = true;
+              }
+              {
+                name = "nikitabobko/tap";
+                trusted = true;
+              }
+              {
+                name = "iina/homebrew-mpv-iina";
+                trusted = true;
+              }
+              {
+                name = "modem-dev/tap";
+                trusted = true;
+              }
             ];
             brews = [
               "im-select"
-              "plannotator"
               "hunk"
             ];
             casks = [
-              # "brave-browser"
               "brave-origin@nightly"
               "betterdisplay"
               "aerospace"
