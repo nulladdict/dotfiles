@@ -1,5 +1,10 @@
 onboarding = false
 
+[keys]
+open_worktree = "prefix+shift+o"
+remove_worktree = "prefix+alt+d"
+copy_mode = "prefix+y"
+
 [ui]
 prompt_new_tab_name = false
 
