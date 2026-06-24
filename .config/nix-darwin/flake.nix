@@ -105,6 +105,7 @@
               "iina"
               "visual-studio-code"
               "kitlangton-hex"
+              "codex-app"
             ];
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
