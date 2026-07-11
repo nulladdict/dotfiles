@@ -171,10 +171,5 @@ end
 
 vim.pack.add({ 'https://github.com/seblyng/roslyn.nvim' })
 do
-    require('roslyn').setup({
-        filewatching = 'roslyn',
-        extensions = {
-            razor = { enabled = false },
-        },
-    })
+    require('roslyn').setup({ filewatching = 'roslyn' })
 end
