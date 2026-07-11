@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/master";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    herdr.url = "github:ogulcancelik/herdr/v0.7.0";
+    herdr.url = "github:ogulcancelik/herdr/v0.7.3";
   };
 
   outputs =
@@ -21,6 +21,10 @@
         {
           # Using Determinate Nix
           nix.enable = false;
+
+          # https://github.com/nix-darwin/nix-darwin/issues/1817
+          documentation.enable = false;
+          system.tools.darwin-uninstaller.enable = false;
 
           nixpkgs.config.allowUnfree = true;
 
