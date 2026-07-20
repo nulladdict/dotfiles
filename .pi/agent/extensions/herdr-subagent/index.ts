@@ -86,16 +86,19 @@ async function formatWaitOutput(
 }
 
 const SubagentParams = Type.Object({
-  prompt: Type.String({ description: "Task for the new persistent Pi agent" }),
+  prompt: Type.String({
+    description:
+      "Task prompt for the subagent. Must be self-contained: include all needed context, file paths, and what to report back if any.",
+  }),
 });
 
 const SubagentSendParams = Type.Object({
-  agent: Type.String({ description: "Herdr agent name returned by subagent" }),
+  agent: Type.String({ description: "Subagent's name" }),
   prompt: Type.String({ description: "Follow-up or steering message to deliver" }),
 });
 
 const SubagentWaitParams = Type.Object({
-  agent: Type.String({ description: "Herdr agent name returned by subagent" }),
+  agent: Type.String({ description: "Subagent's name" }),
 });
 
 export default function (pi: ExtensionAPI): void {
@@ -106,8 +109,10 @@ export default function (pi: ExtensionAPI): void {
   pi.registerTool({
     name: "subagent",
     label: "Subagent",
-    description:
-      "Start a persistent subagent asynchronously. Returns its name immediately; continue other work, then call subagent_wait when its result is needed.",
+    description: [
+      "Start a background subagent: a fully autonomous, headless pi thread with its own context window which runs in a separate persistent Herdr pane.",
+      "This returns immediately with the subagent's name, which can be used to send follow-up messages or wait for its output if needed.",
+    ].join(" "),
     parameters: SubagentParams,
     async execute(_toolCallId, params, signal, _onUpdate, ctx) {
       const workspaceId = process.env.HERDR_WORKSPACE_ID;
@@ -157,8 +162,10 @@ export default function (pi: ExtensionAPI): void {
   pi.registerTool({
     name: "subagent_send",
     label: "Send to subagent",
-    description:
-      "Send a follow-up or steering prompt to a subagent. Use subagent_wait afterward to get its latest response.",
+    description: [
+      "Send a follow-up or steering prompt to a subagent.",
+      "Use subagent_wait afterward if you need to get its latest response to continue your main thread.",
+    ].join(" "),
     parameters: SubagentSendParams,
     async execute(_toolCallId, params, signal) {
       const resolved = await herdr.getAgent(params.agent, signal);
@@ -173,7 +180,11 @@ export default function (pi: ExtensionAPI): void {
   pi.registerTool({
     name: "subagent_wait",
     label: "Wait for subagent",
-    description: `Wait for a subagent to become idle or blocked, then read its latest assistant response.`,
+    description: [
+      "Wait for a subagent to become idle or blocked, then read its latest assistant response.",
+      "Use this if you need the subagent's output to continue your main thread.",
+      "Do not wait for a subagent that is still running if you don't need its output, as it will block your main thread until the subagent finishes.",
+    ].join(" "),
     parameters: SubagentWaitParams,
     async execute(_toolCallId, params, signal) {
       const initial = await herdr.getAgent(params.agent, signal);

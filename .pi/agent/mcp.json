@@ -1,8 +1,12 @@
 {
   "mcpServers": {
-    "chrome-devtools": {
+    "playwright": {
       "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest", "--autoConnect"]
+      "args": ["@playwright/mcp@latest", "--extension"],
+      "env": {
+        "PLAYWRIGHT_MCP_EXECUTABLE_PATH": "/Applications/Brave Origin Nightly.app/Contents/MacOS/Brave Origin Nightly",
+        "PWTEST_EXTENSION_USER_DATA_DIR": "/Users/nulladdict/Library/Application Support/BraveSoftware/Brave-Origin-Nightly"
+      }
     }
   }
 }

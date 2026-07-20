@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/master";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    herdr.url = "github:ogulcancelik/herdr/v0.7.3";
+    herdr.url = "github:ogulcancelik/herdr/v0.7.4";
   };
 
   outputs =
@@ -21,10 +21,6 @@
         {
           # Using Determinate Nix
           nix.enable = false;
-
-          # https://github.com/nix-darwin/nix-darwin/issues/1817
-          documentation.enable = false;
-          system.tools.darwin-uninstaller.enable = false;
 
           nixpkgs.config.allowUnfree = true;
 
@@ -109,7 +105,7 @@
               "iina"
               "visual-studio-code"
               "kitlangton-hex"
-              "codex-app"
+              "chatgpt"
             ];
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;

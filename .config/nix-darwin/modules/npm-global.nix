@@ -37,7 +37,7 @@ in
       sudo --preserve-env=PATH --user=${lib.escapeShellArg config.system.primaryUser} --set-home ${pkgs.bash}/bin/bash -c '
         set -euo pipefail
         mkdir -p ${lib.escapeShellArg cfg.prefix}
-        npm install -g --prefix ${lib.escapeShellArg cfg.prefix} ${lib.escapeShellArgs cfg.packages}
+        npm install -g --dangerously-allow-all-scripts --prefix ${lib.escapeShellArg cfg.prefix} ${lib.escapeShellArgs cfg.packages}
       '
     '';
   };
