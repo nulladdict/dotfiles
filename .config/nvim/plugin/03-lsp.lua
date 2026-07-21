@@ -117,8 +117,8 @@ do
         'sqlls',
         'stylelint_lsp',
         'tailwindcss',
-        -- 'tsgo',
-        'vtsls',
+        'tsgo',
+        -- 'vtsls',
         'yamlls',
     })
 

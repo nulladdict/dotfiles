@@ -24,6 +24,7 @@ do
                 'path',
                 'buffer',
                 'scss-vars',
+                'css-vars',
             },
             providers = {
                 lazydev = {
@@ -40,6 +41,15 @@ do
                             'packages/compass/src/styles/colors.scss',
                             'packages/compass/src/styles/common.scss',
                             'packages/compass/src/styles/mixins.scss',
+                        },
+                    },
+                },
+                ['css-vars'] = {
+                    name = 'css-vars',
+                    module = 'css-vars',
+                    opts = {
+                        include = {
+                            'node_modules/@skbkontur/colors/tokens/brand-blue_accent-gray.css',
                         },
                     },
                 },
