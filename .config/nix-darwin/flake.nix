@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/master";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    herdr.url = "github:ogulcancelik/herdr/v0.7.4";
+    herdr.url = "github:ogulcancelik/herdr/v0.7.5";
   };
 
   outputs =
