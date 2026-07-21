@@ -136,7 +136,6 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 alias oc='opencode'
 compdef oc='opencode'
 export OPENCODE_DISABLE_PRUNE='true'
-export OPENCODE_EXPERIMENTAL_MARKDOWN='true'
 
 # uv
 export PATH="/Users/nulladdict/.local/bin:$PATH"

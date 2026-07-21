@@ -3,15 +3,13 @@
   "plugin": ["@plannotator/opencode@latest"],
   "lsp": false,
   "mcp": {
-    "chrome-devtools": {
-      "enabled": false,
+    "playwright": {
       "type": "local",
-      "command": ["npx", "-y", "chrome-devtools-mcp@latest", "--autoConnect"]
-    },
-    "exa": {
-      "enabled": false,
-      "type": "remote",
-      "url": "https://mcp.exa.ai/mcp"
+      "command": ["npx", "@playwright/mcp@latest", "--extension"],
+      "environment": {
+        "PLAYWRIGHT_MCP_EXECUTABLE_PATH": "/Applications/Brave Origin Nightly.app/Contents/MacOS/Brave Origin Nightly",
+        "PWTEST_EXTENSION_USER_DATA_DIR": "/Users/nulladdict/Library/Application Support/BraveSoftware/Brave-Origin-Nightly"
+      }
     }
   },
   "autoupdate": true
