@@ -11,35 +11,7 @@ import {
   type ExtensionAPI,
 } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
-import { Herdr, type HerdrAgentStatus, type SettledStatus } from "./herdr.ts";
-
-async function waitForSettledStatus(
-  herdr: Herdr,
-  agent: string,
-  signal: AbortSignal | undefined,
-): Promise<SettledStatus> {
-  const stopOtherWait = new AbortController();
-  const waitSignal = signal
-    ? AbortSignal.any([signal, stopOtherWait.signal])
-    : stopOtherWait.signal;
-  try {
-    const response = await Promise.race([
-      herdr.waitForAgentStatus(agent, "idle", waitSignal),
-      herdr.waitForAgentStatus(agent, "blocked", waitSignal),
-    ]);
-    const status =
-      "result" in response ? response.result.agent.agent_status : response.data.agent_status;
-    return status === "blocked" ? "blocked" : "idle";
-  } finally {
-    stopOtherWait.abort();
-  }
-}
-
-function normalizeSettledStatus(status: HerdrAgentStatus): SettledStatus | undefined {
-  if (status === "blocked") return "blocked";
-  if (status === "idle" || status === "done") return "idle";
-  return undefined;
-}
+import { Herdr } from "./herdr.ts";
 
 function latestAssistantText(session: SessionManager): string {
   for (const entry of session.buildContextEntries().toReversed()) {
@@ -59,7 +31,7 @@ function latestAssistantText(session: SessionManager): string {
 }
 
 async function formatWaitOutput(
-  status: SettledStatus,
+  status: string,
   assistantText: string,
   signal?: AbortSignal,
 ): Promise<{ text: string; fullOutputPath?: string }> {
@@ -93,12 +65,12 @@ const SubagentParams = Type.Object({
 });
 
 const SubagentSendParams = Type.Object({
-  agent: Type.String({ description: "Subagent's name" }),
-  prompt: Type.String({ description: "Follow-up or steering message to deliver" }),
+  agent: Type.String({ description: "Generated name returned by subagent" }),
+  prompt: Type.String({ description: "Follow-up or steering prompt to submit" }),
 });
 
 const SubagentWaitParams = Type.Object({
-  agent: Type.String({ description: "Subagent's name" }),
+  agent: Type.String({ description: "Generated name returned by subagent" }),
 });
 
 export default function (pi: ExtensionAPI): void {
@@ -110,14 +82,15 @@ export default function (pi: ExtensionAPI): void {
     name: "subagent",
     label: "Subagent",
     description: [
-      "Start a background subagent: a fully autonomous, headless pi thread with its own context window which runs in a separate persistent Herdr pane.",
-      "This returns immediately with the subagent's name, which can be used to send follow-up messages or wait for its output if needed.",
+      "Start an independent Pi subagent with its own context window in a new background Herdr tab.",
+      "Returns the generated agent name after submitting the initial prompt and observing the agent working, without waiting for completion.",
+      "Use the name with subagent_send for follow-ups.",
+      "Only call subagent_wait when you need the response to continue; otherwise leave the subagent running in the background.",
     ].join(" "),
     parameters: SubagentParams,
     async execute(_toolCallId, params, signal, _onUpdate, ctx) {
       const workspaceId = process.env.HERDR_WORKSPACE_ID;
-      const tabId = process.env.HERDR_TAB_ID;
-      if (!workspaceId || !tabId || !process.env.HERDR_PANE_ID) {
+      if (!workspaceId || !process.env.HERDR_PANE_ID) {
         throw new Error("Herdr parent pane metadata is unavailable");
       }
       if (!ctx.model) {
@@ -139,21 +112,18 @@ export default function (pi: ExtensionAPI): void {
       ];
       if (activeTools.length > 0) piArgs.push("--tools", activeTools.join(","));
       else piArgs.push("--no-tools");
-      piArgs.push(params.prompt);
-
-      const response = await herdr.startAgent(
-        { name: agent, cwd: ctx.cwd, workspaceId, tabId, piArgs },
-        signal,
-      );
-      const paneId = response.result.agent.pane_id;
-      const move = await herdr.movePaneToNewTab(paneId, workspaceId, agent, signal);
+      const tab = await herdr.createTab({ cwd: ctx.cwd, label: agent, workspaceId }, signal);
+      const paneId = tab.result.root_pane.pane_id;
+      await herdr.waitForShell(paneId, signal);
+      await herdr.startAgent({ name: agent, paneId, piArgs }, signal);
+      const prompted = await herdr.promptAgent(agent, params.prompt, signal);
       return {
         content: [{ type: "text", text: agent }],
         details: {
           agent,
           paneId,
-          tabId: move.result.move_result.created_tab.tab_id,
-          status: response.result.agent.agent_status,
+          tabId: tab.result.tab.tab_id,
+          status: prompted.result.agent.agent_status,
         },
       };
     },
@@ -163,16 +133,16 @@ export default function (pi: ExtensionAPI): void {
     name: "subagent_send",
     label: "Send to subagent",
     description: [
-      "Send a follow-up or steering prompt to a subagent.",
-      "Use subagent_wait afterward if you need to get its latest response to continue your main thread.",
+      "Submit a follow-up or steering prompt to a running subagent.",
+      "Returns after submitting the prompt and observing the agent working, without waiting for completion.",
+      "Only call subagent_wait afterward when you need the response to continue; otherwise do not wait.",
     ].join(" "),
     parameters: SubagentSendParams,
     async execute(_toolCallId, params, signal) {
-      const resolved = await herdr.getAgent(params.agent, signal);
-      await herdr.runInPane(resolved.result.agent.pane_id, params.prompt, signal);
+      const prompted = await herdr.promptAgent(params.agent, params.prompt, signal);
       return {
         content: [{ type: "text", text: `Delivered to ${params.agent}.` }],
-        details: { agent: params.agent, paneId: resolved.result.agent.pane_id },
+        details: { agent: params.agent, paneId: prompted.result.agent.pane_id },
       };
     },
   });
@@ -181,17 +151,13 @@ export default function (pi: ExtensionAPI): void {
     name: "subagent_wait",
     label: "Wait for subagent",
     description: [
-      "Wait for a subagent to become idle or blocked, then read its latest assistant response.",
-      "Use this if you need the subagent's output to continue your main thread.",
-      "Do not wait for a subagent that is still running if you don't need its output, as it will block your main thread until the subagent finishes.",
+      "Wait indefinitely for a subagent to become idle, done, or blocked, then return its status and latest assistant response.",
+      "Use this only when you need the response or status to continue your main thread.",
     ].join(" "),
     parameters: SubagentWaitParams,
     async execute(_toolCallId, params, signal) {
-      const initial = await herdr.getAgent(params.agent, signal);
-      const initialStatus = normalizeSettledStatus(initial.result.agent.agent_status);
-      const status = initialStatus ?? (await waitForSettledStatus(herdr, params.agent, signal));
-
-      const resolved = await herdr.getAgent(params.agent, signal);
+      const resolved = await herdr.waitForAgent(params.agent, signal);
+      const status = resolved.result.agent.agent_status;
       const session = resolved.result.agent.agent_session;
       if (!session || session.kind !== "path" || !session.value) {
         throw new Error(`Agent ${params.agent} has no session path`);

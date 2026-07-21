@@ -25,6 +25,28 @@ const AgentInfoSchema = Type.Object({
   agent_session: Type.Optional(AgentSessionSchema),
 });
 
+const PaneInfoSchema = Type.Object({
+  pane_id: Type.String(),
+  tab_id: Type.String(),
+  workspace_id: Type.String(),
+});
+
+const TabInfoSchema = Type.Object({
+  tab_id: Type.String(),
+  workspace_id: Type.String(),
+});
+
+const CreateTabResponseSchema = Type.Object({
+  id: Type.String(),
+  result: Type.Object({
+    root_pane: PaneInfoSchema,
+    tab: TabInfoSchema,
+    type: Type.Literal("tab_created"),
+  }),
+});
+
+export type CreateTabResponse = Static<typeof CreateTabResponseSchema>;
+
 const StartAgentResponseSchema = Type.Object({
   id: Type.String(),
   result: Type.Object({
@@ -36,7 +58,37 @@ const StartAgentResponseSchema = Type.Object({
 
 export type StartAgentResponse = Static<typeof StartAgentResponseSchema>;
 
-const GetAgentResponseSchema = Type.Object({
+const PaneProcessInfoResponseSchema = Type.Object({
+  id: Type.String(),
+  result: Type.Object({
+    process_info: Type.Object({
+      pane_id: Type.String(),
+      shell_pid: Type.Optional(Type.Integer()),
+      foreground_process_group_id: Type.Optional(Type.Integer()),
+      foreground_processes: Type.Optional(
+        Type.Array(
+          Type.Object({
+            pid: Type.Integer(),
+            name: Type.String(),
+          }),
+        ),
+      ),
+    }),
+    type: Type.Literal("pane_process_info"),
+  }),
+});
+
+const PromptAgentResponseSchema = Type.Object({
+  id: Type.String(),
+  result: Type.Object({
+    agent: AgentInfoSchema,
+    type: Type.Literal("agent_prompted"),
+  }),
+});
+
+export type PromptAgentResponse = Static<typeof PromptAgentResponseSchema>;
+
+const WaitForAgentResponseSchema = Type.Object({
   id: Type.String(),
   result: Type.Object({
     agent: AgentInfoSchema,
@@ -44,55 +96,16 @@ const GetAgentResponseSchema = Type.Object({
   }),
 });
 
-export type GetAgentResponse = Static<typeof GetAgentResponseSchema>;
-
-const RunInPaneResponseSchema = Type.Undefined();
-export type RunInPaneResponse = Static<typeof RunInPaneResponseSchema>;
-
-const MovePaneToNewTabResponseSchema = Type.Object({
-  id: Type.String(),
-  result: Type.Object({
-    move_result: Type.Object({
-      changed: Type.Boolean(),
-      created_tab: Type.Object({
-        tab_id: Type.String(),
-        workspace_id: Type.String(),
-      }),
-      pane: Type.Object({
-        pane_id: Type.String(),
-        tab_id: Type.String(),
-        workspace_id: Type.String(),
-      }),
-    }),
-    type: Type.Literal("pane_move"),
-  }),
-});
-
-export type MovePaneToNewTabResponse = Static<typeof MovePaneToNewTabResponseSchema>;
-
-const WaitResolvedResponseSchema = GetAgentResponseSchema;
-const WaitChangedResponseSchema = Type.Object({
-  event: Type.Literal("pane.agent_status_changed"),
-  data: Type.Object({
-    pane_id: Type.String(),
-    agent_status: AgentStatusSchema,
-    agent: Type.Optional(Type.String()),
-  }),
-});
-const WaitForAgentStatusResponseSchema = Type.Union([
-  WaitResolvedResponseSchema,
-  WaitChangedResponseSchema,
-]);
-
-export type WaitForAgentStatusResponse = Static<typeof WaitForAgentStatusResponseSchema>;
-export type HerdrAgentStatus = Static<typeof AgentStatusSchema>;
-export type SettledStatus = "idle" | "blocked";
+export type WaitForAgentResponse = Static<typeof WaitForAgentResponseSchema>;
+export interface CreateTabInput {
+  cwd: string;
+  label: string;
+  workspaceId: string;
+}
 
 export interface StartAgentInput {
   name: string;
-  cwd: string;
-  workspaceId: string;
-  tabId: string;
+  paneId: string;
   piArgs: string[];
 }
 
@@ -132,6 +145,53 @@ export class Herdr {
     this.pi = pi;
   }
 
+  async createTab(
+    input: CreateTabInput,
+    signal: AbortSignal | undefined,
+  ): Promise<CreateTabResponse> {
+    const args = [
+      "tab",
+      "create",
+      "--workspace",
+      input.workspaceId,
+      "--cwd",
+      input.cwd,
+      "--label",
+      input.label,
+      "--no-focus",
+    ];
+    const result = await this.pi.exec("herdr", args, signal ? { signal } : {});
+    throwForFailedCommand("herdr tab create", result);
+    return parseResponse("herdr tab create", result.stdout, CreateTabResponseSchema);
+  }
+
+  async waitForShell(paneId: string, signal: AbortSignal | undefined): Promise<void> {
+    // Work around Herdr 0.7.5 checking shell availability before agent start's timeout begins.
+    while (true) {
+      const result = await this.pi.exec(
+        "herdr",
+        ["pane", "process-info", "--pane", paneId],
+        signal ? { signal } : {},
+      );
+      throwForFailedCommand("herdr pane process-info", result);
+      const response = parseResponse(
+        "herdr pane process-info",
+        result.stdout,
+        PaneProcessInfoResponseSchema,
+      );
+      const info = response.result.process_info;
+      const processes = info.foreground_processes ?? [];
+      const shell = processes.length === 1 ? processes[0] : undefined;
+      if (
+        info.shell_pid !== undefined &&
+        info.foreground_process_group_id === info.shell_pid &&
+        shell?.pid === info.shell_pid
+      ) {
+        return;
+      }
+    }
+  }
+
   async startAgent(
     input: StartAgentInput,
     signal: AbortSignal | undefined,
@@ -140,15 +200,11 @@ export class Herdr {
       "agent",
       "start",
       input.name,
-      "--cwd",
-      input.cwd,
-      "--workspace",
-      input.workspaceId,
-      "--tab",
-      input.tabId,
-      "--no-focus",
-      "--",
+      "--kind",
       "pi",
+      "--pane",
+      input.paneId,
+      "--",
       ...input.piArgs,
     ];
     const result = await this.pi.exec("herdr", args, signal ? { signal } : {});
@@ -156,62 +212,26 @@ export class Herdr {
     return parseResponse("herdr agent start", result.stdout, StartAgentResponseSchema);
   }
 
-  async getAgent(agent: string, signal: AbortSignal | undefined): Promise<GetAgentResponse> {
-    const result = await this.pi.exec("herdr", ["agent", "get", agent], signal ? { signal } : {});
-    throwForFailedCommand("herdr agent get", result);
-    return parseResponse("herdr agent get", result.stdout, GetAgentResponseSchema);
-  }
-
-  async runInPane(
-    paneId: string,
+  async promptAgent(
+    agent: string,
     prompt: string,
     signal: AbortSignal | undefined,
-  ): Promise<RunInPaneResponse> {
+  ): Promise<PromptAgentResponse> {
     const result = await this.pi.exec(
       "herdr",
-      ["pane", "run", paneId, prompt],
+      ["agent", "prompt", agent, prompt, "--wait", "--until", "working"],
       signal ? { signal } : {},
     );
-    throwForFailedCommand("herdr pane run", result);
-    return parseResponse("herdr pane run", result.stdout, RunInPaneResponseSchema);
+    throwForFailedCommand("herdr agent prompt", result);
+    return parseResponse("herdr agent prompt", result.stdout, PromptAgentResponseSchema);
   }
 
-  async movePaneToNewTab(
-    paneId: string,
-    workspaceId: string,
-    label: string,
-    signal: AbortSignal | undefined,
-  ): Promise<MovePaneToNewTabResponse> {
-    const result = await this.pi.exec(
-      "herdr",
-      [
-        "pane",
-        "move",
-        paneId,
-        "--new-tab",
-        "--workspace",
-        workspaceId,
-        "--label",
-        label,
-        "--no-focus",
-      ],
-      signal ? { signal } : {},
-    );
-    throwForFailedCommand("herdr pane move", result);
-    return parseResponse("herdr pane move", result.stdout, MovePaneToNewTabResponseSchema);
-  }
-
-  async waitForAgentStatus(
+  async waitForAgent(
     agent: string,
-    status: SettledStatus,
     signal: AbortSignal | undefined,
-  ): Promise<WaitForAgentStatusResponse> {
-    const result = await this.pi.exec(
-      "herdr",
-      ["agent", "wait", agent, "--status", status],
-      signal ? { signal } : {},
-    );
+  ): Promise<WaitForAgentResponse> {
+    const result = await this.pi.exec("herdr", ["agent", "wait", agent], signal ? { signal } : {});
     throwForFailedCommand("herdr agent wait", result);
-    return parseResponse("herdr agent wait", result.stdout, WaitForAgentStatusResponseSchema);
+    return parseResponse("herdr agent wait", result.stdout, WaitForAgentResponseSchema);
   }
 }
