@@ -58,31 +58,38 @@ do
     })
 end
 
-vim.pack.add({ 'https://github.com/github/copilot.vim' })
+vim.pack.add({ 'https://github.com/zbirenbaum/copilot.lua' })
 do
-    vim.g.copilot_workspace_folders = { vim.fn.getcwd() }
-    vim.g.copilot_version = 'latest'
+    require('copilot').setup({
+        panel = { enabled = false },
+        suggestion = {
+            auto_trigger = true,
+            keymap = {
+                accept = '<tab>',
+                accept_word = false,
+                accept_line = false,
+                next = false,
+                prev = false,
+                dismiss = false,
+                toggle_auto_trigger = false,
+            },
+        },
+        workspace_folders = { vim.fn.getcwd() },
+        filetypes = { ['*'] = true },
+        should_attach = function(_, bufname)
+            return not string.match(bufname, '^%.env.*')
+        end,
+    })
 
     local function appy_suggestion()
-        local suggestion = vim.fn['copilot#GetDisplayedSuggestion']()
-        if suggestion.text ~= nil and suggestion.text ~= '' then
-            return vim.fn['copilot#Accept']('')
-        end
-        return ''
+        require('copilot.suggestion').accept()
     end
     local function clear_suggestion()
-        vim.fn['copilot#Dismiss']()
+        require('copilot.suggestion').dismiss()
     end
 
     vim.keymap.set({ 'i', 'n' }, '<D-j>', appy_suggestion, { expr = true, replace_keycodes = false })
     vim.keymap.set({ 'i', 'n' }, '<D-о>', appy_suggestion, { expr = true, replace_keycodes = false })
     vim.keymap.set({ 'i', 'n' }, '<D-l>', clear_suggestion, { silent = true })
     vim.keymap.set({ 'i', 'n' }, '<D-д>', clear_suggestion, { silent = true })
-
-    vim.api.nvim_create_autocmd('BufEnter', {
-        pattern = { '*.env', '*.env.*' },
-        callback = function()
-            vim.b.copilot_enabled = false
-        end,
-    })
 end
