@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/master";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    herdr.url = "github:ogulcancelik/herdr/v0.7.5";
+    herdr.url = "github:ogulcancelik/herdr/v0.8.0";
   };
 
   outputs =
@@ -50,6 +50,7 @@
             vault
 
             nodejs_24
+            pnpm
             (yarn.override { withNode = false; })
 
             go
@@ -63,7 +64,7 @@
             enable = true;
             nodejs = pkgs.nodejs_24;
             packages = [
-              "opencode-ai"
+              "@opencode-ai/cli@next"
               "@openai/codex"
               "@earendil-works/pi-coding-agent"
             ];
