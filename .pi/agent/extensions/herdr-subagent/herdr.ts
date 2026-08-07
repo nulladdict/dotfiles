@@ -1,6 +1,7 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Type, type Static, type TSchema } from "typebox";
 import { Check } from "typebox/value";
+import { setTimeout } from "node:timers/promises";
 
 const AgentStatusSchema = Type.Union([
   Type.Literal("idle"),
@@ -57,26 +58,6 @@ const StartAgentResponseSchema = Type.Object({
 });
 
 export type StartAgentResponse = Static<typeof StartAgentResponseSchema>;
-
-const PaneProcessInfoResponseSchema = Type.Object({
-  id: Type.String(),
-  result: Type.Object({
-    process_info: Type.Object({
-      pane_id: Type.String(),
-      shell_pid: Type.Optional(Type.Integer()),
-      foreground_process_group_id: Type.Optional(Type.Integer()),
-      foreground_processes: Type.Optional(
-        Type.Array(
-          Type.Object({
-            pid: Type.Integer(),
-            name: Type.String(),
-          }),
-        ),
-      ),
-    }),
-    type: Type.Literal("pane_process_info"),
-  }),
-});
 
 const PromptAgentResponseSchema = Type.Object({
   id: Type.String(),
@@ -165,31 +146,9 @@ export class Herdr {
     return parseResponse("herdr tab create", result.stdout, CreateTabResponseSchema);
   }
 
-  async waitForShell(paneId: string, signal: AbortSignal | undefined): Promise<void> {
+  async waitForShell(_paneId: string, signal: AbortSignal | undefined): Promise<void> {
     // Work around Herdr 0.7.5 checking shell availability before agent start's timeout begins.
-    while (true) {
-      const result = await this.pi.exec(
-        "herdr",
-        ["pane", "process-info", "--pane", paneId],
-        signal ? { signal } : {},
-      );
-      throwForFailedCommand("herdr pane process-info", result);
-      const response = parseResponse(
-        "herdr pane process-info",
-        result.stdout,
-        PaneProcessInfoResponseSchema,
-      );
-      const info = response.result.process_info;
-      const processes = info.foreground_processes ?? [];
-      const shell = processes.length === 1 ? processes[0] : undefined;
-      if (
-        info.shell_pid !== undefined &&
-        info.foreground_process_group_id === info.shell_pid &&
-        shell?.pid === info.shell_pid
-      ) {
-        return;
-      }
-    }
+    await setTimeout(1000, undefined, { signal });
   }
 
   async startAgent(

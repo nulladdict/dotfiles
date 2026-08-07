@@ -1,4 +1,11 @@
 {
+  "settings": {
+    "toolPrefix": "none",
+    "showStatusIcon": false,
+    "mcpFooterStatus": "compact",
+    "scriptMode": false,
+    "freezeDirectTools": true
+  },
   "mcpServers": {
     "playwright": {
       "command": "npx",
@@ -6,7 +13,13 @@
       "env": {
         "PLAYWRIGHT_MCP_EXECUTABLE_PATH": "/Applications/Brave Origin Nightly.app/Contents/MacOS/Brave Origin Nightly",
         "PWTEST_EXTENSION_USER_DATA_DIR": "/Users/nulladdict/Library/Application Support/BraveSoftware/Brave-Origin-Nightly"
-      }
+      },
+      "directTools": ["browser_run_code_unsafe"]
+    },
+    "exa": {
+      "url": "https://mcp.exa.ai/mcp",
+      "directTools": true,
+      "includeTools": ["web_search_exa", "web_fetch_exa"]
     }
   }
 }
