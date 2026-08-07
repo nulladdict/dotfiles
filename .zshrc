@@ -133,9 +133,7 @@ export FZF_DEFAULT_COMMAND='rg --files'
 export PATH="$HOME/.npm-global/bin:$PATH"
 
 # opencode
-alias oc='opencode'
-compdef oc='opencode'
-export OPENCODE_DISABLE_PRUNE='true'
+alias oc='opencode2'
 
 # uv
 export PATH="/Users/nulladdict/.local/bin:$PATH"
