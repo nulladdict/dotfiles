@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto";
 import { mkdtemp, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -57,20 +56,25 @@ async function formatWaitOutput(
   };
 }
 
-const SubagentParams = Type.Object({
-  prompt: Type.String({
+const SpawnAgentParams = Type.Object({
+  task_name: Type.String({
     description:
-      "Task prompt for the subagent. Must be self-contained: include all needed context, file paths, and what to report back if any.",
+      "Short, unique task name containing only lowercase letters, digits, and underscores. Used as both the agent name and Herdr tab name.",
+    pattern: "^[a-z0-9_]+$",
+  }),
+  message: Type.String({
+    description:
+      "Self-contained instructions for a concrete, bounded subtask. Include all relevant context, file paths, constraints, and expected output.",
   }),
 });
 
-const SubagentSendParams = Type.Object({
-  agent: Type.String({ description: "Generated name returned by subagent" }),
-  prompt: Type.String({ description: "Follow-up or steering prompt to submit" }),
+const FollowupTaskParams = Type.Object({
+  target: Type.String({ description: "Task name or live pane ID returned by spawn_agent" }),
+  message: Type.String({ description: "Additional instructions or steering task for the agent" }),
 });
 
-const SubagentWaitParams = Type.Object({
-  agent: Type.String({ description: "Generated name returned by subagent" }),
+const WaitAgentParams = Type.Object({
+  target: Type.String({ description: "Task name or live pane ID returned by spawn_agent" }),
 });
 
 export default function (pi: ExtensionAPI): void {
@@ -79,15 +83,17 @@ export default function (pi: ExtensionAPI): void {
   const herdr = new Herdr(pi);
 
   pi.registerTool({
-    name: "subagent",
-    label: "Subagent",
+    name: "spawn_agent",
+    label: "spawn_agent",
     description: [
-      "Start an independent Pi subagent with its own context window in a new background Herdr tab.",
-      "Returns the generated agent name after submitting the initial prompt and observing the agent working, without waiting for completion.",
-      "Use the name with subagent_send for follow-ups.",
-      "Only call subagent_wait when you need the response to continue; otherwise leave the subagent running in the background.",
+      "Spawn a named background Pi agent to work on a concrete, bounded subtask in a new Herdr tab.",
+      "Choose a short, unique task_name containing only lowercase letters, digits, and underscores; it becomes both the agent name and tab name.",
+      "The agent receives no parent conversation history, so the message must be self-contained and include all relevant context, file paths, constraints, and expected output.",
+      "It inherits the parent's model, reasoning level, working directory, project trust, and active non-collaboration tools; agents cannot spawn nested agents.",
+      "Returns the task name and live Herdr pane ID after the agent starts; either can be used as target in followup_task and wait_agent.",
+      "Use followup_task for additional instructions and wait_agent only when the result is needed.",
     ].join(" "),
-    parameters: SubagentParams,
+    parameters: SpawnAgentParams,
     async execute(_toolCallId, params, signal, _onUpdate, ctx) {
       const workspaceId = process.env.HERDR_WORKSPACE_ID;
       if (!workspaceId || !process.env.HERDR_PANE_ID) {
@@ -97,11 +103,11 @@ export default function (pi: ExtensionAPI): void {
         throw new Error("No active model is available");
       }
 
-      const agent = `pi-subagent-${randomUUID().slice(0, 8)}`;
+      const agent = params.task_name;
       const activeTools = pi
         .getActiveTools()
         .filter(
-          (tool) => tool !== "subagent" && tool !== "subagent_wait" && tool !== "subagent_send",
+          (tool) => tool !== "spawn_agent" && tool !== "followup_task" && tool !== "wait_agent",
         );
       const piArgs = [
         "--model",
@@ -116,61 +122,69 @@ export default function (pi: ExtensionAPI): void {
       const paneId = tab.result.root_pane.pane_id;
       await herdr.waitForShell(paneId, signal);
       await herdr.startAgent({ name: agent, paneId, piArgs }, signal);
-      const prompted = await herdr.promptAgent(agent, params.prompt, signal);
+      const prompted = await herdr.promptAgent(agent, params.message, signal);
+      const status = prompted.result.agent.agent_status;
       return {
-        content: [{ type: "text", text: agent }],
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify({ task_name: agent, pane_id: paneId, status }),
+          },
+        ],
         details: {
-          agent,
-          paneId,
-          tabId: tab.result.tab.tab_id,
-          status: prompted.result.agent.agent_status,
+          task_name: agent,
+          pane_id: paneId,
+          tab_id: tab.result.tab.tab_id,
+          status,
         },
       };
     },
   });
 
   pi.registerTool({
-    name: "subagent_send",
-    label: "Send to subagent",
+    name: "followup_task",
+    label: "followup_task",
     description: [
-      "Submit a follow-up or steering prompt to a running subagent.",
-      "Returns after submitting the prompt and observing the agent working, without waiting for completion.",
-      "Only call subagent_wait afterward when you need the response to continue; otherwise do not wait.",
+      "Send additional instructions or a steering task to an existing agent identified by a task name or live pane ID returned from spawn_agent.",
+      "Returns after the task is delivered and the agent is observed working; it does not wait for completion.",
+      "Use wait_agent afterward only when the result is needed immediately.",
     ].join(" "),
-    parameters: SubagentSendParams,
+    parameters: FollowupTaskParams,
     async execute(_toolCallId, params, signal) {
-      const prompted = await herdr.promptAgent(params.agent, params.prompt, signal);
+      const prompted = await herdr.promptAgent(params.target, params.message, signal);
+      const paneId = prompted.result.agent.pane_id;
       return {
-        content: [{ type: "text", text: `Delivered to ${params.agent}.` }],
-        details: { agent: params.agent, paneId: prompted.result.agent.pane_id },
+        content: [{ type: "text", text: `Delivered follow-up task to ${params.target}.` }],
+        details: { target: params.target, pane_id: paneId },
       };
     },
   });
 
   pi.registerTool({
-    name: "subagent_wait",
-    label: "Wait for subagent",
+    name: "wait_agent",
+    label: "wait_agent",
     description: [
-      "Wait indefinitely for a subagent to become idle, done, or blocked, then return its status and latest assistant response.",
-      "Use this only when you need the response or status to continue your main thread.",
+      "Wait indefinitely for a specific agent, identified by a task name or live pane ID returned from spawn_agent, to become idle, done, or blocked.",
+      "Returns the agent's resulting status and latest assistant response.",
+      "Call only when progress depends on that response; otherwise leave the agent running in the background.",
     ].join(" "),
-    parameters: SubagentWaitParams,
+    parameters: WaitAgentParams,
     async execute(_toolCallId, params, signal) {
-      const resolved = await herdr.waitForAgent(params.agent, signal);
+      const resolved = await herdr.waitForAgent(params.target, signal);
       const status = resolved.result.agent.agent_status;
       const session = resolved.result.agent.agent_session;
       if (!session || session.kind !== "path" || !session.value) {
-        throw new Error(`Agent ${params.agent} has no session path`);
+        throw new Error(`Agent ${params.target} has no session path`);
       }
       const assistantText = latestAssistantText(SessionManager.open(session.value));
       const output = await formatWaitOutput(status, assistantText, signal);
       return {
         content: [{ type: "text", text: output.text }],
         details: {
-          agent: params.agent,
-          paneId: resolved.result.agent.pane_id,
+          target: params.target,
+          pane_id: resolved.result.agent.pane_id,
           status,
-          fullOutputPath: output.fullOutputPath,
+          full_output_path: output.fullOutputPath,
         },
       };
     },
