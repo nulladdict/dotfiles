@@ -146,7 +146,7 @@ export class Herdr {
     return parseResponse("herdr tab create", result.stdout, CreateTabResponseSchema);
   }
 
-  async waitForShell(_paneId: string, signal: AbortSignal | undefined): Promise<void> {
+  async waitForShellStartup(signal: AbortSignal | undefined): Promise<void> {
     // Work around Herdr 0.7.5 checking shell availability before agent start's timeout begins.
     await setTimeout(1000, undefined, { signal });
   }
@@ -172,13 +172,13 @@ export class Herdr {
   }
 
   async promptAgent(
-    agent: string,
+    target: string,
     prompt: string,
     signal: AbortSignal | undefined,
   ): Promise<PromptAgentResponse> {
     const result = await this.pi.exec(
       "herdr",
-      ["agent", "prompt", agent, prompt, "--wait", "--until", "working"],
+      ["agent", "prompt", target, prompt, "--wait", "--until", "working"],
       signal ? { signal } : {},
     );
     throwForFailedCommand("herdr agent prompt", result);
@@ -186,10 +186,10 @@ export class Herdr {
   }
 
   async waitForAgent(
-    agent: string,
+    target: string,
     signal: AbortSignal | undefined,
   ): Promise<WaitForAgentResponse> {
-    const result = await this.pi.exec("herdr", ["agent", "wait", agent], signal ? { signal } : {});
+    const result = await this.pi.exec("herdr", ["agent", "wait", target], signal ? { signal } : {});
     throwForFailedCommand("herdr agent wait", result);
     return parseResponse("herdr agent wait", result.stdout, WaitForAgentResponseSchema);
   }
