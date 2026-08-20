@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/master";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    herdr.url = "github:ogulcancelik/herdr/v0.8.0";
+    herdr.url = "github:ogulcancelik/herdr/v0.8.2";
   };
 
   outputs =
@@ -31,6 +31,7 @@
 
             git
             git-lfs
+            hunk
             lazygit
             gh
 
@@ -85,14 +86,9 @@
                 name = "iina/homebrew-mpv-iina";
                 trusted = true;
               }
-              {
-                name = "modem-dev/tap";
-                trusted = true;
-              }
             ];
             brews = [
               "im-select"
-              "hunk"
             ];
             casks = [
               "brave-origin@nightly"
