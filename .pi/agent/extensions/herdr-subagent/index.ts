@@ -73,10 +73,30 @@ const WaitAgentParams = Type.Object({
   target: Type.String({ description: "Task name or pane ID returned by spawn_agent." }),
 });
 
+const SUBAGENT_TOOLS = ["spawn_agent", "followup_task", "wait_agent"];
+
 export default function (pi: ExtensionAPI): void {
   if (process.env.HERDR_ENV !== "1") return;
 
   const herdr = new Herdr(pi);
+
+  pi.registerCommand("subagent", {
+    description: "Toggle subagent tools",
+    handler: async (_args, ctx) => {
+      const active = pi.getActiveTools();
+      const enabled = !SUBAGENT_TOOLS.every((tool) => active.includes(tool));
+      pi.setActiveTools(
+        enabled
+          ? [...new Set([...active, ...SUBAGENT_TOOLS])]
+          : active.filter((tool) => !SUBAGENT_TOOLS.includes(tool)),
+      );
+      ctx.ui.notify(`Subagent tools ${enabled ? "enabled" : "disabled"}.`, "info");
+    },
+  });
+
+  pi.on("session_start", () => {
+    pi.setActiveTools(pi.getActiveTools().filter((tool) => !SUBAGENT_TOOLS.includes(tool)));
+  });
 
   pi.registerTool({
     name: "spawn_agent",
