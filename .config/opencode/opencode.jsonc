@@ -1,6 +1,14 @@
 {
+  "permissions": [
+    { "action": "*", "resource": "*", "effect": "allow" }
+  ],
   "lsp": false,
   "formatter": false,
+  "agents": {
+    "plan": {
+      "disabled": true
+    }
+  },
   "mcp": {
     "servers": {
       "playwright": {
@@ -13,6 +21,17 @@
         "environment": {
           "PLAYWRIGHT_MCP_EXECUTABLE_PATH": "/Applications/Brave Origin Nightly.app/Contents/MacOS/Brave Origin Nightly",
           "PWTEST_EXTENSION_USER_DATA_DIR": "/Users/nulladdict/Library/Application Support/BraveSoftware/Brave-Origin-Nightly"
+        }
+      },
+      "figma": {
+        "type": "remote",
+        "url": "https://mcp.figma.com/mcp",
+        "oauth": {
+          "client_id": "xZL50MqAPuUXCyjWGlM3l1",
+          "client_secret": "{file:./figma-client-secret}",
+          "scope": "mcp:connect openid email",
+          "callback_port": 19876,
+          "redirect_uri": "http://127.0.0.1:19876/mcp/oauth/callback"
         }
       }
     }
