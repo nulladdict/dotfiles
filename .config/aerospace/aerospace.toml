@@ -70,7 +70,7 @@ if.app-id = 'com.mitchellh.ghostty'
 run = ['move-node-to-workspace 2', 'layout h_accordion']
 
 [[on-window-detected]]
-if.app-id = 'dev.zed.Zed'
+if.app-id = 'com.openai.codex'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
