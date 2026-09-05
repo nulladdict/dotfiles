@@ -43,7 +43,7 @@ do
             'stylua',
             'tailwindcss-language-server',
             'taplo',
-            'tsgo',
+            'tsc',
             'vtsls',
             'yaml-language-server',
         },
@@ -82,14 +82,6 @@ do
         },
     })
 
-    vim.lsp.config('vtsls', {
-        root_markers = { '.git' },
-        settings = {
-            vtsls = { autoUseWorkspaceTsdk = true },
-            typescript = { tsserver = { maxTsServerMemory = 8092 } },
-        },
-    })
-
     vim.lsp.config('stylelint_lsp', {
         settings = {
             stylelint = {
@@ -117,18 +109,13 @@ do
         'sqlls',
         'stylelint_lsp',
         'tailwindcss',
-        'tsgo',
-        -- 'vtsls',
+        'tsc',
         'yamlls',
     })
 
     -- Keymaps
     vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(event)
-            if vim.bo[event.buf].filetype == 'copilot-chat' then
-                return
-            end
-
             local snacks = require('snacks')
             local lsp_map = function(keys, action, desc)
                 vim.keymap.set('n', keys, action, { buffer = event.buf, desc = desc })
