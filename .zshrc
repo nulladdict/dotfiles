@@ -135,6 +135,9 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 # opencode
 alias oc='opencode2'
 
+# ch
+alias oa='open -a ChatGPT'
+
 # uv
 export PATH="/Users/nulladdict/.local/bin:$PATH"
 
