@@ -86,6 +86,10 @@
                 name = "iina/homebrew-mpv-iina";
                 trusted = true;
               }
+              {
+                name = "anomalyco/tap";
+                trusted = true;
+              }
             ];
             brews = [
               "im-select"
@@ -101,8 +105,9 @@
               "transmission"
               "iina"
               "visual-studio-code"
-              "kitlangton-hex"
+              "hex"
               "chatgpt"
+              "docker-desktop"
             ];
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
