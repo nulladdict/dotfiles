@@ -2,9 +2,7 @@
   "settings": {
     "toolPrefix": "none",
     "showStatusIcon": false,
-    "mcpFooterStatus": "compact",
-    "scriptMode": false,
-    "freezeDirectTools": true
+    "mcpFooterStatus": "compact"
   },
   "mcpServers": {
     "playwright": {
