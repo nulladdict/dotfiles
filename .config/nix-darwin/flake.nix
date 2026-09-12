@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/master";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    herdr.url = "github:ogulcancelik/herdr/v0.8.2";
+    herdr.url = "github:ogulcancelik/herdr/v0.9.0";
   };
 
   outputs =
@@ -65,7 +65,7 @@
             enable = true;
             nodejs = pkgs.nodejs_24;
             packages = [
-              "@opencode-ai/cli@next"
+              "@opencode/cli"
               "@openai/codex"
               "@earendil-works/pi-coding-agent"
             ];

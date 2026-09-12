@@ -133,7 +133,7 @@ export FZF_DEFAULT_COMMAND='rg --files'
 export PATH="$HOME/.npm-global/bin:$PATH"
 
 # opencode
-alias oc='opencode2'
+alias oc='opencode'
 
 # ch
 alias oa='open -a ChatGPT'
