@@ -1,6 +1,8 @@
 {
+  "keybinds": {},
   "theme": {
-    "name": "opencode"
+    "name": "opencode",
+    "mode": "dark"
   },
   "diffs": {
     "wrap": "word"
