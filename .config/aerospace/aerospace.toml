@@ -70,11 +70,11 @@ if.app-id = 'com.mitchellh.ghostty'
 run = ['move-node-to-workspace 2', 'layout h_accordion']
 
 [[on-window-detected]]
-if.app-id = 'com.openai.codex'
+if.app-id = 'com.superlogical.rex'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
-if.app-id = 'com.microsoft.VSCode'
+if.app-id = 'dev.zed.Zed'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
@@ -88,3 +88,7 @@ run = 'move-node-to-workspace 4'
 [[on-window-detected]]
 if.app-id = 'Mattermost.Desktop'
 run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+if.app-id = 'com.openai.codex'
+run = 'move-node-to-workspace 9'
