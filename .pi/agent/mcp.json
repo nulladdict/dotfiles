@@ -1,36 +1,22 @@
 {
-  "settings": {
-    "toolPrefix": "none",
-    "showStatusIcon": false,
-    "mcpFooterStatus": "compact"
-  },
   "mcpServers": {
     "playwright": {
-      "command": "npx",
-      "args": ["@playwright/mcp@latest", "--extension"],
+      "command": "/Users/nulladdict/.npm-global/bin/playwright-mcp",
+      "args": ["--extension"],
       "env": {
         "PLAYWRIGHT_MCP_EXECUTABLE_PATH": "/Applications/Brave Origin Nightly.app/Contents/MacOS/Brave Origin Nightly",
         "PWTEST_EXTENSION_USER_DATA_DIR": "/Users/nulladdict/Library/Application Support/BraveSoftware/Brave-Origin-Nightly"
       },
-      "directTools": ["browser_run_code_unsafe"]
+      "exposure": "codemode"
     },
     "exa": {
       "url": "https://mcp.exa.ai/mcp",
-      "directTools": true,
-      "includeTools": ["web_search_exa", "web_fetch_exa"]
+      "exposure": "codemode"
     },
     "figma": {
       "url": "https://mcp.figma.com/mcp",
-      "auth": "oauth",
       "oauth": { "clientName": "Codex" },
-      "exposeResources": true,
-      "directTools": [
-        "get_design_context",
-        "get_screenshot",
-        "download_assets",
-        "get_metadata",
-        "get_variable_defs"
-      ]
+      "exposure": "codemode"
     }
   }
 }

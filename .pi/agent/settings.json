@@ -1,16 +1,27 @@
 {
-  "lastChangelogVersion": "0.85.1",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-6-astra",
+  "lastChangelogVersion": "1.4.0",
+  "defaultProvider": "openai",
+  "defaultModel": "gpt-6.1-sol",
   "defaultThinkingLevel": "medium",
   "hideThinkingBlock": false,
   "transport": "websocket-cached",
   "theme": "rose-pine",
-  "npmCommand": ["npm", "--prefix", "~/.npm-global"],
+  "defaultTools": [
+    "+codemode"
+  ],
+  "npmCommand": [
+    "npm",
+    "--prefix",
+    "~/.npm-global"
+  ],
   "packages": [
     "npm:@plannotator/pi-extension",
-    "npm:pi-mcp-adapter",
     "npm:@ogulcancelik/pi-codex-subagents"
   ],
-  "enabledModels": ["openai-codex/gpt-5.6-luna", "openai-codex/gpt-6-astra"]
+  "enabledModels": [
+    "openai/gpt-6-astra",
+    "openai/gpt-6.1-sol",
+    "openai/gpt-6-luna"
+  ],
+  "deviceId": "fcb5ba6d-ed04-4137-9a5f-c1a3e7960f79"
 }
