@@ -120,7 +120,11 @@ alias envlocal='env $(grep -v "^#" .env.local | xargs)'
 alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 compdef dot='git'
 alias dotl='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
-alias h='herdr'
+
+# Rex settings
+if [ -n "$REX_BIN_DIR" ]; then
+  export PATH="$REX_BIN_DIR:$PATH"
+fi
 
 # FZF settings
 if [ -n "${commands[fzf-share]}" ]; then
@@ -138,11 +142,18 @@ alias oc='opencode'
 # ch
 alias oa='open -a ChatGPT'
 
-# uv
+# claude
 export PATH="/Users/nulladdict/.local/bin:$PATH"
+
+# pi
+export PATH="/Users/nulladdict/.pi/agent/bin:$PATH"
 
 # dotnet
 export PATH="$PATH:/Users/nulladdict/.dotnet/tools"
 
 # lazygit
 export XDG_CONFIG_HOME="$HOME/.config"
+
+
+# opencode
+export PATH=/Users/nulladdict/.opencode/bin:$PATH
