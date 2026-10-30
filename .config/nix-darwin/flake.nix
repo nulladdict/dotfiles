@@ -5,7 +5,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/master";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    herdr.url = "github:ogulcancelik/herdr/v0.9.0";
   };
 
   outputs =
@@ -13,7 +12,6 @@
       self,
       nixpkgs,
       nix-darwin,
-      herdr,
     }:
     let
       configuration =
@@ -50,24 +48,21 @@
             ffmpeg
             vault
 
-            nodejs_24
+            nodejs_26
             pnpm
             (yarn.override { withNode = false; })
 
             go
 
             uv
-
-            herdr.packages.${pkgs.stdenv.hostPlatform.system}.default
           ];
 
           npmGlobal = {
             enable = true;
-            nodejs = pkgs.nodejs_24;
+            nodejs = pkgs.nodejs_26;
             packages = [
-              "@opencode/cli"
               "@openai/codex"
-              "@earendil-works/pi-coding-agent"
+              "@playwright/mcp"
             ];
           };
 
@@ -104,9 +99,8 @@
               "figma"
               "transmission"
               "iina"
-              "visual-studio-code"
+              "zed"
               "hex"
-              "chatgpt"
               "docker-desktop"
             ];
             onActivation.cleanup = "zap";
@@ -148,7 +142,7 @@
             dock.show-recents = false;
             dock.persistent-apps = [
               "/Applications/Brave Origin Nightly.app"
-              "/Applications/Nix Apps/Ghostty.app"
+              "/Applications/Rex Beta.app"
               "/System/Applications/Mail.app"
               "/Applications/Telegram.app"
             ];
@@ -168,6 +162,7 @@
         modules = [
           configuration
           ./modules/npm-global.nix
+          ./modules/global-scripts.nix
         ];
       };
     };
