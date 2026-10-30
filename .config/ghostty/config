@@ -13,6 +13,3 @@ window-padding-y = 8
 
 shell-integration-features = sudo
 
-keybind = ctrl+tab=text:\x02n
-keybind = ctrl+shift+tab=text:\x02p
-
